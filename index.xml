@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hugo tranquilpeak theme</title>
-    <link>https://example.org/</link>
+    <link>https://tianyuliufang233.github.io/blog/</link>
     <description>Recent content on Hugo tranquilpeak theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Jul 2023 22:03:21 +0800</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Jul 2023 22:03:21 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First</title>
-      <link>https://example.org/post/first/</link>
+      <link>https://tianyuliufang233.github.io/blog/post/first/</link>
       <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
       
-      <guid>https://example.org/post/first/</guid>
+      <guid>https://tianyuliufang233.github.io/blog/post/first/</guid>
       <description></description>
     </item>
     
     <item>
       <title>About</title>
-      <link>https://example.org/about/</link>
+      <link>https://tianyuliufang233.github.io/blog/about/</link>
       <pubDate>Wed, 19 Jul 2023 22:00:52 +0800</pubDate>
       
-      <guid>https://example.org/about/</guid>
+      <guid>https://tianyuliufang233.github.io/blog/about/</guid>
       <description></description>
     </item>
     
     <item>
       <title>My First Post</title>
-      <link>https://example.org/2023/07/my-first-post/</link>
+      <link>https://tianyuliufang233.github.io/blog/2023/07/my-first-post/</link>
       <pubDate>Wed, 19 Jul 2023 17:47:24 +0800</pubDate>
       
-      <guid>https://example.org/2023/07/my-first-post/</guid>
+      <guid>https://tianyuliufang233.github.io/blog/2023/07/my-first-post/</guid>
       <description></description>
     </item>
     
