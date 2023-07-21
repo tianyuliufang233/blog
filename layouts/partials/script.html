@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!--EXTERNAL SCRIPTS END-->
 <!--SCRIPTS-->
-<script src="{{ "/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js" | absURL }}"></script>
+<!--<script src="{{ "/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js" | absURL }}"></script>-->
 <!--SCRIPTS END-->
 {{ range .Site.Params.customJS }}
   {{ if isset . "src" }}
@@ -52,15 +52,22 @@ $(document).ready(function() {
 {{ end }}
 {{ if .Params.mermaid }}  <!-- 判断是否开启 -->
 <script type="module">  
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; 
+    import mermaid from 'https://cdn.staticfile.org/mermaid/10.2.4/mermaid.esm.min.mjs'; 
     mermaid.initialize({ startOnLoad: true });  
 </script>  
 <script>  
-    // Replace mermaid pre.code to div  
+    // Replace mermaid pre.code to per  
     Array.from(document.getElementsByClassName("language-mermaid")).forEach(  
         (el) => {  
-            el.parentElement.outerHTML = `<div class="mermaid">${el.innerHTML}</div>`;  
+            el.parentElement.outerHTML = `<per class="mermaid">${el.innerHTML}</per>`;  
         }  
     );  
 </script>  
+<style>  
+    /* Set svg to center */  
+    .mermaid svg {  
+        display: block;  
+        margin: auto;  
+    }  
+</style>  
 {{ end }}

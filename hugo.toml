@@ -13,8 +13,8 @@
 # use grunt task `build` to synchronize assets
 
 baseURL = "https://tianyuliufang233.github.io/blog/"
-languageCode = "en-us"
-defaultContentLanguage = "en-us"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh-cn"
 title = "Hugo tranquilpeak theme"
 theme = "hugo-tranquilpeak-theme"
 disqusShortname = "hugo-tranquilpeak-theme"
@@ -44,15 +44,15 @@ canonifyurls = true
 # Author
 # ------
 [author]
-  name = "Firstname Lastname"
-  bio = "Super bio with markdown support **COOL**"
+  name = "天雨流芳233"
+  bio = "心之所向，素履以往。生如逆旅，一苇以航。"
   job = "Your job title"
   location = "France"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
-  gravatarEmail = "thibaud.lepretre@gmail.com"
+  gravatarEmail = "2893199408@qq.com"
   # Your profile picture
   # Overwritten by your gravatar image if `author.gravatarEmail` is filled
-  picture = "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png"
+  picture = "/static/headimg.jpg"
   # Your Twitter username without the @. E.g : thibaudlepretre
   # twitter = "thibaudlepretre"
   # Your google plus profile id. E.g : +ThibaudLepretre or 114625208755123718311
