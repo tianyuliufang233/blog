@@ -42,6 +42,12 @@ flowchart TB
   本次交易 --> 单价低 --> 提高价格 -->减小市场面 --> 扩大知识深度
 ```
 
+```mermaid
+flowchart TB
+  商业模式 --> 目标群体 --> 遇到问题的人 --> 为什么要付钱 --> 这个问题短时间内他无法解决 -->应该加深知识深度构建壁垒
+  商业模式 --> 可复制性  -->复制成本高所以有边际效应 --> 所以做现代化工匠是一种选择
+```
+
 ### 参考文档
 
 - [imagemagick高级安装文档](https://imagemagick.org/script/advanced-linux-installation.php)
