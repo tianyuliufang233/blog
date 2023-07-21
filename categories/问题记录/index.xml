@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>问题记录 on Hugo tranquilpeak theme</title>
+    <link>https://tianyuliufang233.github.io/blog/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
+    <description>Recent content in 问题记录 on Hugo tranquilpeak theme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 19 Jul 2023 22:03:21 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>imagemagick安装编译无法识别helc问题</title>
+      <link>https://tianyuliufang233.github.io/blog/post/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;imagemagick二进制编译无法启用heic功能&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

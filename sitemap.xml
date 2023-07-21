@@ -2,22 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
     <loc>https://tianyuliufang233.github.io/blog/</loc>
-    <lastmod>2023-07-19T22:03:21+08:00</lastmod>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/post/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/tag1/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/tag2/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/post/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2023-07-20T11:43:51+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/post/2023%E4%B8%8A%E5%8D%8A%E5%B9%B4%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2023-07-20T10:01:12+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/post/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2023-07-19T22:03:21+08:00</lastmod>
   </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/post/</loc>
+    <loc>https://tianyuliufang233.github.io/blog/tags/linux/</loc>
+    <lastmod>2023-07-19T22:03:21+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/linux/</loc>
+    <lastmod>2023-07-19T22:03:21+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2023-07-19T22:03:21+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2023-07-19T22:03:21+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/about/</loc>
     <lastmod>2023-07-19T22:00:52+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/archives/</loc>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/categories/</loc>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/tags/</loc>
   </url>
 </urlset>

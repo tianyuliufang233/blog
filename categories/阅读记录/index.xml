@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Hugo tranquilpeak theme</title>
-    <link>https://tianyuliufang233.github.io/blog/post/</link>
-    <description>Recent content in Posts on Hugo tranquilpeak theme</description>
+    <title>阅读记录 on Hugo tranquilpeak theme</title>
+    <link>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>
+    <description>Recent content in 阅读记录 on Hugo tranquilpeak theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 20 Jul 2023 11:43:51 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jul 2023 11:43:51 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>把时间当作朋友</title>
       <link>https://tianyuliufang233.github.io/blog/post/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/</link>
@@ -23,15 +23,6 @@
       
       <guid>https://tianyuliufang233.github.io/blog/post/2023%E4%B8%8A%E5%8D%8A%E5%B9%B4%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>imagemagick安装编译无法识别helc问题</title>
-      <link>https://tianyuliufang233.github.io/blog/post/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
-      
-      <guid>https://tianyuliufang233.github.io/blog/post/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</guid>
-      <description>&lt;p&gt;imagemagick二进制编译无法启用heic功能&lt;/p&gt;</description>
     </item>
     
   </channel>

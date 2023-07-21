@@ -5,6 +5,43 @@
     <link>https://tianyuliufang233.github.io/blog/categories/</link>
     <description>Recent content in Categories on Hugo tranquilpeak theme</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 20 Jul 2023 11:43:51 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阅读</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Thu, 20 Jul 2023 11:43:51 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>阅读记录</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Thu, 20 Jul 2023 11:43:51 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/linux/</link>
+      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>问题记录</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
