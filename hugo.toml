@@ -388,7 +388,7 @@ dateFormat = "2006-01-02"
 ## 配置 utteranc评论,教程参考 https://utteranc.es/
 [params.utteranc]
   enable = true
-  repo = "tianyuliufang233/blog" ##换成自己得
+  repo = "tianyuliufang233/blog"
   issueTerm = "title"
   theme = "github-light"
 
