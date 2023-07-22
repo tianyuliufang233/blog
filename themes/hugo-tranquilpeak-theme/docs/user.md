@@ -380,14 +380,15 @@ If you need to add some additionnal javascript or css files to your blog without
 ```toml
 [params]
   [[params.customJS]]
-    src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/go.min.js"
+    src = "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/9.8.0/languages/go.min.js"
+
     integrity = "sha256-LVuWfOU0rWFMCJNl1xb3K2HSWfxtK4IPbqEerP1P83M="
     crossorigin = "anonymous"
     async = true
     defer = true
 
   [[params.customJS]]
-    src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/dockerfile.min.js"
+    src = "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/9.8.0/languages/dockerfile.min.js"
     integrity = "sha256-putofyQv7OB569xAldpyBnHJ0Uc+7VGp5Us05IgDGss="
     crossorigin = "anonymous"
     async = true

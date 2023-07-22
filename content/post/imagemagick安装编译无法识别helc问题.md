@@ -11,7 +11,8 @@ keywords:
 - tech
 mermaid: true
 ---
-imagemagick二进制编译无法启用heic功能
+
+
 <!--more-->
 
 ### 问题环境
