@@ -6,7 +6,16 @@
     <description>Recent content in tag2 on 天雨流芳233 的年轮</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 20 Jul 2023 11:43:51 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jul 2023 10:31:23 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 网络全过程</title>
+      <link>https://tianyuliufang233.github.io/blog/post/kubernetes-%E7%BD%91%E7%BB%9C%E5%85%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Wed, 26 Jul 2023 10:31:23 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/kubernetes-%E7%BD%91%E7%BB%9C%E5%85%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>&lt;p&gt;kubernetes 网络从client到服务端处理全过程&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>把时间当作朋友</title>
       <link>https://tianyuliufang233.github.io/blog/post/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/</link>
