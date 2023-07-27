@@ -2,31 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tianyuliufang233.github.io/blog/post/20230727%E6%97%A5%E8%AE%B0/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
     <loc>https://tianyuliufang233.github.io/blog/categories/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/post/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/subcategory/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/tag1/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/tag2/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/tags/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/categories/%E6%97%A5%E8%AE%B0/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
+  </url><url>
+    <loc>https://tianyuliufang233.github.io/blog/</loc>
+    <lastmod>2023-07-27T23:34:58+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/categories/category/</loc>
     <lastmod>2023-07-27T11:58:09+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%8D%B7/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/post/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/categories/subcategory/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/tags/tag1/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/tags/tag2/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/tags/</loc>
-    <lastmod>2023-07-27T11:58:09+08:00</lastmod>
-  </url><url>
-    <loc>https://tianyuliufang233.github.io/blog/</loc>
     <lastmod>2023-07-27T11:58:09+08:00</lastmod>
   </url><url>
     <loc>https://tianyuliufang233.github.io/blog/post/%E6%AF%9B%E9%80%89-%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</loc>
