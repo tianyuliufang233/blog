@@ -6,11 +6,11 @@
     <description>Recent content in Categories on 天雨流芳233 的年轮</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Jul 2023 10:31:23 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 27 Jul 2023 11:58:09 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>category</title>
       <link>https://tianyuliufang233.github.io/blog/categories/category/</link>
-      <pubDate>Wed, 26 Jul 2023 10:31:23 +0800</pubDate>
+      <pubDate>Thu, 27 Jul 2023 11:58:09 +0800</pubDate>
       
       <guid>https://tianyuliufang233.github.io/blog/categories/category/</guid>
       <description></description>
@@ -19,9 +19,18 @@
     <item>
       <title>subcategory</title>
       <link>https://tianyuliufang233.github.io/blog/categories/subcategory/</link>
-      <pubDate>Wed, 26 Jul 2023 10:31:23 +0800</pubDate>
+      <pubDate>Thu, 27 Jul 2023 11:58:09 +0800</pubDate>
       
       <guid>https://tianyuliufang233.github.io/blog/categories/subcategory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/kubernetes/</link>
+      <pubDate>Wed, 26 Jul 2023 10:31:23 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/kubernetes/</guid>
       <description></description>
     </item>
     

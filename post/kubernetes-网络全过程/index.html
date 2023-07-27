@@ -16,7 +16,7 @@
     
   },
   "name":"天雨流芳233 的年轮",
-  "description":"\u003cp\u003ekubernetes 网络从client到服务端处理全过程\u003c\/p\u003e",
+  "description":"\u003cp\u003ekubernetes 网络从client到服务端经过全过程\u003c\/p\u003e",
   "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-%E7%BD%91%E7%BB%9C%E5%85%A8%E8%BF%87%E7%A8%8B\/",
   "keywords":"[tech]"
 }
@@ -28,18 +28,18 @@
 <meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
 <meta name="author" content="天雨流芳233">
 <meta name="keywords" content="tech">
-<meta name="description" content="kubernetes 网络从client到服务端处理全过程">
+<meta name="description" content="kubernetes 网络从client到服务端经过全过程">
 
 
-<meta property="og:description" content="kubernetes 网络从client到服务端处理全过程">
+<meta property="og:description" content="kubernetes 网络从client到服务端经过全过程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kubernetes 网络全过程">
-<meta name="twitter:title" content="Kubernetes 网络全过程">
+<meta property="og:title" content="Kubernetes 网络经过全过程">
+<meta name="twitter:title" content="Kubernetes 网络经过全过程">
 <meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-%E7%BD%91%E7%BB%9C%E5%85%A8%E8%BF%87%E7%A8%8B/">
 <meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-%E7%BD%91%E7%BB%9C%E5%85%A8%E8%BF%87%E7%A8%8B/">
 <meta property="og:site_name" content="天雨流芳233 的年轮">
-<meta property="og:description" content="kubernetes 网络从client到服务端处理全过程">
-<meta name="twitter:description" content="kubernetes 网络从client到服务端处理全过程">
+<meta property="og:description" content="kubernetes 网络从client到服务端经过全过程">
+<meta name="twitter:description" content="kubernetes 网络从client到服务端经过全过程">
 <meta property="og:locale" content="zh-cn">
 
   
@@ -51,7 +51,7 @@
   
   
     
-      <meta property="article:section" content="category">
+      <meta property="article:section" content="kubernetes">
     
       <meta property="article:section" content="subcategory">
     
@@ -81,7 +81,7 @@
 
 
 
-    <title>Kubernetes 网络全过程</title>
+    <title>Kubernetes 网络经过全过程</title>
 
     <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
     
@@ -238,7 +238,7 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title">
-      Kubernetes 网络全过程
+      Kubernetes 网络经过全过程
     </h1>
   
   
@@ -260,7 +260,7 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/category">category</a>, 
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/kubernetes">kubernetes</a>, 
     
       <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/subcategory">subcategory</a>
     
@@ -272,11 +272,13 @@
           
           <div class="post-content markdown">
             <div class="main-content-wrap">
-              <p>kubernetes 网络从client到服务端处理全过程</p>
+              <p>kubernetes 网络从client到服务端经过全过程</p>
+<p>kubernetes 网络流量的经历</p>
 <pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">flowchart TB
    客户端GET请求 --&gt; 到达Traefik --&gt;Ingress已经从Service获取到EndPoint节点IP及端口 --&gt; 将EndPoint节点作为目标地址及端口 --&gt; 根据路由选择进入calico建立的tunl0 --&gt; calico-node通过路由根据pod所属网段将数据包发送到对应宿主机--&gt;宿主机收到数据包后由calico-node再次进行路由选择网桥到达pod --&gt; pod收到数据包后由程序进行处理后发出响应 --&gt; 响应通过路由过网桥找到calico-node进行封装 --&gt; 封装后走eth网卡到Traefik宿主机--&gt;Traefik宿主机收到数据包后由calico-node进行路由到Traefik--&gt;最后到达客户端
    根据路由选择进入calico建立的tunl0 --&gt; calico会为每个物理主机建立变长网段
    将EndPoint节点作为目标地址及端口 --&gt; 也就是说绕过了service --&gt; service只提供endpoint发现功能
+   也就是说绕过了service --&gt;正常来说service的负载均衡是通过iptables或者ipvs实现的
 </code></pre>
               
 
@@ -306,7 +308,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--disabled">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E6%AF%9B%E9%80%89-%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" data-tooltip="毛选 阅读记录" aria-label="下一篇: 毛选 阅读记录">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -395,7 +397,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--disabled">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E6%AF%9B%E9%80%89-%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" data-tooltip="毛选 阅读记录" aria-label="下一篇: 毛选 阅读记录">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
