@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>subcategory on 天雨流芳233 的年轮</title>
+    <title>subcategory on 问道之旅</title>
     <link>https://tianyuliufang233.github.io/blog/categories/subcategory/</link>
-    <description>Recent content in subcategory on 天雨流芳233 的年轮</description>
+    <description>Recent content in subcategory on 问道之旅</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 27 Jul 2023 23:34:58 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/subcategory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Jul 2023 11:39:58 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/subcategory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown手册</title>
+      <link>https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/</link>
+      <pubDate>Fri, 28 Jul 2023 11:39:58 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/</guid>
+      <description>&lt;p&gt;makrdown 手册记录&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes 常用命令案例</title>
+      <link>https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Fri, 28 Jul 2023 10:16:40 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A1%88%E4%BE%8B/</guid>
+      <description>&lt;p&gt;常用命令案例&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>20230727日记</title>
       <link>https://tianyuliufang233.github.io/blog/post/20230727%E6%97%A5%E8%AE%B0/</link>

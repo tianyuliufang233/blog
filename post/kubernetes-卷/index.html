@@ -15,7 +15,7 @@
     "image": "/favicon.jpg%!(EXTRA string=f97382ebc14f74f313202986f34f6792)"
     
   },
-  "name":"天雨流芳233 的年轮",
+  "name":"问道之旅",
   "description":"",
   "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-%E5%8D%B7\/",
   "keywords":"[tech]"
@@ -37,7 +37,7 @@
 <meta name="twitter:title" content="Kubernetes 卷">
 <meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%8D%B7/">
 <meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%8D%B7/">
-<meta property="og:site_name" content="天雨流芳233 的年轮">
+<meta property="og:site_name" content="问道之旅">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
@@ -111,7 +111,7 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">天雨流芳233 的年轮</a>
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">问道之旅</a>
   </div>
   
     
@@ -306,6 +306,239 @@ emptyDir的一些用途：</p>
 <li>在web服务器容器服务数据时，保存内容管理器容器获取的文件。</li>
 </ul>
 <p>emptyDir.medium字段用来控制emptyDir卷的存储位置。</p>
+<h2 id="fc光纤通道">fc(光纤通道)</h2>
+<p>允许将光纤通道块挂载到pod中。可以设置参数targetWWNs指定单个或多个目标WWN(World Wide Names)</p>
+<h2 id="hostpath">hostPath</h2>
+<p>hostPath 存在安全风险，尽量避免使用HostPath。
+hostPath的一些用法：</p>
+<ul>
+<li>允许需要访问docker内部机制的容器</li>
+<li>允许容器中运行cAdvisor</li>
+<li>允许Pod指定给定的hostPath在运行Pod之前是否应该存在。
+可以指定的type如下：
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>空字符串（默认）用于向后兼容，这意味着在安装 hostPath 卷之前不会执行任何检查。</td>
+</tr>
+<tr>
+<td>DirectoryOrCreate</td>
+<td>如果在给定路径上什么都不存在，那么将根据需要创建空目录，权限设置为 0755，具有与 kubelet 相同的组和属主信息。</td>
+</tr>
+<tr>
+<td>Directory</td>
+<td>在给定路径上必须存在的目录。</td>
+</tr>
+<tr>
+<td>FileOrCreate</td>
+<td>如果在给定路径上什么都不存在，那么将在那里根据需要创建空文件，权限设置为 0644，具有与 kubelet 相同的组和所有权。</td>
+</tr>
+<tr>
+<td>File</td>
+<td>在给定路径上必须存在的文件</td>
+</tr>
+<tr>
+<td>Socket</td>
+<td>在给定路径上必须存在的UNIX套接字</td>
+</tr>
+<tr>
+<td>CharDevice</td>
+<td>在给定路径上必须存在的字符设备</td>
+</tr>
+<tr>
+<td>BlockDevice</td>
+<td>在给定路径上必须存在的块设备</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>host FileOrcreate模式不会负责创建文件的父目录。如果挂载的父级目录不存在，pod启动会失败。</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: test-webserver
+spec:
+  containers:
+  - name: test-webserver
+    image: registry.k8s.io/test-webserver:latest
+    volumeMounts:
+    - mountPath: /var/local/aaa
+      name: mydir
+    - mountPath: /var/local/aaa/1.txt
+      name: myfile
+  volumes:
+  - name: mydir
+    hostPath:
+      # 确保文件所在目录成功创建。
+      path: /var/local/aaa
+      type: DirectoryOrCreate
+  - name: myfile
+    hostPath:
+      path: /var/local/aaa/1.txt
+      type: FileOrCreate
+</code></pre><h2 id="iscsi">iscsi</h2>
+<p>能将iscsi卷挂载到pod中。只能单个写模式挂载，能够多个使用者读模式挂载。</p>
+<h2 id="local">local</h2>
+<p>代表某个被挂载的本地存储设备，例如：磁盘、分区或者目录。
+只能用作静态创建的持久卷。不支持动态配置。
+与hostPath相比，能以持久和可移植的方式使用，而无需手动将Pod调度到节点。通过查看PV的节点亲和性配置，就能了解卷的节点约束。
+设置local卷时，需要设置PV的nodeAffinity属性。使用storageClass时建议设置volumeBindingMode为WaitForFirstConsumer。</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/ssd1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - example-node
+</code></pre><h2 id="nfs">nfs</h2>
+<p>nfs卷能将nfs网络系统挂载到pod中。</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: registry.k8s.io/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /my-nfs-data
+      name: test-volume
+  volumes:
+  - name: test-volume
+    nfs:
+      server: my-nfs-server.example.com
+      path: /my-nfs-volume
+      readOnly: true
+</code></pre><h2 id="persistentvolumeclaim">persistentVolumeClaim</h2>
+<p>将持久卷PersistentVolume挂载到Pod中。</p>
+<h2 id="portworx-csi-迁移">Portworx CSI 迁移</h2>
+<p>针对Portworx添加CSIMigration特性，在1.23中默认禁用，1.25中已进入Beta阶段，默认关闭。它将所有插件操作不在指向树内插件(In-Tree Plugin),转而指向容器存储接口(Container Storage Interface，CSI)驱动。要启用此特性，需要在kube-controller-manager 和kubelet中设置 CSIMigrationPortworx=true 。</p>
+<h2 id="rbd">rbd</h2>
+<p>允许将Rados块设备卷挂载到Pod中。rbd在删除Pod时被保存，卷只是被卸载。
+只能单写多读形式安装。</p>
+<h2 id="rbd-csi-迁移">RBD CSI 迁移</h2>
+<p>启用RBD的CSIMigration特性后，所有插件操作从现有的树内插件重定向到CSI驱动程序。要使用该特性需要启用xsiMigrationRBD</p>
+<h2 id="secret">secret</h2>
+<p>用于给Pod传递敏感信息。以文件形式挂载到Pod中，由tmpfs(基于RAM的文件系统)提供存储。</p>
+<h2 id="vsphere-csi-迁移">vSphere CSI 迁移</h2>
+<p>在1.27中，对树内vsphereVolume类的所有操作都被重定向到csi.vsphere.vmware.com CSI驱动程序。
+vSphere CSI驱动不支持：</p>
+<ul>
+<li>diskformat</li>
+<li>hostfailurestotolerate</li>
+<li>forceprovisioning</li>
+<li>cachereservation</li>
+<li>diskstripes</li>
+<li>objectspacereservation</li>
+<li>iopslimit</li>
+</ul>
+<h2 id="subpath">subPath</h2>
+<p>在单个Pod中共享卷以提供多方使用时很有用。volumeMounts.subPath属性用于指定所引用的卷内的子路径，而不是根路径。</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: my-lamp-site
+spec:
+    containers:
+    - name: mysql
+      image: mysql
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: &#34;rootpasswd&#34;
+      volumeMounts:
+      - mountPath: /var/lib/mysql
+        name: site-data
+        subPath: mysql
+    - name: php
+      image: php:7.0-apache
+      volumeMounts:
+      - mountPath: /var/www/html
+        name: site-data
+        subPath: html
+    volumes:
+    - name: site-data
+      persistentVolumeClaim:
+        claimName: my-lamp-site-data
+</code></pre><h3 id="扩展环境变量的subpath">扩展环境变量的subPath</h3>
+<p>subPathExpr可以基于download API环境变量来构造subPath目录名。subPath和subPathExpr属性是互斥的。</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  containers:
+  - name: container1
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    image: busybox:1.28
+    command: [ &#34;sh&#34;, &#34;-c&#34;, &#34;while [ true ]; do echo &#39;Hello&#39;; sleep 10; done | tee -a /logs/hello.txt&#34; ]
+    volumeMounts:
+    - name: workdir1
+      mountPath: /logs
+      # 包裹变量名的是小括号，而不是大括号
+      subPathExpr: $(POD_NAME)
+  restartPolicy: Never
+  volumes:
+  - name: workdir1
+    hostPath:
+      path: /var/log/pods
+</code></pre><h2 id="资源">资源</h2>
+<p>emptyDir的存储介质由保存kubelet数据的根目录(/var/lib/kubelet)的文件系统的介质确定。</p>
+<h2 id="out-of-tree-卷插件">out-of-tree 卷插件</h2>
+<p>Out-of-tree卷插件包括容器存储接口(CSI)。使得存储供应商能够创建自定义存储插件。无需将插件源码添加kubernetes仓库。</p>
+<h2 id="csi">CSI</h2>
+<p>容器存储接口为容器编排系统定义标准接口，以将任意系统暴露给它们的容器工作负载。
+CSI的三种使用方式：</p>
+<ul>
+<li>pvc对象引用</li>
+<li>一般性临时存卷</li>
+<li>CSI临时卷，前提是驱动可以支持这种用法
+CSI持久卷配置字段：</li>
+<li>driver：指定卷驱动名称的字符串值</li>
+<li>volumeHandle: 唯一标识卷的字符串值</li>
+<li>readOnly: 一个可选的布尔值</li>
+<li>fsType: 如果PV的VolumeMode为Filesystem，那么此字段指定挂载时应该使用的文件系统。</li>
+<li>volumeAttributes: 一个字符串到字符串的映射表，用来设置卷的静态属性。</li>
+<li>controllerPublishSecetRef: 对包敏感信息的secret对象的引用；该敏感信息会被传递给CSI驱动来完成CSI ControllerPublishVolume和ControllerUnpublishVolume调用。</li>
+<li>nodeExpandSecretRef: 对包含敏感信息的Secret对象的引用。</li>
+<li>nodePublishSecretRef: 对包含敏感信息的Secret对象的引用，该信息会传递CSI驱动以完成CSI NodeStageVolume调用。</li>
+<li>nodeStageSecretRef: 对敏感信息的Secret对象的引用，该信息会传递给CSI驱动以完成CSI NodeStageVolume调用。</li>
+</ul>
+<h2 id="挂载卷的传播">挂载卷的传播</h2>
+<p>挂载传播特性由Continer.volumeMounts中的mountPropagation字段控制。</p>
+<ul>
+<li>None  不会感知到主机后续在此卷或其任何子目录上执行的挂载变化</li>
+<li>HostToContainer 此卷挂载将会感知到主机后续针对卷或其任何子目录的挂载操作。</li>
+<li>Bidirectional 这种挂载和HostToContainer 挂载表现相同。另外，容器创建的卷挂载将被传播回至主机和使用同一卷的所有Pod的所有容器。
+Bidirectional可以破坏主机操作系统，因此只被允许特权容器中使用。</li>
+</ul>
 <p>参考连接<a href="%22https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/#configmap%22">kubernetes-volumes</a></p>
               
 

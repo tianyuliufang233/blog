@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on 天雨流芳233 的年轮</title>
+    <title>Categories on 问道之旅</title>
     <link>https://tianyuliufang233.github.io/blog/categories/</link>
-    <description>Recent content in Categories on 天雨流芳233 的年轮</description>
+    <description>Recent content in Categories on 问道之旅</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 27 Jul 2023 23:34:58 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Jul 2023 11:39:58 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>category</title>
+      <link>https://tianyuliufang233.github.io/blog/categories/category/</link>
+      <pubDate>Fri, 28 Jul 2023 11:39:58 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/categories/category/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>subcategory</title>
       <link>https://tianyuliufang233.github.io/blog/categories/subcategory/</link>
-      <pubDate>Thu, 27 Jul 2023 23:34:58 +0800</pubDate>
+      <pubDate>Fri, 28 Jul 2023 11:39:58 +0800</pubDate>
       
       <guid>https://tianyuliufang233.github.io/blog/categories/subcategory/</guid>
       <description></description>
@@ -22,15 +31,6 @@
       <pubDate>Thu, 27 Jul 2023 23:34:58 +0800</pubDate>
       
       <guid>https://tianyuliufang233.github.io/blog/categories/%E6%97%A5%E8%AE%B0/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>category</title>
-      <link>https://tianyuliufang233.github.io/blog/categories/category/</link>
-      <pubDate>Thu, 27 Jul 2023 11:58:09 +0800</pubDate>
-      
-      <guid>https://tianyuliufang233.github.io/blog/categories/category/</guid>
       <description></description>
     </item>
     
