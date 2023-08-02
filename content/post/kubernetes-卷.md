@@ -259,3 +259,220 @@ CSI持久卷配置字段：
 Bidirectional可以破坏主机操作系统，因此只被允许特权容器中使用。
 
 参考连接[kubernetes-volumes]("https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/#configmap")
+# 持久卷
+持久卷（PersistentVolume，pv）是集群中的一块存储，可以由管理员事先制备，或者存储类（StorageClass）来动态制备。PV持久卷和普通Volume一样，使用卷插件来实现。
+持久卷申领（PersistentVolumeClaim，PVC）表达的是用户对存储的请求。概念上与Pod类似。Pod消耗节点资源，PVC消耗PV资源。
+## 制备
+PV分为静态和动态制备
+### 静态制备
+集群管理员创建若干PV卷。这些卷带有真实存储的细节信息，对集群用户可见。
+### 动态制备
+基于StorageClass来实现的：PVC申领请求某个存储类，必须已经创建并配置该类才能动态制备PV。需要在API服务器上启用DefaultStorageClass准入控制器。可通过API server组件的--enable-admission-plugins标志值实现这点。
+## 绑定
+用户创建一个带有特定存储容量和特定访问模式需要的PVC对象；在动态制备场景下，制备的PVC和PV是一对一映射。如果找不到匹配的PV卷，PVC会无限期处于未绑定状态。当与之匹配的PV卷可用时，PVC申领会被绑定。
+### 保护使用中的存储对象
+当PVC为Terminating且Finalizers列表中包含kubernetes.io/pvc-protetion时，PVC处于被保护状态。
+### 回收（Reclaiming）
+当用户不再使用其存储卷时，可以从API中将PVC对象删除，从而允许该资源被回收再利用。PV的回收策略告诉集群，当其被从申领中释放时如何处理该数据卷。目前的几种状态Retained（保留）、Recycled（回收）或Deleted（删除）。
+### 保留（Retain）
+回收策略Retain使得用户可以手动回收资源。当PVC被删除时，PV卷任然存在，对应的数据卷被视为"以释放（released）"。需要手动回收该卷：
+- 删除PV。
+- 根据情况手动清除关联存储资产上的数据。
+- 手动删除关联的存储资产。
+### 删除（Delete）
+对于支持Delete回收策略的卷插件，删除动作将PV删除，同时移除关联的存储资产。动态制备的卷会继承StorageClass中设置的回收策略。默认为Delete。
+### PV删除保护finalizer
+可以在PV上添加Finalizer，以确保只有在删除对应的存储后才删除具有Delete回收策略的PV。
+kubernetes.io/pv-controller和external-provisioner.volume.Kubernetes.io/finalizer可被添加到动态制备的卷上。
+### 预留PV
+通过PVC中指定PV，可以声明特定PV与PVC之间的绑定关系。如果PV存在未被通过其claimRef字段预留给PVC，则该PV会和该PVC绑定到一起。绑定操作不会考虑某些卷匹配条件是否满足，包括节点亲和性等。任然会检查存储类、访问模式和请求的存储大小是否合法。
+
+使用claimPolicy属性设置为Retain的PersistentVolume卷时，包括希望复用现有PV时，很有用。
+
+## 扩充PVC申领
+支持扩充类型的卷：
+- azureDisk
+- azureFile
+- awsElasticBlockStore
+- csi
+- flexVolume
+- gcePersistentDisk
+- rbd
+- portworxVolume
+PVC的存储类中将allowVolumeExpansion设置为true时，才可以扩充该PVC。设置一个更大的尺寸值。这一操作会触发下层PV提供存储的卷的扩充。kubernetes不会创建新的PV来满足请求。现有的卷会被调整大小。
+直接边际PV的大小可以阻止该卷自动调整大小。如果对PV的容量进行编辑，然后又对PVC的.spec进行编辑，使得PVC大小匹配PV的话，则不会发送存储大小调整。控制面观察到资源匹配，并认为其后备卷大小已手动增加，无需调整。
+### CSI卷扩充
+CSI扩充能力默认启用，扩充CSI卷要求CSI驱动支持卷扩充操作。
+#### 重设包含文件系统的卷的大小
+只有卷中包含文件系统是XFS、EXT3或EXT4时，才可以重设卷大小。当卷中包含文件系统时，只有Pod使用ReadWrite模式来使用PVC申领的情况下才能重设其文件系统的大小。文件系统扩充的操作可能是在Pod启动期间完成，或在下层文件系统支持在想扩充的前提下在Pod运行期间完成。
+#### 重设使用中PVC的大小
+所有使用中的PVC在其文件系统被扩充后，立即可供Pod使用。此特性对于没有被Pod或Deployment使用的PVC是无效的。必须在执行扩展操作之前创建一个使用该PVC的Pod。
+#### 处理扩展卷过程失败
+如果扩充下层存储失败，可以手动恢复PVC申领的状态并取消重设大小请求。否则会反复重试
+- 将绑定到PVC的PV标记为Retain回收策略
+- 删除PVC对象。由于PV的回收策略为Retain，我们不会重建PVC时丢失数据。
+- 删除PV规约中的claimRef，这样新的PVC可以绑定到该卷。这一操作会使得PV卷变为"可用（Available）"。
+- 使用小于PV卷大小的尺寸重建PVC，设置PVC的volumeName字段为PV卷的名称。这一操作将把新的PVC对象绑定到现有PV卷
+- 恢复PV卷上设置的回收策略。
+通过请求扩展为更小尺寸。此特性为alpha特性。RecoverVolumeExpansionFailure必须被启用以允许使用此特性。
+当开启此特性后可通过扩展更小尺寸重试扩展。可以通过编辑.spec.resources选择一个更小值。可通过查看.status.resizeStatus以及PVC上的事件来监控调整大小操作的状态。不支持将pvc缩小到小于当前的尺寸。
+### 持久卷类型
+- cephfs
+- csi
+- fc
+- hostPath
+- iscsi
+- local
+- nfs
+- rbd
+### 持久卷
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+```
+卷模式支持两种：Filesystem和Block。默认Filesystem。
+访问模式：ReadWriteOnce、ReadOnlyMany、ReadWriteMany、ReadWriteOncePod
+卷访问模式并不能在存储已经被挂载的情况下实施写保护。
+### 类
+每个PV可以属于某个类，通过storageClassName属性设置为某个名称来指定。特定类的PV卷只能绑定到请求该类存储卷的PVC申领。
+### 回收策略
+- Retain 手动回收
+- Recycle  基本擦除 rm -rf /thevolume/*
+- Delete   删除关联资产。目前仅NFS和HostPath支持回收（Recycle）
+### 挂载类型选型
+- awsElasticBlockStore
+- azureDisk
+- azureFile
+- cephfs
+- gcePersistentDisk
+- iscsi
+- nfs
+- rbd
+- vsphereVolume
+### 节点亲和性
+可以通过设置节点亲和性来定义一些约束，限制从哪些节点上可以访问此卷。使用这些卷的Pod只会被调度到节点亲和性规则所选择的节点上执行。要设置节点亲和性，设置PV卷.spec中的nodeAffinity。
+### 阶段
+每个卷会处于以下阶段(Phase)之一：
+- Available（可用）卷是一个空闲资源，尚未绑定到任何申领
+- Bound（已绑定）该卷已经绑定到某申领
+- Released（已释放）所绑定的申领已被删除，但资源尚未被集群回收
+- Failed（失败）卷的自动回收操作失败
+### 选择符
+- matchLabels  卷必须包含带有此值的标签
+- matchExpressions  通过设定键、值列表和操作符来构造的需求。合法的操作符有In、Notin、Exists和DoesNotExist。
+## 类
+通过storageclass.kubernetes.io/is-default-class赋值为true来完成。
+基于block的卷
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: block-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  persistentVolumeReclaimPolicy: Retain
+  fc:
+    targetWWNs: ["50060e801049cfd1"]
+    lun: 0
+    readOnly: false
+```
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: block-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  resources:
+    requests:
+      storage: 10Gi
+```
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-block-volume
+spec:
+  containers:
+    - name: fc-container
+      image: fedora:26
+      command: ["/bin/sh", "-c"]
+      args: [ "tail -f /dev/null" ]
+      volumeDevices:
+        - name: data
+          devicePath: /dev/xvda
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: block-pvc
+```
+## 卷快照与卷克隆
+卷快照（Volume Snapshot）与卷克隆都只支持树外CSI卷插件。
+# 投射卷
+一个projected可以将若干现有的卷映射到同一个目录上。
+可被投射的资源：
+- secret
+- downwardAPI
+- configMap
+- serviceAccountToken
+所有的卷源都要求处于Pod所在的同一个命名空间。
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-test
+spec:
+  containers:
+  - name: container-test
+    image: busybox:1.28
+    volumeMounts:
+    - name: all-in-one
+      mountPath: "/projected-volume"
+      readOnly: true
+  volumes:
+  - name: all-in-one
+    projected:
+      sources:
+      - secret:
+          name: mysecret
+          items:
+            - key: username
+              path: my-group/my-username
+              mode: 511
+      - downwardAPI:
+          items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: "cpu_limit"
+              resourceFieldRef:
+                containerName: container-test
+                resource: limits.cpu
+      - configMap:
+          name: myconfigmap
+          items:
+            - key: config
+              path: my-group/my-config
+```
