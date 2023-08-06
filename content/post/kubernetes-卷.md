@@ -460,7 +460,7 @@ spec:
           items:
             - key: username
               path: my-group/my-username
-              mode: 511
+              mode: 755
       - downwardAPI:
           items:
             - path: "labels"
@@ -475,4 +475,207 @@ spec:
           items:
             - key: config
               path: my-group/my-config
+      - serviceAccountToken:
+          audience: api
+          expirationSeconds: 3600
+          path: token
 ```
+expirationSeconds字段是服务账号令牌预期的生命期长度。默认1小时，至少10分钟。也可以通过--service-account-max-token-expiration设置最大值上限。
+
+Linux中SecurityContext设置RunAsUser属性的Pod中，投射文件具有正确的署主关系。kubelet将确保serviceAccountToken卷的内容归该用户所有，并且令牌文件的权限模式会被设置为0600。
+# 临时卷
+临时卷会遵从Pod的生命周期，与Pod一起创建和删除。Pod规约中，以内联方式定义，这简化了应用程序的部署和管理。
+## 临时卷类型
+支持的临时卷类型：
+- emptyDir：Pod启动时为空，存储空间来自kubelet根目录或内存，由kubelet管理。
+- configMap、downloadAPI、secret：将不同类型的Kubernetes数据注入到Pod中。由kubelet管理。
+- CSI临时卷：类似于前面的卷类型，但由专门支持此类型的指定CSI驱动程序提供。
+- 通用临时卷：它可以由所有支持持久卷的驱动程序提供
+CSI临时卷必须由第三方CSI存储驱动程序提供。通用临时卷可以由第三方CSI存储驱动程序提供，也可以由支持动态制备的任何其他存储驱动程序提供。
+
+CSI临时卷类似于configMap、downwardAPI和secret类型的卷：在各个本地节点管理卷的存储，并在Pod调度到节点后于其他本地资源一起创建。Pod的存储资源的限制只能由kubelet对其自己管理的存储强制执行。
+
+CSI临时存储的Pod的清单：
+```
+kind: Pod
+apiVersion: v1
+metadata:
+  name: my-csi-app
+spec:
+  containers:
+    - name: my-frontend
+      image: busybox:1.28
+      volumeMounts:
+      - mountPath: "/data"
+        name: my-csi-inline-vol
+      command: [ "sleep", "1000000" ]
+  volumes:
+    - name: my-csi-inline-vol
+      csi:
+        driver: inline.storage.kubernetes.io
+        volumeAttributes:
+          foo: bar
+```
+volumeAttributes决定驱动程序准备什么样的卷。
+### 通用临时卷
+类似于emptyDir卷，但也提供一些额外的特性：
+- 存储可以是本地的，也可以是网络连接的
+- 卷可以有固定的大小，Pod不能超量使用。
+- 卷可能有一些初始数据，这取决于驱动程序和参数
+- 支持典型的卷操作，前提是相关的驱动程序也支持该操作，包括快照、克隆、调整大小、存储容量跟踪。
+```
+kind: Pod
+apiVersion: v1
+metadata:
+  name: my-app
+spec:
+  containers:
+    - name: my-frontend
+      image: busybox:1.28
+      volumeMounts:
+      - mountPath: "/scratch"
+        name: scratch-volume
+      command: [ "sleep", "1000000" ]
+  volumes:
+    - name: scratch-volume
+      ephemeral:
+        volumeClaimTemplate:
+          metadata:
+            labels:
+              type: my-frontend-volume
+          spec:
+            accessModes: [ "ReadWriteOnce" ]
+            storageClassName: "scratch-storage-class"
+            resources:
+              requests:
+                storage: 1Gi
+```
+自动创建的PVC采取确定性的命名机制：Pod名称和卷名称的组合，中间由连字符-连接。
+## 存储类
+StorageClass包含provisioner、parameters和reclaimPolicy字段，这些字段会在StorageClass需要动态制备PersistentVolume时使用到。
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations: 
+    storageclass.kubernetes.io/is-default-class: false
+  name: standard
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+mountOptions:
+  - debug
+volumeBindingMode: Immediate
+```
+### 回收策略
+reclaimPolicy 字段中指定回收策略，默认是Delete，可以是Retain。
+allowVolumeExpansion为可扩展 设置为true则可扩展。
+mountOptions指定挂载选项，如果卷不支持挂载选项，指定后会失败。
+### 绑定模式
+volumeBindingMode字段控制了卷绑定和动态制备应该发生在什么时候。默认为Immediate模式。
+Immediate表示一旦创建了卷PV也就完成了绑定和动态制备。对于由于拓扑限制而非集群所有节点可达的存储后端，PV会在不知道Pod调度要求的情况下邦迪或制备。
+可以通过WaitForFirstConsumer模式解决这个问题。
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: kube-01
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
+```
+可以使用allowedTopologies设置制备拓扑结构。
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+- matchLabelExpressions:
+  - key: failure-domain.beta.kubernetes.io/zone
+    values:
+    - us-central-1a
+    - us-central-1b
+```
+## Ceph RBD
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/rbd
+parameters:
+  monitors: 10.16.153.105:6789
+  adminId: kube
+  adminSecretName: ceph-secret
+  adminSecretNamespace: kube-system
+  pool: kube
+  userId: kube
+  userSecretName: ceph-secret-user
+  userSecretNamespace: default
+  fsType: ext4
+  imageFormat: "2"
+  imageFeatures: "layering"
+```
+- monitors: Ceph monitor，逗号分隔。该参数是必须的。
+- adminId: Ceph 客户端ID，用于在池ceph池中创建映像。默认admin
+- adminSecret: adminId的Secret名称。该参数为必须。提供的secret必须有值为"kubernetes.io/rbd"的type参数。
+- adminSecretNamespace:  adminSecret的命名空间。默认是default。
+- pool：CephRBD池。默认是"rbd"
+- userId: Ceph 客户端ID，用于映射RBD镜像。默认与adminId相同
+- userSecretName: 用于映射RBD镜像的userId的Ceph Secret的名字。必须与PVC存在于相同的namespace中。该参数是必须的。提供的secret必须具有值为"kubernetes.io/rbd"的type参数。
+- userSecretNamespace: userSecretName的命名空间。
+- fsType: Kubernetes 支持的fsType。默认为"ext4"
+- imageFormat: Ceph RBD 镜像格式，“1”或者“2”.默认为1
+- imageFeatures：可选参数，只能在imageFormat设置为2时才使用。目前功能只有layering。默认未打开。
+## 动态卷
+使用动态卷
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: slow
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast
+  resources:
+    requests:
+      storage: 30Gi
+```
+设置默认StorageClass为默认，添加注解**ingressclass.kubernetes.io/is-default-class: "true"**
+### 卷快照、卷快照class、CSI卷克隆
+都基本都是要CSI，目前没有使用，就不记录了。
+### 存储容量
+从1.27开始对存储容量跟踪的集群级API支持。
+#### API
+两个API扩展接口：
+- CSIStorageCapacity对象：由CSI驱动程序在安装驱动程序的命名空间中产生。每个对象包含一个存储类的容量信息，并定义哪些节点可以访问该存储。
+- CSIDriverSpec.StorageCapacity字段：设置为true时，Kubernetes调度程序将考虑使用CSI驱动程序的卷的存储容量。
