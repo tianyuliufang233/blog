@@ -679,3 +679,14 @@ spec:
 两个API扩展接口：
 - CSIStorageCapacity对象：由CSI驱动程序在安装驱动程序的命名空间中产生。每个对象包含一个存储类的容量信息，并定义哪些节点可以访问该存储。
 - CSIDriverSpec.StorageCapacity字段：设置为true时，Kubernetes调度程序将考虑使用CSI驱动程序的卷的存储容量。
+#### 调度
+存储容量信息将会被kubernetes调度程序使用：
+- Pod使用的卷还没有被创建
+- 卷使用引用了CSI驱动的StorageClass，并且使用了WaitForFirstConsumer卷绑定模式
+- 驱动程序的CSIDriver对象的StorageCapacity被设置为true
+将卷的大小与CSIStorageCapacity对象中列出的容量进行比较，并使用包含该节点的拓扑。
+对于有Immediate卷绑定模式的卷，存储驱动程序将决定在何处创建该卷，而不取决于将使用该卷的Pod。对于CSI临时卷，调度总是不在考虑存储容量的情况下进行。基于：该卷类型仅由节点本地的特殊CSI驱动程序使用，并且不需要大量资源。的考虑
+单节点有卷数量限制。
+#### 卷健康监测
+卷健康检测是CSI驱动从底层的存储系统着手，探测异常的卷状态，以事件的形式上报到PVC或Pod。
+如果要启动节点失效监测功能，可以设置enable-node-watcher为true。
