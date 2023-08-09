@@ -16,8 +16,8 @@
     
   },
   "name":"问道之旅",
-  "description":"\u003cp\u003emakrdown 手册记录\u003c\/p\u003e",
-  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/markdown%E6%89%8B%E5%86%8C\/",
+  "description":"\u003cp\u003eservice 负载均衡和联网\u003c\/p\u003e",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91\/",
   "keywords":"[tech]"
 }
 
@@ -28,25 +28,25 @@
 <meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
 <meta name="author" content="天雨流芳233">
 <meta name="keywords" content="tech">
-<meta name="description" content="makrdown 手册记录">
+<meta name="description" content="service 负载均衡和联网">
 
 
-<meta property="og:description" content="makrdown 手册记录">
+<meta property="og:description" content="service 负载均衡和联网">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown手册">
-<meta name="twitter:title" content="Markdown手册">
-<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/">
-<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/">
+<meta property="og:title" content="Kubernetes Service 负载均衡和联网">
+<meta name="twitter:title" content="Kubernetes Service 负载均衡和联网">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/">
 <meta property="og:site_name" content="问道之旅">
-<meta property="og:description" content="makrdown 手册记录">
-<meta name="twitter:description" content="makrdown 手册记录">
+<meta property="og:description" content="service 负载均衡和联网">
+<meta name="twitter:description" content="service 负载均衡和联网">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2023-07-28T11:39:58">
+    <meta property="article:published_time" content="2023-08-09T16:38:13">
   
   
-    <meta property="article:modified_time" content="2023-07-28T11:39:58">
+    <meta property="article:modified_time" content="2023-08-09T16:38:13">
   
   
   
@@ -81,14 +81,14 @@
 
 
 
-    <title>Markdown手册</title>
+    <title>Kubernetes Service 负载均衡和联网</title>
 
     <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
     
 
     
 
-    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/">
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/">
 
     
     <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -238,19 +238,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title">
-      Markdown手册
+      Kubernetes Service 负载均衡和联网
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2023-07-28T11:39:58&#43;08:00">
+      <time datetime="2023-08-09T16:38:13&#43;08:00">
         
   
   
   
   
-    2023-07-28
+    2023-08-09
   
 
       </time>
@@ -272,15 +272,87 @@
           
           <div class="post-content markdown">
             <div class="main-content-wrap">
-              <p>makrdown 手册记录</p>
-<h2 id="勾选框">勾选框</h2>
+              <p>service 负载均衡和联网</p>
+<h1 id="kubernetes网络模型">kubernetes网络模型</h1>
+<p>从端口分分配、命名、服务发现、负载均衡、应用配置和迁移的角度看，Pod可以被视为虚拟机或者物理主机。</p>
 <ul>
-<li><input disabled="" type="checkbox"> </li>
-<li><input checked="" disabled="" type="checkbox"> </li>
+<li>Pod要能与其他节点上的Pod通信，且不需要网络地址转译</li>
+<li>节点上的代理(系统守护进程、kubelet)可以和节点上的所有Pod通信。
+kubernetes 网络解决四方面问题：</li>
+<li>一个Pod中的容器之间通过本地回路(loopback)通信</li>
+<li>集群网络在不同Pod之间提供通信。</li>
+<li>service api 运行你向外暴露Pod中运行的应用，以支持来自于集群外部的访问。
+<ul>
+<li>ingress提供专门用于暴露HTTP应用程序、网站和API的额外功能。</li>
 </ul>
-<pre tabindex="0"><code>- [ ]
-- [x]
-</code></pre>
+</li>
+<li>可以使用Service来发布仅供集群内部使用的服务</li>
+</ul>
+<h2 id="service">service</h2>
+<p>kubernetes中Service是将运行在一个或一组Pod上的网络应用程序公开为网络服务的方法。service定义的抽象能够解耦关联。service由Pod定义的选择符来确定。也会有不带选择符的service。ingress将路由规则整合到单个资源。</p>
+<p>云原生服务发现是通过kubernetes api进行服务发现，可以查询API服务器用于匹配EndpointSlices。只要Pod发生变化，Kubernetes会更新服务EndpointSlices。</p>
+<p>定义service：</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: proxy
+spec:
+  containers:
+  - name: nginx
+    image: nginx:stable
+    ports:
+      - containerPort: 80
+        name: http-web-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+  - name: name-of-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-web-svc
+</code></pre><h3 id="endpointslices">EndpointSlices</h3>
+<p>EndpointSlices对象表示针对服务的后端网络端点的子集(切片)。当EndpointSlice表示的端点数量达到阈值时，kubernetes会添加另一个空的EndpointSlice并在其中存储新的端点信息。默认100个。</p>
+<h3 id="endpoints">Endpoints</h3>
+<p>该资源定义了网络端点的列表，通常由service引用，以定义可以将流量发送到哪些Pod。
+kubernetes限制单个Endpoints对象中可以容纳的端点数量。当一个service配置超过1000个后备端点时，kubernetes会截断EndpointSlice。appProtocol字段提供了一种为每个Service端口指定应用协议的方式。</p>
+<h3 id="多端口service">多端口Service</h3>
+<p>对于某些服务，需要开多个端口</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9377
+</code></pre><h3 id="发布服务服务类型">发布服务（服务类型）</h3>
+<p>可能希望将其暴露给kubernetes集群外部的IP地址。</p>
+<h2 id="ingress">ingress</h2>
+<h2 id="ingress-control">ingress control</h2>
+<h2 id="endpointslice">EndpointSlice</h2>
+<h2 id="网络策略">网络策略</h2>
+<h2 id="service与pod的dns">service与Pod的DNS</h2>
+<h2 id="ipv4ipv6双协议栈">IPv4/IPv6双协议栈</h2>
+<h2 id="拓扑感知路由">拓扑感知路由</h2>
+<h2 id="windows网络">windows网络</h2>
+<h2 id="service-clusterip分配">Service ClusterIP分配</h2>
+<h2 id="服务内部流量策略">服务内部流量策略</h2>
               
 
 
@@ -309,7 +381,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/" data-tooltip="Kubernetes Service 负载均衡和联网" aria-label="下一篇: Kubernetes Service 负载均衡和联网">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -317,7 +389,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A1%88%E4%BE%8B/" data-tooltip="Kubernetes 常用命令案例" aria-label="上一篇: Kubernetes 常用命令案例">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/" data-tooltip="Markdown手册" aria-label="上一篇: Markdown手册">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -360,9 +432,9 @@
     </div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/markdown%E6%89%8B%E5%86%8C\/';
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91\/';
         
-          this.page.identifier = '\/post\/markdown%E6%89%8B%E5%86%8C\/'
+          this.page.identifier = '\/post\/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91\/'
         
       };
       (function() {
@@ -398,7 +470,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/" data-tooltip="Kubernetes Service 负载均衡和联网" aria-label="下一篇: Kubernetes Service 负载均衡和联网">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -406,7 +478,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%A1%88%E4%BE%8B/" data-tooltip="Kubernetes 常用命令案例" aria-label="上一篇: Kubernetes 常用命令案例">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/" data-tooltip="Markdown手册" aria-label="上一篇: Markdown手册">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
