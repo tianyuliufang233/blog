@@ -6,7 +6,16 @@
     <description>Recent content in Posts on 问道之旅</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 09 Aug 2023 16:38:13 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Aug 2023 14:31:50 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VirtualMachine</title>
+      <link>https://tianyuliufang233.github.io/blog/post/virtualmachine/</link>
+      <pubDate>Thu, 10 Aug 2023 14:31:50 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/virtualmachine/</guid>
+      <description>&lt;p&gt;虚拟机方案&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Kubernetes Service 负载均衡和联网</title>
       <link>https://tianyuliufang233.github.io/blog/post/kubernetes-service-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E8%81%94%E7%BD%91/</link>
