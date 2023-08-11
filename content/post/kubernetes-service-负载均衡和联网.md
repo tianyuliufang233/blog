@@ -433,9 +433,120 @@ spec:
   hostNetwork: true
   dnsPolicy: ClusterFirstWithHostNet
 ```
-
+#### Pod的DNS配置
+pod的DNS配置可以让用户对Pod的DNS设置进行更多控制。dnsConfig字段可选，它可以与任何dnsPolicy设置一起使用。但当Pod的dnsPolicy设置为None时，必须指定dnsConfig字段。
+- nameservers  将用作DNS server的IP地址列表。最多可以指定3个IP地址。当Pod的dnsPolicy设置为None时，列表必须至少包含一个IP地址，否则此属性是可选的。所列出的服务器将合并到从指定的DNS策略生成的基本名称服务器，并删除重复的地址。
+- searches: 用于Pod中查找主机名的DNS搜索域的列表。此属性是可选的。指定此属性时，所提供的列表将合并到根据所选DNS策略生成的基本搜索域名中。重复的域名将被删除。最多6个搜索域。
+- options：可选对象列表，每个对象可能具有name属性（必需）和value属性（可选）。此属性的内容将合并到从指定的DNS策略生成的选项。重复的条目将被删除。
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: default
+  name: dns-example
+spec:
+  containers:
+    - name: test
+      image: nginx
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+      - 192.0.2.1 # 这是一个示例
+    searches:
+      - ns1.svc.cluster-domain.example
+      - my.dns.search.suffix
+    options:
+      - name: ndots
+        value: "2"
+      - name: edns0
+```
+kubernetes本身不限制DNS配置，最多可支持32个搜索域列表，所有搜索域的总长度不超过2048。此限制分别适用于节点的解析器配置文件、Pod的Dns配置和合并的DNS配置。
 ## IPv4/IPv6双协议栈
+从1.21版本开始，默认启用IPv4/IPv6双协议栈，以支持同时分配IPv4和IPv6。
+### 配置IPv4/IPv6双协议栈
+- kube-apiserver: --service-cluster-ip-range=<IPv4>,<IPv6>
+- kube-controller-manager:
+  - --cluster-cidr=<IPv4 CIDR>,<IPv6 CIDR>
+  - --service-cluster-ip-range=<IPv4 CIDR>,<IPv6 CIDR>
+  - --node-cidr-mask-size-ipv4|--node-cidr-mask-size-ipv6 对于IPv4默认为/24，对于IPv6默认为/64
+- kube-proxy: --cluster-cidr=<IPv4 CIDR>,</IPv6 CIDR>
+- kubelet:
+  - 当没有--cloud-provider时，管理员可以通过--node-ip来传递逗号分隔的IP地址，为该节点手动配置双栈.status.addresses。如果Pod以HostNetwork模式在该节点商运行，则Pod会用.status.podIPs字段来报告它的IP地址。一个节点的所有podIP都会匹配该节点的由.status.addresses字段定义的IP组。
+
+使用外部云驱动时，如果kubelet和外部云提供商都启用了CloudDualStackNodeIPs特性门控，则可以将双栈--node-ip值传递给kubelet。此特性需要保证云提供商支持双栈集群。
+### service IPv4或IPv6
+服务器的地址默认为第一个服务集群IP范围地址族(通过kube-apiserver的--service-cluster-ip-range参数配置)。当定义服务时，可以配置为双栈。若要指定所需的行为，可以设置.spec.ipFamilyPolicy字段：
+- SingleStack: 单栈服务。控制面使用第一个配置的服务集群IP范围为服务分配集群IP。
+- PreferDualStack：为服务分配IPv4和IPv6集群地址。
+- RequireDualStack: 从IPv4和IPv6的地址范围分配服务的.spec.ClusterIPs。从基于.spec.ipFailies数组中第一个元素的地址族.spec.ClusterIPs列表中选择.spec.ClusterIP
+如果想要定义哪个IP族用于单栈或定义双栈IP族的顺序，可以通过设置服务上的可选字段.spec.ipFamilies来选择地址族，.spec.ipFamilies可以添加或删除第二个地址族，但不能更改现有服务的主IP地址族。
+#### 新服务双栈选型
+未显式设置.spec.ipFamilyPolicy。当创建服务时，kubernetes从配置的第一个service-cluster-ip-range中为服务分配一个集群IP，并设置.spec.ipFamilyPolicy为SingleStack。无选择符服务和无头服务的行为方式与此相同。
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app.kubernetes.io/name: MyApp
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+```
+显式设置.spec.ipFamilyPolicy为PreferDualStack。当在双栈集群上创建此服务时，Kubernetes会为该服务分配IPv4和IPv6地址。.spec.ClusterIPs是主要字段，包含两个分配的IP地址，.spec.ClusterIP是次要字段，其取值从.spec.ClusterIPs计算而来。
+- 对于.spec.ClusterIP字段，控制面记录来自第一个服务集群IP范围对应的地址族的IP地址。
+- 对于单协议集群，.spec.ClusterIPs和.spec.ClusterIP字段都仅列出一个地址。
+- 对于启用了双协议栈的集群，将.spec.ipFamilyPolicy设置为RequireDualStack时，其行为与PreferDualStack相同。
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app.kubernetes.io/name: MyApp
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+```
+显式指定.spec.ipFamilies中指定IPv6和IPv4，并将.spec.ipFamilyPolicy设定为PreferDualStack。当Kubernetes为.spec.ClusterIPs分配一个IPv6和一个IPv4地址时，.spec.ClusterIP被设置成IPv6地址，因为它是.spec.ClusterIPs数组中的第一个元素，覆盖其默认值。
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app.kubernetes.io/name: MyApp
+spec:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+```
 ## 拓扑感知路由
+拓扑感知路由（Toplogy Aware Routing）调整路由行为，以优先保持流量在其发起区域内。在某些情况下，有助于降低成本或提高网络性能。
+### 动机
+kubernetes集群多地部署在多区域环境中。拓扑感知路由提供了一种机制帮助流量保留在其发起所在区域内。计算服务（service）的端点时，EndpointSlice控制器考虑每个端点的物理拓扑（地区和区域），并填充提示字段以将其分配到区域。诸如kube-proxy等集群组件可以使用这些提示，影响流量的路由方式（优先考虑物理拓扑上更近的点）。
+通过service.kubernetes.io/topology-mode注解设置为Auto来启用Service的拓扑感知路由。当某个区域中有足够的端点可用时，系统将为EndpointSlices填充拓扑提示，把每个端点分配给特定区域，从而使流量被路由到更接近其来源的位置。
+### 什么情况下效果最好
+1. 入站流量均匀分布
+当预计入栈流量源自同一区域时，不建议使用此特性。会导致端点子集过载。
+2. 服务在每个区域具有至少三个端点
+在一个三区域的集群中，意味着至少9个端点。如果每个区域的端点少于3个，则EndpointSlice控制器很大概率无法平均分配端点，回退到默认的集群范围的路由方法。
+### 工作原理
+"自动"启发算法会尝试按比例分配一定数量的端点到每个区域。这种启发方式对有大量端点的Service效果最佳。
+
 ## windows网络
 ## Service ClusterIP分配
 ## 服务内部流量策略
