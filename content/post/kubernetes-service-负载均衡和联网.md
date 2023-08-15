@@ -589,4 +589,52 @@ kube-proxy组件依据EndpointSlice控制器设置的提示，过滤由它负责
 
 ## windows网络
 ## Service ClusterIP分配
+在kubernetes中，Service是一种抽象方式，用于公开在一组Pod上运行的应用。有两种分配方式：
+- 动态分配，由集群控制面自动从所配置的IP范围为type: ClusterIP选择一个空闲IP地址。
+- 静态分配，根据Service所配置的Ip范围，选定并设置你的IP地址。整个集群中，每个service的ClusterIP都必须是唯一的。尝试使用已分配的ClusterIP创建Service将返回错误。
+### 预留Service的ClusterIP
+作为一种非强制性的约定，一些kubernetes安装程序将Service IP范围中的第10个IP地址分配给DNS服务。假设将集群的Service IP范围配置为10.96.0.0/16，并且希望Dns Service IP为10.96.0.10，则yaml如下:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: kube-dns
+    kubernetes.io/cluster-service: "true"
+    kubernetes.io/name: CoreDNS
+  name: kube-dns
+  namespace: kube-system
+spec:
+  clusterIP: 10.96.0.10
+  ports:
+  - name: dns
+    port: 53
+    protocol: UDP
+    targetPort: 53
+  - name: dns-tcp
+    port: 53
+    protocol: TCP
+    targetPort: 53
+  selector:
+    k8s-app: kube-dns
+  type: ClusterIP
+```
+如果在DNS启动之前或同时采用动态分配机制创建其他Service，则它们有可能被分配此IP，因此，你将无法创建DNS Service,因为它会因冲突错误而失败。默认情况下，动态IP分配使用地址较高的一段，一旦用完，将使用较低范围。这将允许用户在冲突风险较低地段上使用静态分配。
 ## 服务内部流量策略
+为Service的.spec.internalTrafficPolicy项设置为Local时，Service的yaml:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+  internalTrafficPolicy: Local
+```
+kube-proxy基于spec.internalTrafficPolicy的设置来过滤路由的目标服务端点。当设置为Local时，只会选择节点本地端点。当值设为Cluster或缺省时，Kubernetes会选择所有的服务端点。
+
