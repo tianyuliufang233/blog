@@ -6,7 +6,16 @@
     <description>Recent content in tag1 on 问道之旅</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Aug 2023 12:36:23 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Aug 2023 11:32:46 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 调度、抢占和驱逐</title>
+      <link>https://tianyuliufang233.github.io/blog/post/kubernetes-%E8%B0%83%E5%BA%A6%E6%8A%A2%E5%8D%A0%E5%92%8C%E9%A9%B1%E9%80%90/</link>
+      <pubDate>Tue, 15 Aug 2023 11:32:46 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/kubernetes-%E8%B0%83%E5%BA%A6%E6%8A%A2%E5%8D%A0%E5%92%8C%E9%A9%B1%E9%80%90/</guid>
+      <description>&lt;p&gt;调度、抢占和驱逐&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>单词记录</title>
       <link>https://tianyuliufang233.github.io/blog/post/%E5%8D%95%E8%AF%8D%E8%AE%B0%E5%BD%95/</link>
