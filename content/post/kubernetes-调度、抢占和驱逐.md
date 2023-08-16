@@ -113,7 +113,70 @@ spec:
 ```
 必须拥有打了kubernetes.io/os=linux标签的节点。
 #### 逐个调度方案中设置节点亲和性
-在配置多个调度方案时，可以将某个方案与节点亲和性相关联起来。
+在配置多个调度方案时，可以将某个方案与节点亲和性相关联起来。可以在调度器配置中为NodeAffinity插件的args字段添加addEdAffinity。如：
+```
+apiVersion: kubescheduler.config.k8s.io/v1beta3
+kind: KubeSchedulerConfiguration
+
+profiles:
+  - schedulerName: default-scheduler
+  - schedulerName: foo-scheduler
+    pluginConfig:
+      - name: NodeAffinity
+        args:
+          addedAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: scheduler-profile
+                  operator: In
+                  values:
+                  - foo
+```
+DaemonSet控制器为DaemonSet创建Pod，但该控制器不理会调度方案。DaemonSet控制器创建Pod时，默认的Kubernetes调度器负责防止Pod，并遵从DaemonSet控制器中设置的nodeAffinity规则。
+
+#### Pod间亲和性与反亲和性
+Pod间亲和性与反亲和性使你可以基于已经在节点上运行的Pod的标签来约束Pod可以调度到的节点，而不是基于节点上的标签。Pod间亲和性与反亲和性都需要相当的计算量，因此在大规模集群中显著降低调度速度。不建议超过百个节点的集群中使用这类设置。
+
+Pod反亲和性需要节点上存在一致性的标签。换言之，集群中每个节点都必须拥有与topologykey匹配的标签。如果某些或者所有节点上不存在指定的topologyKey标签，调度行为可能与预期的不同。
+
+Pod间亲和性与反亲和性的类型：
+- requireDuringSchedulingIgnoreedDuringExecution
+- preferredDuringSchedulingIgnoredDuringExecution
+对于亲和性可以使用.affinity.podAffinity字段，对于反亲和性使用.affinity.podAntiAffinity字段。
+案例：
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-pod-affinity
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: security
+            operator: In
+            values:
+            - S1
+        topologyKey: topology.kubernetes.io/zone
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: security
+              operator: In
+              values:
+              - S2
+          topologyKey: topology.kubernetes.io/zone
+  containers:
+  - name: with-pod-affinity
+    image: registry.k8s.io/pause:2.0
+```
+
 
 ### Pod开销
 ### Pod拓扑分布约束
