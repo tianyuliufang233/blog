@@ -433,7 +433,15 @@ spec:
   containers:
   - name: with-pod-affinity
     image: registry.k8s.io/pause:2.0
-</code></pre><h3 id="pod开销">Pod开销</h3>
+</code></pre><p>原则上topologyKey可以是任何合法的标签键。出于性能和安全原因，topologyKey有一些限制：</p>
+<ul>
+<li>对于Pod亲和性而言，在requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution中，topologyKey不允许为空。</li>
+<li>对于requiredDuringSchedulingIgnoredDuringExecution要求的Pod反亲和性，准入控制器LimitPodHardAntiAffinityToplogy要求topologyKey只能是kubernetes.io/hostname。如果使用其他拓扑逻辑，可以更改准入控制器或禁用。</li>
+</ul>
+<p>除了labelSelector和topologyKey,可以在labelSelector和topologyKey的同一层上设置namespace以指定labelSelector要匹配的命名空间列表。如果namespace被忽略或为空，则默认为Pod亲和性/反亲和性的定义所在的命名空间。</p>
+<h4 id="命名空间选择符">命名空间选择符</h4>
+<p>用户可以使用namespaceSelector选择匹配的命名空间，此参数是对命名空间集和进行标签查询的机制。空的{}会匹配所有空间，null或namespace为null则是当前Pod的命名空间。</p>
+<h3 id="pod开销">Pod开销</h3>
 <h3 id="pod拓扑分布约束">Pod拓扑分布约束</h3>
 <h3 id="污点和容忍度">污点和容忍度</h3>
 <h3 id="动态资源分配">动态资源分配</h3>
