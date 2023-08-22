@@ -279,8 +279,113 @@ spec:
 - 调度器会忽略没有任何topologySpreadConstraints[*].topologyKey的节点。意味着：
   - 位于这些节点上的Pod不影响maxSkew计算。
   - 新的Pod没有机会被调度到这类节点上。
-- 如果新的Pod的toplogySpreadConstraints[*].labelSelector与自身的标签不匹配。
+- 如果新的Pod的toplogySpreadConstraints[*].labelSelector与自身的标签不匹配。更新工作负载的 topologySpreadConstraints[*].labelSelector 以匹配 Pod 模板中的标签。
+#### 集群级别的默认约束
+为集群设置默认的拓扑分布约束也是可能的。默认拓扑分布约束在且仅在以下条件下才会被应用到Pod上：
+- Pod没有在其.spec.topologySpreadConstraints中定义任何约束。
+- Pod隶属于某个Service、ReplicaSet、StatefulSet或ReplicatonController。
+默认约束可以设置为调度方案中PodToplogySpread插件参数的一部分。labelSelector必须为空。
+```
+apiVersion: kubescheduler.config.k8s.io/v1beta3
+kind: KubeSchedulerConfiguration
+
+profiles:
+  - schedulerName: default-scheduler
+    pluginConfig:
+      - name: PodTopologySpread
+        args:
+          defaultConstraints:
+            - maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: ScheduleAnyway
+          defaultingType: List
+```
+默认SelectorSpread插件是被禁用的。Kubernetes项目建议使用PodTopologySpread以执行类似行为。
+#### 内置默认约束
+```
+defaultConstraints:
+  - maxSkew: 3
+    topologyKey: "kubernetes.io/hostname"
+    whenUnsatisfiable: ScheduleAnyway
+  - maxSkew: 5
+    topologyKey: "topology.kubernetes.io/zone"
+    whenUnsatisfiable: ScheduleAnyway
+```
+用于提供同等行为的SelectorSpread插件默认被禁用。如果节点不会同时设置kubernetes.io/hostname和topology.kubernetes.io/zone标签，应该定义自己的约束而不是使用Kubernetes的默认约束。如果不想为集群使用默认的Pod分布约束，可以通过设置defaultingType参数为List，并将PodTopologySpread插件配置中的defaultConstraints参数置空来禁用Pod分布约束：
+```
+apiVersion: kubescheduler.config.k8s.io/v1beta3
+kind: KubeSchedulerConfiguration
+
+profiles:
+  - schedulerName: default-scheduler
+    pluginConfig:
+      - name: PodTopologySpread
+        args:
+          defaultConstraints: []
+          defaultingType: List
+```
+#### 比较podAffinity和podAntiAffinity
+在Kubernetes中，Pod间亲和性和反亲和性控制Pod彼此的调度方式(更密集或更分散)。
+- podAffinity：吸引Pod；可以尝试将任意数量的Pod集中到符合条件的拓扑域中。
+- podAntiAffinity：驱逐Pod。如果设置为requiredDuringSchedulingIgnoredDuringExecution模式，则只有单个Pod可以调度到单个拓扑域；如果选择preferredDuringScheduleIgnoredDuringExecution,则将丢失强制执行此约束的能力。
+#### 局限性
+- 当Pod被移除时，无法保证约束仍然被满足。当Deployment的规模缩减时，Pod的分布可能不再均衡。可以使用Descheduler来重新实现Pod分布的均衡。
+- 具有污点的节点上匹配的Pod也会被统计。
+- 调度器不会预先知道集群拥有的所有可用区和其他拓扑域。拓扑域由集群中存在的节点确定。在自动扩缩容的集群种，如果一个节点池的节点数量缩减为零，而用户期望其扩容时，可能导致调度出现问题。因为这种情况下，调度器不会考虑这些拓扑域，直至这些拓扑域中至少包含一个节点。
 ### 污点和容忍度
+节点亲和性被吸引到一类特定的节点。污点（Taint）则相反。
+容忍度（Toleration）是应用于Pod上的。容忍度允许调度器调度带有对应污点的Pod。容忍度允许调度但并不保证调度：作为其功能的一部分，调度器会评估其他参数。
+```
+tolerations:
+- key: "key1"
+  operator: "Equal"
+  value: "value1"
+  effect: "NoSchedule"
+```
+operator的默认值是Equal。
+一个容忍度和一个污点相"匹配"是它们有一样的键名和效果，并且：
+- 如果operator是Exists（此时容忍度不能指定value）
+- 如果operator是Equal，则它们的value应该相等。
+特殊情况：
+- 如果一个容忍度的key为空且operator为Exists，表示这个容忍度与任意的key、value和effect都匹配，即这个容忍度能容忍任何污点。
+- 如果effect为空，则可以与所有键名的效果相匹配。
+需要注意的情况：
+- 如果未被忽略的污点中存在至少一个effect值为NoSchedule的污点，则Kubernetes不会将Pod调度到该节点。
+- 如果未被忽略的污点中不存在effect值为NoSchedule的污点，但是存在至少一个effect值为PreferNoSchedule的污点，则Kubernetes会尝试不将Pod调度到该节点。
+- 如果未被忽略的污点中存在至少一个effect值为NoExecute的污点，则kubernetes不会将Pod调度到该节点。(如果Pod还未在节点上允许)，并且会将Pod从该节点驱逐(如果Pod已经在节点上运行)
+一些内置污点：
+- node.kubernetes.io/not-ready：节点未准备好。这相当于节点状况Ready的值为"False"。
+- node.kubernetes.io/unreachable：节点控制器访问不到节点，相当于节点Ready的值为Unknown
+- node.kubernetes.io/memory-pressure：节点存在内存压力
+- node.kubernetes.io/disk-pressure：节点存在磁盘压力
+- node.kubernetes.io/pid-pressure：节点的PID压力
+- node.kubernetes.io/network-unavailable：节点网络不可用
+- node.kubernetes.io/unschedulable：节点不可调度
+- node.cloudprovider.kubernetes.io/uninitialized：如果kubelet启动时指定外部平台驱动，它将给当前节点添加一个污点将其标志为不可用。
+节点被排空时，当节点不可达时，API服务器无法与节点上的kubelet进行通信。在与API服务器的通信被重新简历之前，删除Pod的决定无法传递到kubelet。同时，被调度进行删除的Pod可能继续运行在分区后的节点上。
+当节点不可达时，API服务器无法与节点上的kubelet进行通信。在与API服务器的通信被重新建立之前，删除Pod的决定无法传递到kubelet。同时，被调度进行删除的Pod可能会继续运行在分区后的节点上。
+控制面会限制向节点添加新污点的速度。这一速率限制可以管理多个节点同时不可达时，可能触发的驱逐的数量。
+
+Pod可设置tolerationSecods，以指定当节点失败或者不响应时，Pod维系与该节点间绑定关系的时长。当出现网络分裂事件时，对于一个与节点本地状态有深度绑定的应用，仍然停留在当前节点上运行一段较长时间，等待网络恢复以避免被驱逐。这种容忍度的配置案例如下：
+```
+tolerations:
+- key: "node.kubernetes.io/unreachable"
+  operator: "Exists"
+  effect: "NoExecute"
+  tolerationSeconds: 6000
+```
+DaemonSet中的Pod被创建时，针对以下污点会自动添加NoExecute的容忍度不会指定tolerationSeconds：
+- node.kubernetes.io/unreachable
+- node.kubernetes.io/not-ready
+以保证DaemonSet的Pod永远不会被驱逐。
+#### 基于节点状态添加污点
+DaemonSet控制器自动为所有收获进程添加NoSchedule容忍度，防止DaemonSet崩溃：
+- node.kubernetes.io/memory-pressure
+- node.kubernetes.io/disk-pressure
+- node.kubernetes.io/pid-pressure
+- node.kubernetes.io/unschedulable
+- node.kubernetes.io/network-unavailable（只适合主机网络配置）
+
 ### 动态资源分配
 ### 调度框架
 ### 调度器性能调试
