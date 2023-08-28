@@ -423,13 +423,68 @@ Bind插件用于将Pod绑定到节点上。直到所有的PreBind插件都完成
 ### 动态资源分配
 是一个用于在Pod之间和Pod内部容器之间请求和共享资源的API。对为通用资源所提供的持久卷API的泛化。第三方资源驱动程序负责跟踪和分配资源。不同类型的资源支持用任意参数进行定义和初始化。
 ### 调度器性能调试
+kube-scheduler主要负责将Pod调度到集群的Node上。可以通过调整percentageOfNodesScore来配置节点的阈值。percentageOfNodesToScore选项接收从0到100之间的整数值。0表示编译后的默认值。超过100等价于100。
+#### 节点打分阈值
+可以使用整个集群节点总数的百分比作为阈值来指定需要多少节点。kube-scheduler会将它转换为节点数的整数值。在调度期间，如果kube-scheduler已确认的可调度节点数足以超过配置的百分比数量，kube-scheduler将停止继续查找可调度节点并继续进行打分阶段。
+#### 默认阈值
+100-节点下取50%，5000-节点集群下取10%。这个自动设置的参数最低值是5%。
+#### percentageOfNodesToScore参数
+值必须在1-100之间，默认值是通过集群的规模计算得来。当集群少于50个时，调度器任然去检查所有Node，因为可调度节点太少，不足以停止调度器最初的过滤选择。如果将percentageOfNodesToScore设置一个较低值，则没有效果或效果很小。
+该参数设置后，可能导致只有集群种少数节点被选为可调度节点，很多节点都没有进入到打分阶段。由于这个原因，这个参数不应该设置为一个很低的值。通常做法是不会将这个参数的值设置得低于10。太低的参数值一般在调度器的吞吐量很高且对节点的打分不重要的情况下才使用。
+#### 调度器做调度选择的时候如何覆盖所有Node
+为了让集群种所有节点都有公平的机会去运行Pod，调度器将会以轮询的方式覆盖全部的Node。可以理解为Node列表想象为数组。调度器从数组的头部开始筛选可调度节点，直到percentageOfNodesToScore参数的要求数量。
+### 扩展资源的资源装箱（bin packing）
+MostAllocated和RequestedToCapacityRatio。两种资源策略。
+#### 使用MostAllocated策略启用资源装箱
+MostAllocated策略基于资源的利用率来为节点计分，优先分配比率较高的节点。
+使用插件NodeResourcesFit设置MostAllocated策略的案例：
+```
+apiVersion: kubescheduler.config.k8s.io/v1beta3
+kind: KubeSchedulerConfiguration
+profiles:
+- pluginConfig:
+  - args:
+      scoringStrategy:
+        resources:
+        - name: cpu
+          weight: 1
+        - name: memory
+          weight: 1
+        - name: intel.com/foo
+          weight: 3
+        - name: intel.com/bar
+          weight: 3
+        type: MostAllocated
+    name: NodeResourcesFit
+```
+#### 使用RequestedToCapacityRatio策略来启用资源装箱
+RequestedToCapacityRatio策略允许用户基于请求值与容量的比率，针对参与节点计分的每类资源设置权重。这些策略使得用户可以使用合适的参数来对扩展资源执行装箱操作，进而提升大规模集群中稀有资源的的利用率。
+NodeResourcesFit计分函数中的RequestedToCapacityRatio可以通过字段scoringStrategy来控制。可以配置requestedToCapacityRatio和resources。requestedToCapacityRatio参数中的shape设置使得用户能够调整函数的算法，基于utilization和score值计算最少请求或最多请求。resources参数中包含计分过程中需要考虑的资源的name，以及用来设置每种资源权重的weight。
 
-### 扩展资源的资源装箱
-### Pod调度就绪
-### Descheduler
-
+```
+apiVersion: kubescheduler.config.k8s.io/v1beta3
+kind: KubeSchedulerConfiguration
+profiles:
+- pluginConfig:
+  - args:
+      scoringStrategy:
+        resources:
+        - name: intel.com/foo
+          weight: 3
+        - name: intel.com/bar
+          weight: 3
+        requestedToCapacityRatio:
+          shape:
+          - utilization: 0
+            score: 0
+          - utilization: 100
+            score: 10
+        type: RequestedToCapacityRatio
+    name: NodeResourcesFit
+```
 ## Pod 干扰
 ### Pod优先级和抢占
+Pod可以有优先级。优先级表示一个Pod相对其他Pod的重要性。
 ### 节点压力驱逐
 ### API发起的驱逐
 
