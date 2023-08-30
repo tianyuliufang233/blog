@@ -22,5 +22,3 @@ netsh interface ipv4 show subinterfaces
 netsh interface ipv4 set subinterface " 连接名" mtu=1340 store=persistent 
 ```
 
-
-sudo docker exec -i xyba-mysql-dev-dw mysql -h 172.29.5.4 -P13306  -uroot -p'lmOQipjblHn4d%yr@8vH' xyba_piller_hospital_dev
