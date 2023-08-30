@@ -15,7 +15,7 @@
 baseURL = "https://tianyuliufang233.github.io/blog/"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh-cn"
-title = "问道之旅"
+title = "素履虔行"
 theme = "hugo-tranquilpeak-theme"
 disqusShortname = "hugo-tranquilpeak-theme"
 # googleAnalytics = "UA-123-45"
@@ -119,7 +119,7 @@ canonifyurls = true
   # -----------
   # Description
   # -----------
-  description = "问道之旅"
+  description = "素履虔行"
   # ------------------
   # Syntax highlighter
   # ------------------
