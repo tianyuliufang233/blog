@@ -17,7 +17,7 @@
   },
   "name":"素履虔行",
   "description":"",
-  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/interface-mtu\/",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B\/",
   "keywords":"[tech]"
 }
 
@@ -33,20 +33,20 @@
 
 <meta property="og:description" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Interface MTU">
-<meta name="twitter:title" content="Interface MTU">
-<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/interface-mtu/">
-<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/interface-mtu/">
+<meta property="og:title" content="Elasticsearch 常用案例">
+<meta name="twitter:title" content="Elasticsearch 常用案例">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/">
 <meta property="og:site_name" content="素履虔行">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2023-08-25T11:31:55">
+    <meta property="article:published_time" content="2023-08-31T11:49:22">
   
   
-    <meta property="article:modified_time" content="2023-08-25T11:31:55">
+    <meta property="article:modified_time" content="2023-08-31T11:49:22">
   
   
   
@@ -81,14 +81,14 @@
 
 
 
-    <title>Interface MTU</title>
+    <title>Elasticsearch 常用案例</title>
 
     <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
     
 
     
 
-    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/interface-mtu/">
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/">
 
     
     <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -238,19 +238,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title">
-      Interface MTU
+      Elasticsearch 常用案例
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2023-08-25T11:31:55&#43;08:00">
+      <time datetime="2023-08-31T11:49:22&#43;08:00">
         
   
   
   
   
-    2023-08-25
+    2023-08-31
   
 
       </time>
@@ -272,11 +272,134 @@
           
           <div class="post-content markdown">
             <div class="main-content-wrap">
-              <h1 id="windows-查看interface">windows 查看interface</h1>
-<pre tabindex="0"><code>netsh interface ipv4 show subinterfaces 
-</code></pre><h2 id="修改interface-mtu">修改interface mtu</h2>
-<pre tabindex="0"><code>netsh interface ipv4 set subinterface &#34; 连接名&#34; mtu=1340 store=persistent 
-</code></pre>
+              <p>es通过docker-compose.yaml部署，docker-compose.yaml位于/data/apps/elasticsearch目录下，内容如下：</p>
+<pre tabindex="0"><code>version: &#39;2.2&#39;
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    restart: always
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - xpack.security.enabled=true
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - &#34;ES_JAVA_OPTS=-Xms2048m -Xmx2048m&#34;
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /data/data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - 19200:9200
+    networks:
+      - elastic
+ 
+networks:
+  elastic:
+    driver: bridge
+</code></pre><p>启动命令</p>
+<pre tabindex="0"><code>#  sudo docker-compose -f /data/apps/elasticsearch/docker-compose.yaml up -d  #启动
+#  curl -XGET 127.0.0.1:19200/_cat/aliases?v  #验证集群状态
+# 以下命令为需要停止容器的时候使用：
+# sudo docker-compose -f /data/apps/elasticsearch/docker-compose.yaml stop #停止
+# sudo docker-compose -f /data/apps/elasticsearch/docker-compose.yaml down -v 删除容器及卷
+</code></pre><p>配置内部账号</p>
+<pre tabindex="0"><code># sudo /usr/local/bin/docker-compose -f /data/apps/elasticsearch/docker-compose.yaml exec es01 /bin/bash  #进入容器bash终端
+容器内执行如下命令配置密码：
+# elasticsearch-setup-passwords interactive
+# 退出容器
+# exit
+</code></pre><p>权限配置-添加role</p>
+<pre tabindex="0"><code>put 127.0.0.1:9200/_security/role/approle
+{
+        &#34;cluster&#34;: [
+            &#34;all&#34;
+        ],
+        &#34;indices&#34;: [
+            {
+                &#34;names&#34;: [
+                    &#34;*&#34;
+                ],
+                &#34;privileges&#34;: [
+                    &#34;all&#34;
+                ],
+                &#34;allow_restricted_indices&#34;: false
+            }
+        ]
+}
+</code></pre><p>添加角色</p>
+<pre tabindex="0"><code>put /_security/role/applogrole
+{
+        &#34;cluster&#34;: [
+            &#34;monitor&#34;,
+            &#34;read_ccr&#34;
+        ],
+        &#34;indices&#34;: [
+            {
+                &#34;names&#34;: [
+                    &#34;*&#34;
+                ],
+                &#34;privileges&#34;: [
+                    &#34;read&#34;,
+                    &#34;view_index_metadata&#34;,
+                    &#34;read_cross_cluster&#34;,
+                    &#34;monitor&#34;
+                ],
+                &#34;allow_restricted_indices&#34;: false
+            }
+        ]
+}
+</code></pre><p>添加用户</p>
+<pre tabindex="0"><code>put 127.0.0.1:9200/_security/user/username
+{
+    &#34;password&#34;: &#34;test&#34;,
+    &#34;roles&#34;:&#34;approle&#34;,
+    &#34;full_name&#34;: &#34;username&#34;
+}
+</code></pre><p>添加快照备份</p>
+<pre tabindex="0"><code>#添加快照策略
+PUT http://127.0.0.1:9200/_snapshot/es_cos_backup
+{
+    &#34;type&#34;: &#34;cos&#34;,
+    &#34;settings&#34;: {
+        &#34;access_key_id&#34;: &#34;key_id&#34;,
+        &#34;bucket&#34;: &#34;bucketname&#34;,
+        &#34;chunk_size&#34;: &#34;500mb&#34;,
+        &#34;compress&#34;: &#34;true&#34;,
+        &#34;access_key_secret&#34;: &#34;key&#34;,
+        &#34;base_path&#34;: &#34;backup path&#34;,
+        &#34;region&#34;: &#34;ap-chengdu&#34;
+    }
+}
+#添加周期快照策略
+PUT http://127.0.0.1:9200/_slm/policy/daily-snapshots
+{
+  &#34;schedule&#34;: &#34;0 30 1 * * ?&#34;,
+  &#34;name&#34;: &#34;&lt;snapshot-{now/d}&gt;&#34;,
+  &#34;repository&#34;: &#34;es_cos_backup&#34;,
+  &#34;retention&#34;: {
+    &#34;expire_after&#34;: &#34;7d&#34;,
+    &#34;min_count&#34;: 7,
+    &#34;max_count&#34;: 14
+  }
+}
+#获取周期备份策略
+GET http://127.0.0.1:9200/_slm/policy/daily-snapshots/
+#获取快照策略
+GET http://127.0.0.1:9200/_snapshot/_all
+#执行周期备份策略
+PUT http://127.0.0.1:9200/_slm/policy/daily-snapshots/_execute
+{
+  &#34;snapshot_name&#34;: &#34;daily-snap-2023.08.31-gwrqoo2xtea3q57vvg0uea&#34;
+}
+</code></pre><h2 id="注意">注意</h2>
+<ul>
+<li>java虚拟机内存最好设置为需求内存的一半，另一半留给系统做缓存使用以便于提高速度。</li>
+<li>服务器内存配置较低时，务必开启bootstrap.memory_lock=true锁定内存，避免oom。</li>
+</ul>
               
 
 
@@ -305,7 +428,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/" data-tooltip="Elasticsearch 常用案例" aria-label="下一篇: Elasticsearch 常用案例">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -313,7 +436,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2%E5%AE%89%E5%85%A8/" data-tooltip="白帽子讲安全" aria-label="上一篇: 白帽子讲安全">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/interface-mtu/" data-tooltip="Interface MTU" aria-label="上一篇: Interface MTU">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -356,9 +479,9 @@
     </div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/interface-mtu\/';
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B\/';
         
-          this.page.identifier = '\/post\/interface-mtu\/'
+          this.page.identifier = '\/post\/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B\/'
         
       };
       (function() {
@@ -394,7 +517,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/" data-tooltip="Elasticsearch 常用案例" aria-label="下一篇: Elasticsearch 常用案例">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -402,7 +525,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2%E5%AE%89%E5%85%A8/" data-tooltip="白帽子讲安全" aria-label="上一篇: 白帽子讲安全">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/interface-mtu/" data-tooltip="Interface MTU" aria-label="上一篇: Interface MTU">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
