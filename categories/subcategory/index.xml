@@ -6,7 +6,142 @@
     <description>Recent content in subcategory on 素履虔行</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 22 Oct 2023 10:42:24 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/subcategory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 Oct 2023 16:46:37 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/subcategory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开源收集</title>
+      <link>https://tianyuliufang233.github.io/blog/post/%E5%BC%80%E6%BA%90%E6%94%B6%E9%9B%86/</link>
+      <pubDate>Tue, 24 Oct 2023 16:46:37 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/%E5%BC%80%E6%BA%90%E6%94%B6%E9%9B%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Netbird_容器化快速部署</title>
+      <link>https://tianyuliufang233.github.io/blog/post/netbird_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 24 Oct 2023 11:55:11 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/netbird_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</guid>
+      <description>&lt;p&gt;netbird搭建文档&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nacos_容器化快速部署</title>
+      <link>https://tianyuliufang233.github.io/blog/post/nacos_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 24 Oct 2023 10:34:44 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/nacos_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mongodb数据迁移</title>
+      <link>https://tianyuliufang233.github.io/blog/post/mongodb%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</link>
+      <pubDate>Tue, 24 Oct 2023 10:31:20 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/mongodb%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Coredns_二进制搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/coredns_%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 10:26:33 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/coredns_%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>备份数据到cos脚本</title>
+      <link>https://tianyuliufang233.github.io/blog/post/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Tue, 24 Oct 2023 10:23:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/elasticsearch_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 10:08:40 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/elasticsearch_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>基础镜像dockerfile</title>
+      <link>https://tianyuliufang233.github.io/blog/post/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</link>
+      <pubDate>Tue, 24 Oct 2023 10:02:15 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Traefik_白名单</title>
+      <link>https://tianyuliufang233.github.io/blog/post/traefik_%E7%99%BD%E5%90%8D%E5%8D%95/</link>
+      <pubDate>Tue, 24 Oct 2023 09:59:52 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/traefik_%E7%99%BD%E5%90%8D%E5%8D%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/mysql_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:56:39 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/mysql_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Npm_registry_verdaccio_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/npm_registry_verdaccio_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:49:24 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/npm_registry_verdaccio_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/redis_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:47:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/redis_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WireGuard_vpn</title>
+      <link>https://tianyuliufang233.github.io/blog/post/wireguard_vpn/</link>
+      <pubDate>Tue, 24 Oct 2023 09:45:06 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/wireguard_vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus_config</title>
+      <link>https://tianyuliufang233.github.io/blog/post/prometheus_config/</link>
+      <pubDate>Tue, 24 Oct 2023 09:43:29 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/prometheus_config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>加密解密</title>
+      <link>https://tianyuliufang233.github.io/blog/post/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/</link>
+      <pubDate>Tue, 24 Oct 2023 09:40:54 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>引爆自律力</title>
       <link>https://tianyuliufang233.github.io/blog/post/%E5%BC%95%E7%88%86%E8%87%AA%E5%BE%8B%E5%8A%9B/</link>
