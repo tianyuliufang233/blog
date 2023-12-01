@@ -17,7 +17,7 @@
   },
   "name":"素履虔行",
   "description":"",
-  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82\/",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-install\/",
   "keywords":"[tech]"
 }
 
@@ -33,20 +33,20 @@
 
 <meta property="og:description" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何鉴别伪需求">
-<meta name="twitter:title" content="如何鉴别伪需求">
-<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/">
-<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/">
+<meta property="og:title" content="Kubernetes Install">
+<meta name="twitter:title" content="Kubernetes Install">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-install/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/kubernetes-install/">
 <meta property="og:site_name" content="素履虔行">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2023-11-01T18:04:49">
+    <meta property="article:published_time" content="2023-11-23T16:19:38">
   
   
-    <meta property="article:modified_time" content="2023-11-01T18:04:49">
+    <meta property="article:modified_time" content="2023-11-23T16:19:38">
   
   
   
@@ -81,14 +81,14 @@
 
 
 
-    <title>如何鉴别伪需求</title>
+    <title>Kubernetes Install</title>
 
     <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
     
 
     
 
-    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/">
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/kubernetes-install/">
 
     
     <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -238,19 +238,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title">
-      如何鉴别伪需求
+      Kubernetes Install
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2023-11-01T18:04:49&#43;08:00">
+      <time datetime="2023-11-23T16:19:38&#43;08:00">
         
   
   
   
   
-    2023-11-01
+    2023-11-23
   
 
       </time>
@@ -272,17 +272,68 @@
           
           <div class="post-content markdown">
             <div class="main-content-wrap">
-              <ol>
-<li>看需求提出者会不会为需求买单，如果一个用户愿意为这个需求付费，并且提前付出一定成本，比如交一定费用预购产品，那么说明这个需求是真实存在的，能够帮助用户解决问题的。
-相反，如果用户只是口头说说很想要这个功能，但并不愿意为此付出任何成本，哪怕一毛钱，说明这个需求并不是真正的需求。即使上线后，效果也不会很好。
-不要听用户说什么，而是要看用户做什么。看用户会用什么产品解决他们的什么问题，看他们会因为产品的什么特点而付费。
-只有用户付出了明确的成本，才代表这个需求对他来说是真实的。</li>
-<li>列举需求的使用场景，真正的需求可以列举出非常细节的使用场景，使用路径，并且对比当前用户的解决方案，会有明显的体验或者效率的提升。
-如果无法列举出具体场景，也没办法做到比当前解决方案明显更优，这个需求的真实性也是存疑的。</li>
-<li>伪需求更多的来自于个体，而真实需求往往来自于群体。
-要想找到真正的需求，需要从群体视角出发，思考用户需求中共性的部分。
-需求有清晰明确的用户画像，你的产品究竟是为什么样的一群人解决了什么样的问题。你的解决方案比同类产品好在什么地方，能否实现新体验远远大于旧体验，超出用户既定预期。</li>
-</ol>
+              <p>/usr/local/bin/kube-apiserver &ndash;enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota &ndash;anonymous-auth=false &ndash;bind-address=192.168.1.1 &ndash;secure-port=6443 &ndash;advertise-address=192.168.1.1 &ndash;authorization-mode=Node,RBAC &ndash;runtime-config=api/all=true &ndash;enable-bootstrap-token-auth &ndash;service-cluster-ip-range=10.174.0.0/16 &ndash;token-auth-file=/data/apps/kubernetes/conf/token.csv &ndash;service-node-port-range=30000-50000 &ndash;tls-cert-file=/data/apps/kubernetes/ssl/kube-apiserver.pem &ndash;tls-private-key-file=/data/apps/kubernetes/ssl/kube-apiserver-key.pem &ndash;client-ca-file=/data/apps/kubernetes/ssl/ca.pem &ndash;kubelet-client-certificate=/data/apps/kubernetes/ssl/kube-apiserver.pem &ndash;kubelet-client-key=/data/apps/kubernetes/ssl/kube-apiserver-key.pem &ndash;service-account-key-file=/data/apps/kubernetes/ssl/ca-key.pem &ndash;service-account-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem &ndash;service-account-issuer=api &ndash;etcd-cafile=/data/apps/kubernetes/ssl/ca.pem &ndash;etcd-certfile=/data/apps/kubernetes/ssl/etcd.pem &ndash;etcd-keyfile=/data/apps/kubernetes/ssl/etcd-key.pem &ndash;etcd-servers=https://192.168.1.1:2379  &ndash;allow-privileged=true &ndash;apiserver-count=3  &ndash;audit-log-maxage=30 &ndash;audit-log-maxbackup=3 &ndash;audit-log-maxsize=100 &ndash;audit-log-path=/data/log/kubernetes/kube-apiserver-audit.log &ndash;event-ttl=1h  &ndash;v=4</p>
+<p>cfssl gencert -initca ca-csr.json  | cfssljson -bare ca
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes etcd-csr.json | cfssljson  -bare etcd
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-apiserver-csr.json | cfssljson -bare kube-apiserver
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-scheduler-csr.json | cfssljson -bare kube-scheduler
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson -bare kube-proxy</p>
+<p>cat &gt; token.csv &laquo; EOF
+$(head -c 16 /dev/urandom | od -An -t x | tr -d &rsquo; &lsquo;),kubelet-bootstrap,10001,&ldquo;system:kubelet-bootstrap&rdquo;
+EOF</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube.config
+kubectl config set-credentials admin &ndash;client-certificate=../ssl/admin.pem &ndash;client-key=../ssl/admin-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube.config
+kubectl config set-context kubernetes &ndash;cluster=kubernetes &ndash;user=admin &ndash;kubeconfig=kube.config
+kubectl config use-context kubernetes &ndash;kubeconfig=kube.config
+mkdir ~/.kube -p
+cp kube.config ~/.kube/config
+cp kube.config /data/apps/kubernetes/admin.conf
+kubectl create clusterrolebinding kube-apiserver:kubelet-apis &ndash;clusterrole=system:kubelet-api-admin &ndash;user kubernetes</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-credentials system:kube-controller-manager &ndash;client-certificate=../ssl/kube-controller-manager.pem &ndash;client-key=../ssl/kube-controller-manager-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-context system:kube-controller-manager &ndash;cluster=kubernetes &ndash;user=system:kube-controller-manager &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config use-context system:kube-controller-manager &ndash;kubeconfig=kube-controller-manager.kubeconfig</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-credentials system:kube-scheduler &ndash;client-certificate=../ssl/kube-scheduler.pem &ndash;client-key=../ssl/kube-scheduler-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-context system:kube-scheduler &ndash;cluster=kubernetes &ndash;user=system:kube-scheduler &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config use-context system:kube-scheduler &ndash;kubeconfig=kube-scheduler.kubeconfig</p>
+<p>BOOTSTRAP_TOKEN=$(awk -F &ldquo;,&rdquo; &lsquo;{print $1}&rsquo; /data/apps/kubernetes/conf/token.csv)
+kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-credentials kubelet-bootstrap &ndash;token=${BOOTSTRAP_TOKEN} &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-context default &ndash;cluster=kubernetes &ndash;user=kubelet-bootstrap &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config use-context default &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl create clusterrolebinding kubelet-bootstrap &ndash;clusterrole=system:node-bootstrapper &ndash;user=kubelet-bootstrap</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config set-credentials kube-proxy &ndash;client-certificate=../ssl/kube-proxy.pem &ndash;client-key=../ssl/kube-proxy-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config set-context default &ndash;cluster=kubernetes &ndash;user=kube-proxy &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config use-context default &ndash;kubeconfig=kube-proxy.kubeconfig</p>
+<p>/usr/local/bin/kube-controller-manager <br>
+&ndash;secure-port=10257 <br>
+&ndash;bind-address=0.0.0.0 <br>
+&ndash;kubeconfig=/data/apps/kubernetes/conf/kube-controller-manager.kubeconfig <br>
+&ndash;service-cluster-ip-range=10.174.0.0/16 <br>
+&ndash;cluster-name=kubernetes <br>
+&ndash;cluster-signing-cert-file=/data/apps/kubernetes/ssl/ca.pem <br>
+&ndash;cluster-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem <br>
+&ndash;allocate-node-cidrs=true <br>
+&ndash;cluster-cidr=10.175.0.0/16 <br>
+&ndash;root-ca-file=/data/apps/kubernetes/ssl/ca.pem <br>
+&ndash;service-account-private-key-file=/data/apps/kubernetes/ssl/ca-key.pem <br>
+&ndash;leader-elect=true <br>
+&ndash;feature-gates=RotateKubeletServerCertificate=true <br>
+&ndash;controllers=*,bootstrapsigner,tokencleaner <br>
+&ndash;horizontal-pod-autoscaler-sync-period=10s <br>
+&ndash;tls-cert-file=/data/apps/kubernetes/ssl/kube-controller-manager.pem <br>
+&ndash;tls-private-key-file=/data/apps/kubernetes/ssl/kube-controller-manager-key.pem <br>
+&ndash;use-service-account-credentials=true <br>
+&ndash;v=2</p>
+<p>遇到的问题
+calico  ippool  无法更改问题 etcdctl需要配置socket
+nacos 连接数据库后隔段时间就无法连接  发现是“Public Key Retrieval is not allowed” allowPublicKeyRetrieval设置为true参数问题
+非root用户无法监听1024以下端口问题    setcap cap_net_bind_service=+eip /path/to/application   或者关闭 net.ipv4.ip_unprivileged_port_start
+kubernetes集群内部，可以通过coredns rewrite 域名来  重定向域名</p>
               
 
 
@@ -311,7 +362,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-install/" data-tooltip="Kubernetes Install" aria-label="下一篇: Kubernetes Install">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -319,7 +370,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E5%AF%B9%E4%BA%8E%E7%BB%93%E5%A9%9A%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对于结婚的思考" aria-label="上一篇: 对于结婚的思考">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/" data-tooltip="如何鉴别伪需求" aria-label="上一篇: 如何鉴别伪需求">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -362,9 +413,9 @@
     </div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82\/';
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/kubernetes-install\/';
         
-          this.page.identifier = '\/post\/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82\/'
+          this.page.identifier = '\/post\/kubernetes-install\/'
         
       };
       (function() {
@@ -400,7 +451,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/kubernetes-install/" data-tooltip="Kubernetes Install" aria-label="下一篇: Kubernetes Install">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -408,7 +459,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E5%AF%B9%E4%BA%8E%E7%BB%93%E5%A9%9A%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对于结婚的思考" aria-label="上一篇: 对于结婚的思考">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/" data-tooltip="如何鉴别伪需求" aria-label="上一篇: 如何鉴别伪需求">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
