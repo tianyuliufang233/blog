@@ -2,13 +2,14 @@
 title: "Markdown手册"
 date: 2023-07-28T11:39:58+08:00
 categories:
-- category
-- subcategory
+categories:
+- 工作
+- 记录
 tags:
-- tag1
-- tag2
+- 工作
+- 记录
 keywords:
-- tech
+- 案例
 #thumbnailImage: //example.com/image.jpg
 ---
 makrdown 手册记录

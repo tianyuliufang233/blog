@@ -2,13 +2,13 @@
 title: "VirtualMachine"
 date: 2023-08-10T14:31:50+08:00
 categories:
-- category
-- subcategory
+- 工作
+- 记录
 tags:
-- tag1
-- tag2
+- 工作
+- 记录
 keywords:
-- tech
+- 案例
 #thumbnailImage: //example.com/image.jpg
 ---
 虚拟机方案
