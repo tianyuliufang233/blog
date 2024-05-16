@@ -281,6 +281,38 @@
 <pre tabindex="0"><code>kubectl rollout restart deployment appname -n default --kubeconfig /test_kubeconfig
 </code></pre><h2 id="kubernetes-只修改镜像">kubernetes 只修改镜像</h2>
 <pre tabindex="0"><code>kubectl set image deployment/containerName deploymentName=Repository/imageName:xxxxx -n namespace --kubeconfig kubeconfig
+</code></pre><h2 id="kubernetes-内存算法">kubernetes 内存算法</h2>
+<pre tabindex="0"><code>#!/bin/bash
+#!/usr/bin/env bash
+
+# This script reproduces what the kubelet does
+# to calculate memory.available relative to root cgroup.
+
+# current memory usage
+memory_capacity_in_kb=$(cat /proc/meminfo | grep MemTotal | awk &#39;{print $2}&#39;)
+memory_capacity_in_bytes=$((memory_capacity_in_kb * 1024))
+memory_usage_in_bytes=$(cat /sys/fs/cgroup/memory/memory.usage_in_bytes)
+memory_total_inactive_file=$(cat /sys/fs/cgroup/memory/memory.stat | grep total_inactive_file | awk &#39;{print $2}&#39;)
+
+memory_working_set=${memory_usage_in_bytes}
+if [ &#34;$memory_working_set&#34; -lt &#34;$memory_total_inactive_file&#34; ];
+then
+    memory_working_set=0
+else
+    memory_working_set=$((memory_usage_in_bytes - memory_total_inactive_file))
+fi
+
+memory_available_in_bytes=$((memory_capacity_in_bytes - memory_working_set))
+memory_available_in_kb=$((memory_available_in_bytes / 1024))
+memory_available_in_mb=$((memory_available_in_kb / 1024))
+
+echo &#34;memory.capacity_in_bytes $memory_capacity_in_bytes&#34;
+echo &#34;memory.usage_in_bytes $memory_usage_in_bytes&#34;
+echo &#34;memory.total_inactive_file $memory_total_inactive_file&#34;
+echo &#34;memory.working_set $memory_working_set&#34;
+echo &#34;memory.available_in_bytes $memory_available_in_bytes&#34;
+echo &#34;memory.available_in_kb $memory_available_in_kb&#34;
+echo &#34;memory.available_in_mb $memory_available_in_mb&#34;
 </code></pre>
               
 
