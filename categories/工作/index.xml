@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工作 on 素履虔行</title>
+    <link>https://tianyuliufang233.github.io/blog/categories/%E5%B7%A5%E4%BD%9C/</link>
+    <description>Recent content in 工作 on 素履虔行</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 16 Jan 2024 16:15:27 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/%E5%B7%A5%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mysql8.0锁表问题排查</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/mysql8.0%E9%94%81%E8%A1%A8%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</link>
+      <pubDate>Tue, 16 Jan 2024 16:15:27 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/mysql8.0%E9%94%81%E8%A1%A8%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Netbird_容器化快速部署</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/netbird_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 24 Oct 2023 11:55:11 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/netbird_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</guid>
+      <description>&lt;p&gt;netbird搭建文档&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nacos_容器化快速部署</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/nacos_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 24 Oct 2023 10:34:44 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/nacos_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mongodb数据迁移</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/mongodb%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</link>
+      <pubDate>Tue, 24 Oct 2023 10:31:20 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/mongodb%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Coredns_二进制搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/coredns_%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 10:26:33 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/coredns_%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 10:08:40 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Traefik_白名单</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/traefik_%E7%99%BD%E5%90%8D%E5%8D%95/</link>
+      <pubDate>Tue, 24 Oct 2023 09:59:52 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/traefik_%E7%99%BD%E5%90%8D%E5%8D%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/mysql_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:56:39 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/mysql_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Npm_registry_verdaccio_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/npm_registry_verdaccio_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:49:24 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/npm_registry_verdaccio_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis_容器化快速搭建</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/redis_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Tue, 24 Oct 2023 09:47:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/redis_%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WireGuard_vpn</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/wireguard_vpn/</link>
+      <pubDate>Tue, 24 Oct 2023 09:45:06 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/wireguard_vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus_config</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/prometheus_config/</link>
+      <pubDate>Tue, 24 Oct 2023 09:43:29 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/prometheus_config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheusalert规则编辑</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/prometheusalert%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</link>
+      <pubDate>Tue, 26 Sep 2023 15:57:26 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/prometheusalert%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>中拓互联以续费为名销售中文域名</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%9F%E5%90%8D%E4%BB%A3%E7%90%86%E5%95%86%E4%B8%AD%E6%8B%93%E4%BA%92%E8%81%94%E8%80%8C%E5%B7%B2%E9%94%80%E5%94%AE%E4%B8%AD%E6%96%87%E5%9F%9F%E5%90%8D/</link>
+      <pubDate>Mon, 25 Sep 2023 17:33:28 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%9F%E5%90%8D%E4%BB%A3%E7%90%86%E5%95%86%E4%B8%AD%E6%8B%93%E4%BA%92%E8%81%94%E8%80%8C%E5%B7%B2%E9%94%80%E5%94%AE%E4%B8%AD%E6%96%87%E5%9F%9F%E5%90%8D/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perf原理</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/perf%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Tue, 19 Sep 2023 10:59:07 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/perf%E5%8E%9F%E7%90%86/</guid>
+      <description>&lt;p&gt;perf原理&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 常用案例</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Thu, 31 Aug 2023 11:49:22 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Interface MTU</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/interface-mtu/</link>
+      <pubDate>Fri, 25 Aug 2023 11:31:55 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/interface-mtu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hyper V无法启动虚拟机</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/hyper-v%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
+      <pubDate>Wed, 16 Aug 2023 18:26:13 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/hyper-v%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows Schtasks详解</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/windows-schtasks%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Mon, 14 Aug 2023 09:59:32 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/windows-schtasks%E8%AF%A6%E8%A7%A3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>VirtualMachine</title>
+      <link>https://tianyuliufang233.github.io/blog/post/virtualmachine/</link>
+      <pubDate>Thu, 10 Aug 2023 14:31:50 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/virtualmachine/</guid>
+      <description>&lt;p&gt;虚拟机方案&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdown手册</title>
+      <link>https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/</link>
+      <pubDate>Fri, 28 Jul 2023 11:39:58 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/markdown%E6%89%8B%E5%86%8C/</guid>
+      <description>&lt;p&gt;makrdown 手册记录&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>imagemagick安装编译无法识别helc问题</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>案例 on 素履虔行</title>
+    <link>https://tianyuliufang233.github.io/blog/tags/%E6%A1%88%E4%BE%8B/</link>
+    <description>Recent content in 案例 on 素履虔行</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Jan 2024 11:20:56 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/tags/%E6%A1%88%E4%BE%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 全局代理</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/shell/linux-%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Fri, 05 Jan 2024 11:20:56 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/shell/linux-%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>备份数据到cos脚本</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/shell/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Tue, 24 Oct 2023 10:23:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/shell/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>基础镜像dockerfile</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</link>
+      <pubDate>Tue, 24 Oct 2023 10:02:15 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>一篇关于编译器注入后门的文章</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/security/%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%BC%96%E8%AF%91%E5%99%A8%E6%B3%A8%E5%85%A5%E5%90%8E%E9%97%A8%E7%9A%84%E6%96%87%E7%AB%A0/</link>
+      <pubDate>Tue, 26 Sep 2023 16:00:47 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/security/%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%BC%96%E8%AF%91%E5%99%A8%E6%B3%A8%E5%85%A5%E5%90%8E%E9%97%A8%E7%9A%84%E6%96%87%E7%AB%A0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>记一次服务无日志退出情况排查</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%97%A5%E5%BF%97%E9%80%80%E5%87%BA%E6%83%85%E5%86%B5%E6%8E%92%E6%9F%A5/</link>
+      <pubDate>Tue, 26 Sep 2023 11:00:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%97%A5%E5%BF%97%E9%80%80%E5%87%BA%E6%83%85%E5%86%B5%E6%8E%92%E6%9F%A5/</guid>
+      <description>&lt;p&gt;记一次服务无日志退出情况排查&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

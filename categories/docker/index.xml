@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on 素履虔行</title>
+    <link>https://tianyuliufang233.github.io/blog/categories/docker/</link>
+    <description>Recent content in docker on 素履虔行</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 24 Oct 2023 10:02:15 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基础镜像dockerfile</title>
+      <link>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</link>
+      <pubDate>Tue, 24 Oct 2023 10:02:15 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/workrecords/%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8Fdockerfile/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

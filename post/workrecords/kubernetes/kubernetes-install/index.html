@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/kubernetes\/kubernetes-install\/",
+  "keywords":"[安装]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="安装">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes Install">
+<meta name="twitter:title" content="Kubernetes Install">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/kubernetes/kubernetes-install/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/kubernetes/kubernetes-install/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2023-11-23T16:19:38">
+  
+  
+    <meta property="article:modified_time" content="2023-11-23T16:19:38">
+  
+  
+  
+    
+      <meta property="article:section" content="kubernetes">
+    
+      <meta property="article:section" content="记录">
+    
+  
+  
+    
+      <meta property="article:tag" content="kubernetes">
+    
+      <meta property="article:tag" content="记录">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>Kubernetes Install</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/workrecords/kubernetes/kubernetes-install/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Kubernetes Install
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2023-11-23T16:19:38&#43;08:00">
+        
+  
+  
+  
+  
+    2023-11-23
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/kubernetes">kubernetes</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%ae%b0%e5%bd%95">记录</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p>/usr/local/bin/kube-apiserver &ndash;enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota &ndash;anonymous-auth=false &ndash;bind-address=192.168.1.1 &ndash;secure-port=6443 &ndash;advertise-address=192.168.1.1 &ndash;authorization-mode=Node,RBAC &ndash;runtime-config=api/all=true &ndash;enable-bootstrap-token-auth &ndash;service-cluster-ip-range=10.174.0.0/16 &ndash;token-auth-file=/data/apps/kubernetes/conf/token.csv &ndash;service-node-port-range=30000-50000 &ndash;tls-cert-file=/data/apps/kubernetes/ssl/kube-apiserver.pem &ndash;tls-private-key-file=/data/apps/kubernetes/ssl/kube-apiserver-key.pem &ndash;client-ca-file=/data/apps/kubernetes/ssl/ca.pem &ndash;kubelet-client-certificate=/data/apps/kubernetes/ssl/kube-apiserver.pem &ndash;kubelet-client-key=/data/apps/kubernetes/ssl/kube-apiserver-key.pem &ndash;service-account-key-file=/data/apps/kubernetes/ssl/ca-key.pem &ndash;service-account-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem &ndash;service-account-issuer=api &ndash;etcd-cafile=/data/apps/kubernetes/ssl/ca.pem &ndash;etcd-certfile=/data/apps/kubernetes/ssl/etcd.pem &ndash;etcd-keyfile=/data/apps/kubernetes/ssl/etcd-key.pem &ndash;etcd-servers=https://192.168.1.1:2379  &ndash;allow-privileged=true &ndash;apiserver-count=3  &ndash;audit-log-maxage=30 &ndash;audit-log-maxbackup=3 &ndash;audit-log-maxsize=100 &ndash;audit-log-path=/data/log/kubernetes/kube-apiserver-audit.log &ndash;event-ttl=1h  &ndash;v=4</p>
+<p>cfssl gencert -initca ca-csr.json  | cfssljson -bare ca
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes etcd-csr.json | cfssljson  -bare etcd
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-apiserver-csr.json | cfssljson -bare kube-apiserver
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-scheduler-csr.json | cfssljson -bare kube-scheduler
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson -bare kube-proxy</p>
+<p>cat &gt; token.csv &laquo; EOF
+$(head -c 16 /dev/urandom | od -An -t x | tr -d &rsquo; &lsquo;),kubelet-bootstrap,10001,&ldquo;system:kubelet-bootstrap&rdquo;
+EOF</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube.config
+kubectl config set-credentials admin &ndash;client-certificate=../ssl/admin.pem &ndash;client-key=../ssl/admin-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube.config
+kubectl config set-context kubernetes &ndash;cluster=kubernetes &ndash;user=admin &ndash;kubeconfig=kube.config
+kubectl config use-context kubernetes &ndash;kubeconfig=kube.config
+mkdir ~/.kube -p
+cp kube.config ~/.kube/config
+cp kube.config /data/apps/kubernetes/admin.conf
+kubectl create clusterrolebinding kube-apiserver:kubelet-apis &ndash;clusterrole=system:kubelet-api-admin &ndash;user kubernetes</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-credentials system:kube-controller-manager &ndash;client-certificate=../ssl/kube-controller-manager.pem &ndash;client-key=../ssl/kube-controller-manager-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-context system:kube-controller-manager &ndash;cluster=kubernetes &ndash;user=system:kube-controller-manager &ndash;kubeconfig=kube-controller-manager.kubeconfig
+kubectl config use-context system:kube-controller-manager &ndash;kubeconfig=kube-controller-manager.kubeconfig</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-credentials system:kube-scheduler &ndash;client-certificate=../ssl/kube-scheduler.pem &ndash;client-key=../ssl/kube-scheduler-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-context system:kube-scheduler &ndash;cluster=kubernetes &ndash;user=system:kube-scheduler &ndash;kubeconfig=kube-scheduler.kubeconfig
+kubectl config use-context system:kube-scheduler &ndash;kubeconfig=kube-scheduler.kubeconfig</p>
+<p>BOOTSTRAP_TOKEN=$(awk -F &ldquo;,&rdquo; &lsquo;{print $1}&rsquo; /data/apps/kubernetes/conf/token.csv)
+kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-credentials kubelet-bootstrap &ndash;token=${BOOTSTRAP_TOKEN} &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-context default &ndash;cluster=kubernetes &ndash;user=kubelet-bootstrap &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config use-context default &ndash;kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl create clusterrolebinding kubelet-bootstrap &ndash;clusterrole=system:node-bootstrapper &ndash;user=kubelet-bootstrap</p>
+<p>kubectl config set-cluster kubernetes &ndash;certificate-authority=../ssl/ca.pem &ndash;embed-certs=true &ndash;server=https://192.168.1.1:6443 &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config set-credentials kube-proxy &ndash;client-certificate=../ssl/kube-proxy.pem &ndash;client-key=../ssl/kube-proxy-key.pem &ndash;embed-certs=true &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config set-context default &ndash;cluster=kubernetes &ndash;user=kube-proxy &ndash;kubeconfig=kube-proxy.kubeconfig
+kubectl config use-context default &ndash;kubeconfig=kube-proxy.kubeconfig</p>
+<p>/usr/local/bin/kube-controller-manager <br>
+&ndash;secure-port=10257 <br>
+&ndash;bind-address=0.0.0.0 <br>
+&ndash;kubeconfig=/data/apps/kubernetes/conf/kube-controller-manager.kubeconfig <br>
+&ndash;service-cluster-ip-range=10.174.0.0/16 <br>
+&ndash;cluster-name=kubernetes <br>
+&ndash;cluster-signing-cert-file=/data/apps/kubernetes/ssl/ca.pem <br>
+&ndash;cluster-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem <br>
+&ndash;allocate-node-cidrs=true <br>
+&ndash;cluster-cidr=10.175.0.0/16 <br>
+&ndash;root-ca-file=/data/apps/kubernetes/ssl/ca.pem <br>
+&ndash;service-account-private-key-file=/data/apps/kubernetes/ssl/ca-key.pem <br>
+&ndash;leader-elect=true <br>
+&ndash;feature-gates=RotateKubeletServerCertificate=true <br>
+&ndash;controllers=*,bootstrapsigner,tokencleaner <br>
+&ndash;horizontal-pod-autoscaler-sync-period=10s <br>
+&ndash;tls-cert-file=/data/apps/kubernetes/ssl/kube-controller-manager.pem <br>
+&ndash;tls-private-key-file=/data/apps/kubernetes/ssl/kube-controller-manager-key.pem <br>
+&ndash;use-service-account-credentials=true <br>
+&ndash;v=2</p>
+<p>遇到的问题
+calico  ippool  无法更改问题 etcdctl需要配置socket
+nacos 连接数据库后隔段时间就无法连接  发现是“Public Key Retrieval is not allowed” allowPublicKeyRetrieval设置为true参数问题
+非root用户无法监听1024以下端口问题    setcap cap_net_bind_service=+eip /path/to/application   或者关闭 net.ipv4.ip_unprivileged_port_start
+kubernetes集群内部，可以通过coredns rewrite 域名来  重定向域名</p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/kubernetes/">kubernetes</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/diary/2023%E5%B9%B4%E6%80%BB%E7%BB%93/" data-tooltip="2023年总结" aria-label="下一篇: 2023年总结">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/lifethinking/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/" data-tooltip="如何鉴别伪需求" aria-label="上一篇: 如何鉴别伪需求">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/kubernetes\/kubernetes-install\/';
+        
+          this.page.identifier = '\/post\/workrecords\/kubernetes\/kubernetes-install\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2024 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/diary/2023%E5%B9%B4%E6%80%BB%E7%BB%93/" data-tooltip="2023年总结" aria-label="下一篇: 2023年总结">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/lifethinking/%E5%A6%82%E4%BD%95%E9%89%B4%E5%88%AB%E4%BC%AA%E9%9C%80%E6%B1%82/" data-tooltip="如何鉴别伪需求" aria-label="上一篇: 如何鉴别伪需求">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+

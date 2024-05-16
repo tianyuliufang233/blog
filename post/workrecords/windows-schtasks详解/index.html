@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/windows-schtasks%E8%AF%A6%E8%A7%A3\/",
+  "keywords":"[案例]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="案例">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Schtasks详解">
+<meta name="twitter:title" content="Windows Schtasks详解">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/windows-schtasks%E8%AF%A6%E8%A7%A3/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/windows-schtasks%E8%AF%A6%E8%A7%A3/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2023-08-14T09:59:32">
+  
+  
+    <meta property="article:modified_time" content="2023-08-14T09:59:32">
+  
+  
+  
+    
+      <meta property="article:section" content="工作">
+    
+      <meta property="article:section" content="记录">
+    
+  
+  
+    
+      <meta property="article:tag" content="工作">
+    
+      <meta property="article:tag" content="记录">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>Windows Schtasks详解</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/workrecords/windows-schtasks%E8%AF%A6%E8%A7%A3/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Windows Schtasks详解
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2023-08-14T09:59:32&#43;08:00">
+        
+  
+  
+  
+  
+    2023-08-14
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e5%b7%a5%e4%bd%9c">工作</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%ae%b0%e5%bd%95">记录</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <h2 id="语法">语法</h2>
+<pre tabindex="0"><code>schtasks /change
+schtasks /create
+schtasks /delete
+schtasks /end
+schtasks /query
+schtasks /run
+</code></pre><h2 id="参数">参数</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>schtasks change</td>
+<td>更改任务的下一个或多个属性：<!-- raw HTML omitted --> - 任务运行的程序(/tr) <!-- raw HTML omitted --> - 运行任务的用户账户(/ru) <!-- raw HTML omitted --> - 用户账户的密码(/rp) <!-- raw HTML omitted --> - 将仅交互属性添加到任务(/it)</td>
+</tr>
+<tr>
+<td>schtasks create</td>
+<td>计划新任务</td>
+</tr>
+<tr>
+<td>schtasks delete</td>
+<td>删除计划任务</td>
+</tr>
+<tr>
+<td>schtasks end</td>
+<td>停止任务启动的程序</td>
+</tr>
+<tr>
+<td>schtasks query</td>
+<td>显示计划在计算机上运行的任务</td>
+</tr>
+<tr>
+<td>schtasks run</td>
+<td>立即启动计划任务。运行操作会忽略计划，而是使用任务中保存的程序文件位置、用户账户和密码立即运行任务。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create-语法">create 语法</h2>
+<pre tabindex="0"><code>schtasks /create /sc &lt;scheduletype&gt; /tn &lt;taskname&gt; /tr &lt;taskrun&gt; [/s &lt;computer&gt; [/u [&lt;domain&gt;\]&lt;user&gt; [/p &lt;password&gt;]]] [/ru {[&lt;domain&gt;\]&lt;user&gt; | system}] [/rp &lt;password&gt;] [/mo &lt;modifier&gt;] [/d &lt;day&gt;[,&lt;day&gt;...] | *] [/m &lt;month&gt;[,&lt;month&gt;...]] [/i &lt;idletime&gt;] [/st &lt;starttime&gt;] [/ri &lt;interval&gt;] [/rl &lt;level&gt;] [{/et &lt;endtime&gt; | /du &lt;duration&gt;} [/k]] [/sd &lt;startdate&gt;] [/ed &lt;enddate&gt;] [/it] [/np] [/z] [/f]
+</code></pre><h2 id="参数-1">参数</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/sc <!-- raw HTML omitted --></td>
+<td>指定计划类型。 有效值包括： MINUTE - 指定任务运行前的分钟数。 HOURLY - 指定任务运行前的小时数。 DAILY - 指定任务运行前的天数。 WEEKLY - 指定任务运行前的周数。 MONTHLY - 指定任务运行前的月数。 ONCE - 指定该任务在指定的日期和时间运行一次。 ONSTART - 指定任务在每次系统启动时运行。 可以指定开始日期，也可以在系统下次启动时运行任务。 ONLOGON - 指定任务在用户（任何用户）登录时运行。 可以指定一个日期，也可以在用户下次登录时运行任务。 ONIDLE - 指定任务在系统空闲时间段运行。 可以指定一个日期，也可以在系统下次空闲时运行任务。</td>
+</tr>
+<tr>
+<td>/tn <!-- raw HTML omitted --></td>
+<td>指定任务名称。 系统上的每个任务必须具有唯一的名称，并且必须符合文件名规则，不超过 238 个字符。 使用引号将包含空格的名称括起来。 若要将计划任务存储在其他文件夹中，请运行 /tn&lt;folder name\task name&gt;。</td>
+</tr>
+<tr>
+<td>/tr <!-- raw HTML omitted --></td>
+<td>指定任务运行的程序或命令。 键入可执行文件、脚本文件或批处理文件的完全限定路径和文件名。 该路径名称不得超过 262 个字符。 如果不添加路径，则 schtasks 假定该文件位于 <!-- raw HTML omitted -->\System32 目录中。</td>
+</tr>
+<tr>
+<td>/s <!-- raw HTML omitted --></td>
+<td>指定远程计算机的名称或 IP 地址（带反斜杠或不带反斜杠）。 默认为本地计算机。</td>
+</tr>
+<tr>
+<td>/u [<!-- raw HTML omitted -->]</td>
+<td>使用指定用户帐户的权限来运行该命令。 默认值为本地计算机的当前用户的权限。 /u 和 /p 参数仅在使用 /s 时有效。 指定帐户的权限用于计划任务和运行任务。 若要使用其他用户的权限运行任务，请使用 /ru 参数。 用户帐户必须是远程计算机上 Administrators 组的成员。 此外，本地计算机必须与远程计算机位于同一域中，或者必须位于远程计算机域信任的域中。</td>
+</tr>
+<tr>
+<td>/p <!-- raw HTML omitted --></td>
+<td>指定 /u 参数中指定的用户帐户的密码。 如果在不使用 /p 形参或 password 实参的情况下使用 /u 形参，则 schtasks 将提示你输入密码。 /u 和 /p 参数仅在使用 /s 时有效。</td>
+</tr>
+<tr>
+<td>/ru {[<!-- raw HTML omitted -->]<!-- raw HTML omitted --> or system}</td>
+<td>使用指定用户帐户的权限运行任务。 默认情况下，使用本地计算机的当前用户的权限运行任务，或者使用 /u 参数指定的用户权限（如果包含）。 在本地或远程计算机上计划任务时，/ru 参数有效。 有效选项包括： Domain - 指定备用用户帐户。 System - 指定 Local System 帐户，即操作系统和系统服务所使用的高特权帐户。</td>
+</tr>
+<tr>
+<td>/rp <!-- raw HTML omitted --></td>
+<td>指定现有用户帐户或 /ru 参数指定的用户帐户的密码。 如果在指定用户帐户时未使用此参数，SchTasks.exe 将在下次登录时提示输入密码。 不要将 /rp 参数用于通过 System 帐户凭据 (/ru System) 运行的任务。 System 帐户没有密码，SchTasks.exe 不提示输入密码。</td>
+</tr>
+<tr>
+<td>/mo <!-- raw HTML omitted --></td>
+<td>指定任务在其计划类型中运行的频率。 有效选项包括： MINUTE - 指定任务每隔 <!-- raw HTML omitted --> 分钟运行一次。 可以使用介于 1 - 1439 分钟之间的任何值。 默认值为 1 分钟。 HOURLY - 指定任务每隔 <!-- raw HTML omitted --> 小时运行一次。 可以使用介于 1 - 23 小时之间的任何值。 默认值为 1 小时。 DAILY - 指定任务每隔 <!-- raw HTML omitted --> 天运行一次。 可以使用介于 1 - 365 天之间的任何值。 默认值为 1 天。 WEEKLY - 指定任务每隔 <!-- raw HTML omitted --> 周运行一次。 可以使用介于 1 - 52 周之间的任何值。 默认值为 1 周。 MONTHLY - 指定任务每隔 <!-- raw HTML omitted --> 月运行一次。 你可以使用以下任意值： 介于 1 到 12 月的数字 LASTDAY - 在月份的最后一天运行任务    FIRST、SECOND、THIRD 或 FOURTH 以及 /d <!-- raw HTML omitted --> 参数 - 指定运行任务的特定周和日期。 例如，在当月的第三个星期三运行任务。 ONCE - 指定任务运行一次。 ONSTART - 指定任务在启动时运行。 ONLOGON - 指定在 /ru 参数指定的用户登录时运行任务。 ONIDLE - 指定任务在系统空闲后（空闲分钟数由 /i 参数指定）运行</td>
+</tr>
+<tr>
+<td>/d DAY[,DAY&hellip;]</td>
+<td>指定任务在其计划类型中运行的频率。 有效选项包括： WEEKLY - 通过提供介于 1-52 周之间的值来指定任务每周运行一次。 （可选）还可以通过添加 MON - SUN 的值或 [MON - SUN&hellip;] 来添加一周中的特定日期。 MONTHLY - 通过提供 FIRST、SECOND、THIRD、FOURTH、LAST 的值，指定任务每月每周运行一次。 （可选）还可以通过添加 MON - SUN 的值或提供介于 1 到 12 个月的数字来添加一周中的特定日期。 如果使用此选项，还可以通过提供介于 1-31 之间的数字来添加月份的特定日期。 注意：日期值 1 - 31 仅在没有 /m 参数的情况下有效，或者如果 /mo 参数为每月 (1 - 12) 才有效。 默认值为第 1 天（每月的第一天）。</td>
+</tr>
+<tr>
+<td>/m MONTH[,MONTH&hellip;]</td>
+<td>指定应运行计划任务的月份。 有效选项包括 JAN - DEC 和 *（每月）。 /m 参数仅对 MONTHLY 计划有效。 使用 LASTDAY 修饰符时，该参数是必需的。 否则，该参数为可选参数，默认值为 *（每月）。</td>
+</tr>
+<tr>
+<td>/i <!-- raw HTML omitted --></td>
+<td>指定计算机在任务开始前处于空闲状态的分钟数。 有效值为介于 1 到 999 的整数。 此参数仅对 ONIDLE 计划有效，因此是必需的。</td>
+</tr>
+<tr>
+<td>/st <!-- raw HTML omitted --></td>
+<td>使用 24 小时时间格式 HH:mm 指定任务的开始时间。 默认值为本地计算机的当前时间。 /st 参数对 MINUTE、HOURLY、DAILY、WEEKLY、MONTHLY 和 ONCE 计划有效。 对于 ONCE 计划，该参数是必需的。</td>
+</tr>
+<tr>
+<td>/ri <!-- raw HTML omitted --></td>
+<td>指定计划任务的重复间隔（分钟）。 此参数对以下计划类型不适应：MINUTE、HOURLY、ONSTART、ONLOGON 和 ONIDLE。 有效范围为 1 - 599940（599940 分钟 = 9999 小时）。 如果指定了 /et 或 /du 参数，则默认值为“10 分钟”。</td>
+</tr>
+<tr>
+<td>/rl <!-- raw HTML omitted --></td>
+<td>指定作业的运行级别。 可接受的值为 LIMITED（计划任务将以最低级别的权限运行，例如标准用户帐户）和 HIGHEST（计划任务将以最高级别的权限运行，例如超级用户帐户）。 （注意：LIMITED 为默认值）。</td>
+</tr>
+<tr>
+<td>/et <!-- raw HTML omitted --></td>
+<td>以 <a href="HH:MM">HH:MM</a> 24 小时格式指定分钟或小时任务计划结束的时间。 在指定的结束时间过后，在开始时间重复之前，schtasks 不会再次启动任务。 默认情况下，任务计划没有结束时间。 此参数为可选参数，仅对 MINUTE 或 HOURLY 计划有效。</td>
+</tr>
+<tr>
+<td>/du <!-- raw HTML omitted --></td>
+<td>以 <a href="HHHH:MM">HHHH:MM</a> 24 小时格式指定分钟或小时计划的最长时间。 在指定的时间过后，在开始时间重复之前，schtask 不会再次启动任务。 默认情况下，任务计划没有最长持续时间。 此参数为可选参数，仅对 MINUTE 或 HOURLY 计划有效。</td>
+</tr>
+<tr>
+<td>/k</td>
+<td>在 /et 或 /du 指定的时间停止任务运行的程序。 如果没有 /k，则 schtasks 不会在程序达到 /et 或 /du 指定的时间后再次启动程序，也不会停止程序（如果程序仍在运行）。 此参数为可选参数，仅对 MINUTE 或 HOURLY 计划有效。</td>
+</tr>
+<tr>
+<td>/sd <!-- raw HTML omitted --></td>
+<td>指定任务计划的开始日期。 默认值为本地计算机的当前日期。 Startdate 的格式因“区域和语言选项”中为本地计算机选择的区域设置而异。 每个区域设置只有一种格式有效。 有效的日期格式包括（请确保选择的格式与在本地计算机上的“区域和语言选项”中为“短日期”选择的格式最相似）： <!-- raw HTML omitted -->// - 指定使用按月优先格式，例如英语（美国）和西班牙语（巴拿马）。 <!-- raw HTML omitted -->// - 指定使用按日优先格式，例如保加利亚语和荷兰语（荷兰）。 <!-- raw HTML omitted -->// - 指定使用按年优先格式，例如瑞典语和法语（加拿大）。</td>
+</tr>
+<tr>
+<td>/ed <!-- raw HTML omitted --></td>
+<td>指定计划的结束日期。 此参数是可选的。 此参数在 ONCE、ONSTART、ONLOGON 或 ONIDLE 计划中无效。 默认情况下，计划没有结束日期。 默认值为本地计算机的当前日期。 Enddate 的格式因“区域和语言选项”中为本地计算机选择的区域设置而异。 每个区域设置只有一种格式有效。 有效的日期格式包括（请确保选择的格式与在本地计算机上的“区域和语言选项”中为“短日期”选择的格式最相似）： <!-- raw HTML omitted -->// - 指定使用按月优先格式，例如英语（美国）和西班牙语（巴拿马）。 <!-- raw HTML omitted -->// - 指定使用按日优先格式，例如保加利亚语和荷兰语（荷兰）。 <!-- raw HTML omitted -->// - 指定使用按年优先格式，例如瑞典语和法语（加拿大）。</td>
+</tr>
+<tr>
+<td>/it</td>
+<td>指定仅当以用户身份运行（运行任务的用户帐户）登录到计算机时才运行计划任务。 此参数对使用系统权限运行的任务或已设置了仅交互式属性的任务没有影响。 不能使用更改命令从任务中删除仅交互式属性。 默认情况下，以用户身份运行是计划任务时本地计算机的当前用户，或是 /u 参数指定的帐户（如果有使用）。 但是，如果命令包含 /ru 参数，则以用户身份运行的是 /ru 参数指定的帐户。</td>
+</tr>
+<tr>
+<td>/np</td>
+<td>不存储任何密码。 任务以给定用户身份以非交互方式运行。 只有本地资源可用。</td>
+</tr>
+<tr>
+<td>/z</td>
+<td>指定在任务完成其计划后删除任务。</td>
+</tr>
+<tr>
+<td>/f</td>
+<td>指定创建任务，如果指定的任务已存在，则禁止显示警告。</td>
+</tr>
+<tr>
+<td>/?</td>
+<td>在命令提示符下显示帮助。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="案例">案例</h3>
+<pre tabindex="0"><code>schtasks /create 
+</code></pre>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E5%B7%A5%E4%BD%9C/">工作</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/kubernetes/kubernetes-%E8%B0%83%E5%BA%A6%E6%8A%A2%E5%8D%A0%E5%92%8C%E9%A9%B1%E9%80%90/" data-tooltip="Kubernetes 调度、抢占和驱逐" aria-label="下一篇: Kubernetes 调度、抢占和驱逐">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/virtualmachine/" data-tooltip="VirtualMachine" aria-label="上一篇: VirtualMachine">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/windows-schtasks%E8%AF%A6%E8%A7%A3\/';
+        
+          this.page.identifier = '\/post\/workrecords\/windows-schtasks%E8%AF%A6%E8%A7%A3\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2024 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/kubernetes/kubernetes-%E8%B0%83%E5%BA%A6%E6%8A%A2%E5%8D%A0%E5%92%8C%E9%A9%B1%E9%80%90/" data-tooltip="Kubernetes 调度、抢占和驱逐" aria-label="下一篇: Kubernetes 调度、抢占和驱逐">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/virtualmachine/" data-tooltip="VirtualMachine" aria-label="上一篇: VirtualMachine">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+

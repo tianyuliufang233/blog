@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"\u003cp\u003eperf原理\u003c\/p\u003e",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/perf%E5%8E%9F%E7%90%86\/",
+  "keywords":"[案例]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="案例">
+<meta name="description" content="perf原理">
+
+
+<meta property="og:description" content="perf原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Perf原理">
+<meta name="twitter:title" content="Perf原理">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/perf%E5%8E%9F%E7%90%86/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/perf%E5%8E%9F%E7%90%86/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="perf原理">
+<meta name="twitter:description" content="perf原理">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2023-09-19T10:59:07">
+  
+  
+    <meta property="article:modified_time" content="2023-09-19T10:59:07">
+  
+  
+  
+    
+      <meta property="article:section" content="工作">
+    
+      <meta property="article:section" content="记录">
+    
+  
+  
+    
+      <meta property="article:tag" content="工作">
+    
+      <meta property="article:tag" content="记录">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>Perf原理</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/workrecords/perf%E5%8E%9F%E7%90%86/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Perf原理
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2023-09-19T10:59:07&#43;08:00">
+        
+  
+  
+  
+  
+    2023-09-19
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e5%b7%a5%e4%bd%9c">工作</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%ae%b0%e5%bd%95">记录</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p>perf原理</p>
+<h1 id="perf原理">perf原理</h1>
+<p>Linux性能计数器是一个基于内核的子系统，它提供一个性能分析框架，如硬件(cpu、PMU(Performance Monitoring Unit))功能和软件（软件计数器、tracepoint）功能。</p>
+<p>Perf可以对程序进行函数级别的采样，从而了解程序的性能瓶颈。基本原理是：每隔一个固定时间，就是cpu上产生一个中断，看当前哪个进程、哪个函数，然后给对应的进程和函数加一个统计值，这样就知道cpu有多少时间在某个进程或某个函数上。</p>
+<pre tabindex="0"><code>sudo perf record -a --call-graph dwarf -p `ps aux | grep &#34;xxx&#34; | grep -v grep | cut -c 9-15` -d 1 -b
+</code></pre><h1 id="perf-命令">perf 命令</h1>
+<p>命令结构   perf [&ndash;version] [&ndash;help] [OPTIONS] COMMAND [ARGS]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>annotate</td>
+<td>读取 perf.data(通过perf record创建) 展示注释代码</td>
+</tr>
+<tr>
+<td>bench</td>
+<td>基准测试的一般框架，对系统调度、内存访问、epoll、futex进行压力测试</td>
+</tr>
+<tr>
+<td>buildid-cache</td>
+<td>管理buildid cache</td>
+</tr>
+<tr>
+<td>buildid-list</td>
+<td>列出一个perf.data文件的buildids</td>
+</tr>
+<tr>
+<td>c2c</td>
+<td>共享数据C2C/HITM分析</td>
+</tr>
+<tr>
+<td>config</td>
+<td>在配置文件中获取和设置变量</td>
+</tr>
+<tr>
+<td>data</td>
+<td>数据文件相关的处理</td>
+</tr>
+<tr>
+<td>diff</td>
+<td>读取 perf.data文件并显示差异</td>
+</tr>
+<tr>
+<td>evlist</td>
+<td>列出perf.data文件的事件名称</td>
+</tr>
+<tr>
+<td>ftrace</td>
+<td>内核ftrace功能的简单包装器</td>
+</tr>
+<tr>
+<td>inject</td>
+<td>筛选以使用其他信息扩充事件流</td>
+</tr>
+<tr>
+<td>kallsyms</td>
+<td>在运行内核的中搜索标志</td>
+</tr>
+<tr>
+<td>kmem</td>
+<td>用于跟踪/测量内核内存属性的工具</td>
+</tr>
+<tr>
+<td>kvm</td>
+<td>用于跟踪/测量kvm来宾系统</td>
+</tr>
+<tr>
+<td>list</td>
+<td>列出所有事件符号类型</td>
+</tr>
+<tr>
+<td>lock</td>
+<td>分析事件锁</td>
+</tr>
+<tr>
+<td>mem</td>
+<td>配置文件内存访问</td>
+</tr>
+<tr>
+<td>record</td>
+<td>运行命令并将其配置文件记录到perf.data中</td>
+</tr>
+<tr>
+<td>report</td>
+<td>读取perf.data(由perf记录创建)并显示配置文件</td>
+</tr>
+<tr>
+<td>sched</td>
+<td>用于跟踪/测量调度程序属性</td>
+</tr>
+<tr>
+<td>script</td>
+<td>读取perf.data(由perf记录创建)并显示跟踪输出</td>
+</tr>
+<tr>
+<td>stat</td>
+<td>运行命令并收集性能计数器统计信息</td>
+</tr>
+<tr>
+<td>test</td>
+<td>运行全流程测试</td>
+</tr>
+<tr>
+<td>timechart</td>
+<td>可视化工作负载期间整体系统行为的工具</td>
+</tr>
+<tr>
+<td>top</td>
+<td>系统分析工具</td>
+</tr>
+<tr>
+<td>probe</td>
+<td>定义新的动态跟踪点</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>启动工具</td>
+</tr>
+</tbody>
+</table>
+<h1 id="常用参数-stat">常用参数 stat</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-e &ndash;event</td>
+<td>选择事件符号名称(sys/bus/event_source/drices/<!-- raw HTML omitted -->/format/*)</td>
+</tr>
+<tr>
+<td>-i &ndash;no-inherit</td>
+<td>子任务不继承计数器</td>
+</tr>
+<tr>
+<td>-p &ndash;pid</td>
+<td>在现有进程上统计事件状态</td>
+</tr>
+<tr>
+<td>-t &ndash;tid</td>
+<td>在现有线程上统计事件状态</td>
+</tr>
+<tr>
+<td>-a &ndash;all-cpus</td>
+<td>全系统范围所有cpu</td>
+</tr>
+<tr>
+<td>-c &ndash;scale</td>
+<td>缩放/规范化 计数器值</td>
+</tr>
+<tr>
+<td>-d &ndash;detailed</td>
+<td>打印更详细的统计数据，最多可指定3次  -d  详细事件、L1和LLC数据缓存。-d -d 更多详细事件，DTLB和ITLB事件。-d -d -d 非常详细的事件，添加预取事件</td>
+</tr>
+<tr>
+<td>-r &ndash;repeat=</td>
+<td>重复命令并打印平均值+stddev(max:100)  0表示永远</td>
+</tr>
+<tr>
+<td>-B &ndash;big-num</td>
+<td>根据区域设置打印带有数千个分隔符的大数字</td>
+</tr>
+<tr>
+<td>-C &ndash;cpu</td>
+<td>仅依靠提供的cpu列表计数。多个cpu可以以逗号分隔的形式提供，不带空格的列表：0，1.cpu的使用范围使用-表示：0-2指定。在每线程模式下，将忽略此选项。-a选项仍然是激活系统范围监视所必需的。默认值是依靠所有cpu。</td>
+</tr>
+<tr>
+<td>-A &ndash;no-aggr</td>
+<td>不聚合所有受监视的cpu计数</td>
+</tr>
+<tr>
+<td>-n &ndash;null</td>
+<td>不启动任何计数器</td>
+</tr>
+<tr>
+<td>-v &ndash;verbose</td>
+<td>更详细，显示计数器 打开错误等</td>
+</tr>
+<tr>
+<td>-x  &ndash;field-separator SEP</td>
+<td>使用CSV样式输出打印计数，以便轻松直接导入电子表格。列由SEP中指定的字符串分隔</td>
+</tr>
+<tr>
+<td>&ndash;table</td>
+<td>以表格显示每次运行的时间(-r 选项)，如：性能统计  &ndash;null -r 5 &ndash;table 性能调度管道。性能计数器统计数据(5次运行)</td>
+</tr>
+<tr>
+<td>-G  -cgroup</td>
+<td>仅在名为&quot;name&quot;的容器cgroup中监视。此选项仅在per-cpu模式。name在受监视的cpu上运行时收到监控。可以提供多个cgroups。</td>
+</tr>
+<tr>
+<td>-o  &ndash;output</td>
+<td>将输出打印到指定文件中</td>
+</tr>
+<tr>
+<td>&ndash;append</td>
+<td>追加到-o指定的文件中，如果未指定-o，则忽略</td>
+</tr>
+<tr>
+<td>&ndash;log-fd</td>
+<td>输出记录到fd，而不是stderr。与&ndash;output互补</td>
+</tr>
+<tr>
+<td>&ndash;pre  &ndash;post</td>
+<td>测量前 测量后挂钩</td>
+</tr>
+<tr>
+<td>-I  &ndash;interval-print msecs</td>
+<td>每N毫秒打印计数增量(最小值:  1毫秒) 开销百分比可能很高，在某些情况下，如间隔小于100毫秒。请谨慎使用</td>
+</tr>
+<tr>
+<td>&ndash;interval-count</td>
+<td>固定次数的打印计数增量。合格选项与&quot;-l&quot;选项一起使用</td>
+</tr>
+<tr>
+<td>&ndash;interval-clear</td>
+<td>下一个间隔之前清除屏幕。</td>
+</tr>
+<tr>
+<td>&ndash;timeout</td>
+<td>停止性能统计信息会话并在N毫秒后打印计数增量(最小值：10毫秒)。&quot;-l&quot;选项不支持此选项。</td>
+</tr>
+<tr>
+<td>&ndash;metric-only</td>
+<td>仅打印计算指标。将它们打印在一行中。不显示任何原始值。不支持&ndash;per-thread</td>
+</tr>
+<tr>
+<td>&ndash;per-socket</td>
+<td>系统范围模式测量的每个处理器插槽的聚合计数。用于检测套接字之间不平衡的有用模式。输出包括插槽编号和该插槽上的联机处理器数量。</td>
+</tr>
+<tr>
+<td>&ndash;per-die</td>
+<td>用于系统范围模式测量的每个处理器芯片的总计数。这个模式检测模具之间不平衡的有用模式。</td>
+</tr>
+<tr>
+<td>&ndash;per-core</td>
+<td>系统范围模式测量的每个物理处理器的聚合计数。</td>
+</tr>
+<tr>
+<td>&ndash;per-thread</td>
+<td>监视线程(-t 选项)或进程(-p时，每个受监控线程的聚合计数选项)</td>
+</tr>
+<tr>
+<td>-D &ndash;delay msecs</td>
+<td>启动程序后，等待毫秒后再进行测量。过滤掉程序启动阶段。</td>
+</tr>
+<tr>
+<td>-T, &ndash;transaction</td>
+<td>打印事务执行统计信息(如果支持)</td>
+</tr>
+<tr>
+<td>-i file  &ndash;input file</td>
+<td>input file name</td>
+</tr>
+<tr>
+<td>&ndash;per-socket</td>
+<td>用于系统范围模式测量的每个处理器socket 的聚合计数</td>
+</tr>
+<tr>
+<td>&ndash;per-die</td>
+<td>用于系统范围模式测量的每个处理器芯片的总计数</td>
+</tr>
+<tr>
+<td>&ndash;per-core</td>
+<td>用于系统范围模式测量的每个物理处理器的聚合计数</td>
+</tr>
+<tr>
+<td>-M  &ndash;metrics</td>
+<td>打印以逗号分隔的列表中指定的衡量指标组。对于一组所有指标从组中添加。系统会自动测量指标中的事件。见性能列出可能的指标和指标组的输出。</td>
+</tr>
+<tr>
+<td>-A  &ndash;no-aggr</td>
+<td>不聚合所有受监控cpu的计数</td>
+</tr>
+<tr>
+<td>&ndash;topdown</td>
+<td>打印自上而下的 1 级指标（如果 CPU 支持）。这允许通过将消耗的周期分解为前端绑定、后端绑定、错误推测和停用来确定 CPU 密集型工作负载的 CPU 管道中的瓶颈</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常用top命令">常用top命令</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a  &ndash;all-cpus</td>
+<td>系统范围的集和</td>
+</tr>
+<tr>
+<td>-c  &ndash;count</td>
+<td>事件采样周期</td>
+</tr>
+<tr>
+<td>-C  &ndash;cpu</td>
+<td>仅监视体哦那个的cpu列表。多个cpu可以作为逗号分隔的列表提供：0，1.cpu的范围用-：0-2指定。默认监视所有cpu。</td>
+</tr>
+<tr>
+<td>-d &ndash;delay</td>
+<td>刷新之间间隔秒数</td>
+</tr>
+<tr>
+<td>-e &ndash;event</td>
+<td>选择pmu事件。悬着可以是符号事件名称(使用perf列表列出所有事件)或rnn形式的原始pmu事件(eventsel+umask)，其中NNN是十六进制事件描述符。</td>
+</tr>
+<tr>
+<td>-E  &ndash;entries</td>
+<td>展示多功能</td>
+</tr>
+<tr>
+<td>-f  &ndash;count-filter</td>
+<td>只展示事件数超过此值的函数</td>
+</tr>
+<tr>
+<td>&ndash;group</td>
+<td>将计数器放入计数器组</td>
+</tr>
+<tr>
+<td>-F  &ndash;freq</td>
+<td>在此频率下配置文件。</td>
+</tr>
+<tr>
+<td>-i &ndash;inherit</td>
+<td>子任务不继承计数器</td>
+</tr>
+<tr>
+<td>-k  &ndash;vmlinux</td>
+<td>vmlinux的路径。批注功能必需</td>
+</tr>
+<tr>
+<td>&ndash;ingore-vmlinux</td>
+<td>忽略vmlinux文件</td>
+</tr>
+<tr>
+<td>-m &ndash;mmap-pages=</td>
+<td>mmap数据页数(必须是2的幂)或附加的大小规格单位字符 - B/K/M/G。大小向上舍入为最近的页幂为两个值</td>
+</tr>
+<tr>
+<td>-p  &ndash;pid</td>
+<td>分析现有进程ID上的事件(逗号分隔列表)</td>
+</tr>
+<tr>
+<td>-t  &ndash;tid</td>
+<td>分析现有线程ID上的事件(逗号分隔列表)</td>
+</tr>
+<tr>
+<td>-u &ndash;uid</td>
+<td>记录uid拥有的线程中的事件。姓名或者编号</td>
+</tr>
+<tr>
+<td>-r  &ndash;realtime</td>
+<td>使用此RT SCHED_FIFO优先级收集数据</td>
+</tr>
+<tr>
+<td>&ndash;sym-annotate</td>
+<td>注释此符号</td>
+</tr>
+<tr>
+<td>-K  &ndash;hide_kernel_symbols</td>
+<td>隐藏内核符号</td>
+</tr>
+<tr>
+<td>-U &ndash;hide_user_symbols</td>
+<td>隐藏用户符号</td>
+</tr>
+<tr>
+<td>&ndash;demangle-kernel</td>
+<td>动态内核符号</td>
+</tr>
+<tr>
+<td>-D &ndash;dump-symtab</td>
+<td>转储用于分析的符号表</td>
+</tr>
+<tr>
+<td>-v &ndash;verbose</td>
+<td>更详细(显示打开的错误计数)</td>
+</tr>
+<tr>
+<td>-z  &ndash;zero</td>
+<td>显示更新的历史记录为零</td>
+</tr>
+<tr>
+<td>-s  &ndash;sort</td>
+<td>按键排序: pid、comm、dso、符号、父项、srcline、权重、local_weight、终止、in_tx、事务、开销、样本、周期。</td>
+</tr>
+<tr>
+<td>&ndash;fields</td>
+<td>指定输出字段-可以csv格式指定多个键。以下字段可用:间接费用、overhead_sys、overhead_us、overhead_children</td>
+</tr>
+</tbody>
+</table>
+<h2 id="record-参数">record 参数</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-e &ndash;event</td>
+<td>选择pmu事件。可以选择一个符号事件，一行pmu事件，符号形成的pmu事件，</td>
+</tr>
+<tr>
+<td>&ndash;filter</td>
+<td>事件筛选器。此选项遵循-e，该选择器选择跟踪点事件或硬件跟踪pmu。</td>
+</tr>
+<tr>
+<td>-a &ndash;all-cpus</td>
+<td>从所有cpu收集系统范围(如果未指定目标，则默认)</td>
+</tr>
+<tr>
+<td>-p &ndash;pid</td>
+<td>记录现有进程ID上的事件(逗号分隔列表)</td>
+</tr>
+<tr>
+<td>-t  &ndash;tid</td>
+<td>记录现有线程ID 上的事件(逗号分隔列表)。这个选项通常默认关闭，开启需要添加 &ndash;inherit</td>
+</tr>
+<tr>
+<td>-r  &ndash;realtime</td>
+<td>使用此 RT SCHED_FIFO优先级收集数据</td>
+</tr>
+<tr>
+<td>&ndash;no-buffering</td>
+<td>不使用缓冲收集数据</td>
+</tr>
+<tr>
+<td>-c  &ndash;count</td>
+<td>采样事件周期</td>
+</tr>
+<tr>
+<td>-o &ndash;output</td>
+<td>输出文件名</td>
+</tr>
+<tr>
+<td>-i  &ndash;no-inherit</td>
+<td>子任务不继承计数器</td>
+</tr>
+<tr>
+<td>-F  &ndash;freq</td>
+<td>在此凭率下配置文件。使用当前最大频率为max，即kernel.perf_event_max_sample_rate sysctl中的值。</td>
+</tr>
+<tr>
+<td>&ndash;strict-freq</td>
+<td>如果无法使用指定的凭率，则为失败</td>
+</tr>
+<tr>
+<td>-m &ndash;mmap-pages</td>
+<td>mmap数据页数(必须是2的幂)或附加单位字符 - B/K/M/G的大小规范。大小向上舍入为最接近的页次方为2的值。通过添加逗号，指定AUX区域跟踪的map页数</td>
+</tr>
+<tr>
+<td>&ndash;group</td>
+<td>将所有事件放在一个事件组中。</td>
+</tr>
+<tr>
+<td>-g  &ndash;call-graph</td>
+<td>开启调用图(堆栈链/回溯)记录</td>
+</tr>
+<tr>
+<td>-q  &ndash;quite</td>
+<td>不打印任何消息，用于脚本</td>
+</tr>
+<tr>
+<td>-v    &ndash;verbose</td>
+<td>更详细(显示计数器打开的错误等)</td>
+</tr>
+<tr>
+<td>-s  &ndash;stat</td>
+<td>记录每个线程的事件计数。将其与性能报告-T一起使用以查看值</td>
+</tr>
+<tr>
+<td>-d  &ndash;data</td>
+<td>记录示例虚拟地址</td>
+</tr>
+<tr>
+<td>&ndash;phys-data</td>
+<td>记录实例物理地址</td>
+</tr>
+<tr>
+<td>-T  &ndash;timestamp</td>
+<td>记录实例时间戳。将其与perf报告 -D 一起使用以查看事件戳</td>
+</tr>
+<tr>
+<td>-P &ndash;period</td>
+<td>记录采样周期</td>
+</tr>
+<tr>
+<td>&ndash;sample-cpu</td>
+<td>记录实例cpu</td>
+</tr>
+<tr>
+<td>-n &ndash;no-samples</td>
+<td>不采样</td>
+</tr>
+<tr>
+<td>-R  &ndash;raw-samples</td>
+<td>从所有打开的计数器中收集原始样本记录(跟踪点计数器的默认值)</td>
+</tr>
+<tr>
+<td>-c  &ndash;cpu</td>
+<td>仅在提供的cpu列表中收集样本。多个cpu可以作为逗号分隔的列表提供，没有空格: 0,1。cpu的范围使用-：0-2指定。在启用继承模式的每线程模式下(默认)，仅当线程在指定的cpu上执行时，才会捕获示例</td>
+</tr>
+<tr>
+<td>-B &ndash;no-buildid</td>
+<td>不将二进制文件生成的id保存到perf.data文件中。这会在录制过程中的最后一步花费很长时间，因为它需要处理查找MMAP记录的所有事件</td>
+</tr>
+<tr>
+<td>-N  &ndash;no-buildid-cache</td>
+<td>不更新构建id缓存。在perf.data文件(包括构建id)中的信息足够的情况下，可以节省一些开销。还可以将&quot;record.build-id&quot;配置变量设置为无缓存以具有相同的效果。</td>
+</tr>
+<tr>
+<td>-G  name  &ndash;cgroup  name</td>
+<td>仅在cgroup中监视此选项仅在每核cpu模式下可用。必须挂载cgroup文件系统。监视属于容器&quot;名称&quot;的所有线程。可以提供多个cgroup</td>
+</tr>
+<tr>
+<td>-b  &ndash;branch-any</td>
+<td>启用分支堆栈采样。可以对任何类型的分支进行采样。是 &ndash;branch-filter any的快捷方式。</td>
+</tr>
+<tr>
+<td>-j &ndash;branch-filter</td>
+<td>启用分支堆栈采样。每个样本捕获一系列连续的分支。每个示例捕获的分支数取决于底层硬件、感兴趣的分支类型核执行代码。any、any_call、any_ret、ind_call、call、u、k、hv、in_tx、no_tx、abort_tx、cond、save_type</td>
+</tr>
+<tr>
+<td>&ndash;wight</td>
+<td>启用加权抽样。每个样品记录一个额外的重量，并可与重量和local_wight排序一起显示。</td>
+</tr>
+<tr>
+<td>&ndash;transaction</td>
+<td>记录事务相关事件的事务标志。</td>
+</tr>
+<tr>
+<td>&ndash;per-thread</td>
+<td>使用pre-thread。默认情况下，将创建每个cpu的mmap。此选项将覆盖该选项，并使用每线程mmap。这样做的副作用是继承会自动禁用。</td>
+</tr>
+<tr>
+<td>-D &ndash;delay</td>
+<td>启动程序后，等待几秒后再测量，对于过滤程序的启动阶段很有用。</td>
+</tr>
+<tr>
+<td>-I &ndash;intr-regs</td>
+<td>在中断时捕获机器状态(寄存器)，每个样本的计数器溢出。捕获的寄存器列表取决于体系结构。默认情况下，此选项为关闭状态。</td>
+</tr>
+<tr>
+<td>&ndash;user-regs</td>
+<td>在采样时捕获用户寄存器。于I相同的参数</td>
+</tr>
+<tr>
+<td>&ndash;running-time</td>
+<td>记录读取事件的运行和启用时间</td>
+</tr>
+<tr>
+<td>-k  &ndash;clockid</td>
+<td>设置用于perf_event_type记录种各种时间字段的时钟id。</td>
+</tr>
+<tr>
+<td>-S &ndash;snapshot</td>
+<td>选择aux区域跟踪快照模式。此选项仅对aux区域追踪事件有效。可以指定每个快照要捕获的字节数。</td>
+</tr>
+<tr>
+<td>&ndash;proc-map-timeout</td>
+<td>处理预先存在的线程时，可能需要很长时间，因为文件可能很大。这种情况下，需要超时。默认500秒</td>
+</tr>
+<tr>
+<td>&ndash;switch-events</td>
+<td>记录上下文切换事件</td>
+</tr>
+<tr>
+<td>&ndash;buildid-all</td>
+<td>记录所有dso的构建id，无论是否实际命中。</td>
+</tr>
+<tr>
+<td>&ndash;all-kernel</td>
+<td>将所有使用的事件配置为在内核空间种运行</td>
+</tr>
+<tr>
+<td>&ndash;all-user</td>
+<td>将所有使用的事件配置为在用户空间种运行</td>
+</tr>
+<tr>
+<td>&ndash;timestamp-filename</td>
+<td>将时间戳附加到输出文件名</td>
+</tr>
+<tr>
+<td>&ndash;timestamp-boundary</td>
+<td>记录时间戳边界(第一个/最后一个样本的时间)</td>
+</tr>
+<tr>
+<td>&ndash;switch-output</td>
+<td>生成多个perf.data文件，时间戳前缀，根据模式值切换到新文件：&ldquo;信号&rdquo;  -当收到SIGUSR2(默认值)或 - 当达到大小阈值时，大小应为附加单位字符的数字</td>
+</tr>
+<tr>
+<td>&ndash;dry-run</td>
+<td>解析选项后退出。&ndash;dry-run可用于检测cmdline选项中的错误</td>
+</tr>
+<tr>
+<td>&ndash;tail-synthesize</td>
+<td>不要在记录开始时收集非样本事件，而是在完成输出文件期间收集它们。收集的非样本事件反映了记录完成时系统的状态</td>
+</tr>
+<tr>
+<td>&ndash;overwrite</td>
+<td>使所有事件都使用可重写的环形缓冲区。可重写环形缓冲区的工作方式类似于飞行记录器。当它变满时，内核将覆盖旧的记录因此永远捕获进入perf.data文件。</td>
+</tr>
+</tbody>
+</table>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E5%B7%A5%E4%BD%9C/">工作</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/lifethinking/bing%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E8%AF%AD%E6%B3%95/" data-tooltip="Bing高级搜索语法" aria-label="下一篇: Bing高级搜索语法">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/" data-tooltip="Elasticsearch 常用案例" aria-label="上一篇: Elasticsearch 常用案例">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/perf%E5%8E%9F%E7%90%86\/';
+        
+          this.page.identifier = '\/post\/workrecords\/perf%E5%8E%9F%E7%90%86\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2024 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/lifethinking/bing%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E8%AF%AD%E6%B3%95/" data-tooltip="Bing高级搜索语法" aria-label="下一篇: Bing高级搜索语法">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch-%E5%B8%B8%E7%94%A8%E6%A1%88%E4%BE%8B/" data-tooltip="Elasticsearch 常用案例" aria-label="上一篇: Elasticsearch 常用案例">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+
