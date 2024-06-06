@@ -17,7 +17,7 @@
   },
   "name":"素履虔行",
   "description":"",
-  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/lifethinking\/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83\/",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/elasticsearch%E5%A4%87%E4%BB%BD\/",
   "keywords":"[记录]"
 }
 
@@ -33,20 +33,20 @@
 
 <meta property="og:description" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对未来的思考">
-<meta name="twitter:title" content="对未来的思考">
-<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/lifethinking/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/">
-<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/lifethinking/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/">
+<meta property="og:title" content="Elasticsearch备份">
+<meta name="twitter:title" content="Elasticsearch备份">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch%E5%A4%87%E4%BB%BD/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch%E5%A4%87%E4%BB%BD/">
 <meta property="og:site_name" content="素履虔行">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2024-06-04T15:18:11">
+    <meta property="article:published_time" content="2024-06-06T17:33:15">
   
   
-    <meta property="article:modified_time" content="2024-06-04T15:18:11">
+    <meta property="article:modified_time" content="2024-06-06T17:33:15">
   
   
   
@@ -81,14 +81,14 @@
 
 
 
-    <title>对未来的思考</title>
+    <title>Elasticsearch备份</title>
 
     <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
     
 
     
 
-    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/lifethinking/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/">
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/workrecords/elasticsearch%E5%A4%87%E4%BB%BD/">
 
     
     <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -238,19 +238,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title">
-      对未来的思考
+      Elasticsearch备份
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2024-06-04T15:18:11&#43;08:00">
+      <time datetime="2024-06-06T17:33:15&#43;08:00">
         
   
   
   
   
-    2024-06-04
+    2024-06-06
   
 
       </time>
@@ -272,12 +272,229 @@
           
           <div class="post-content markdown">
             <div class="main-content-wrap">
-              <p>目前面临的情况：</p>
-<ul>
-<li>进需要突破工资上限</li>
-<li>退需要调整工作性质及工作地域范围。
-可能最后还是自媒体、销售性质的岗位吧，创业风险太高了。</li>
-</ul>
+              <pre tabindex="0"><code>GET http://127.0.0.1:9200/system_message/_search
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+  &#34;query&#34;: {
+    &#34;match_all&#34;: {}
+  },
+  &#34;sort&#34;:[
+    {
+        &#34;createTime&#34;: {
+            &#34;order&#34;: &#34;desc&#34;
+        }
+    }
+  ]
+}
+ 
+GET http://127.0.0.1:9200/message_template/_search
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+  &#34;query&#34;: {
+    &#34;match_all&#34;: {}
+  }
+}
+ 
+GET http://127.0.0.1:9200/_cat/indices
+content-type: application/json
+Authorization: Basic ***************
+
+GET http://127.0.0.1:9200/_cat/indices
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_slm/policy
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_snapshot
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_slm/stats
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_snapshot/sync_backup/*
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_snapshot/es_master_cos_backup/*
+content-type: application/json
+Authorization: Basic ***************
+ 
+PUT http://127.0.0.1:9200/_snapshot/sync_backup
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+        &#34;type&#34;: &#34;cos&#34;,
+        &#34;settings&#34;: {
+            &#34;access_key_id&#34;: &#34;********************************************&#34;,
+            &#34;bucket&#34;: &#34;harbor&#34;,
+            &#34;chunk_size&#34;: &#34;500mb&#34;,
+            &#34;compress&#34;: &#34;true&#34;,
+            &#34;access_key_secret&#34;: &#34;***********************************&#34;,
+            &#34;base_path&#34;: &#34;sync_backup&#34;,
+            &#34;region&#34;: &#34;ap-nanjin&#34;
+        }
+    }
+ 
+PUT http://127.0.0.1:9200/_snapshot/sync_backup/snapshot_9
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+    &#34;indices&#34;: &#34;system,message&#34;
+}
+ 
+PUT http://127.0.0.1:9200/_snapshot/es_master_cos_backup/snapshot_9
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+    &#34;indices&#34;: &#34;system,message&#34;
+}
+ 
+DELETE http://127.0.0.1:9200/_snapshot/sync_backup/snapshot_6
+content-type: application/json
+Authorization: Basic ***************
+ 
+DELETE http://127.0.0.1:9200/_snapshot/sync_backup
+content-type: application/json
+Authorization: Basic ***************
+ 
+ 
+ 
+#########################################################
+ 
+ 
+#########################################################
+ 
+ 
+GET http://127.0.0.1:9200/_snapshot
+content-type: application/json
+Authorization: Basic ***************
+ 
+PUT http://127.0.0.1:9200/_snapshot/sync_backup
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+        &#34;type&#34;: &#34;cos&#34;,
+        &#34;settings&#34;: {
+            &#34;access_key_id&#34;: &#34;*********************************&#34;,
+            &#34;bucket&#34;: &#34;harbor&#34;,
+            &#34;chunk_size&#34;: &#34;500mb&#34;,
+            &#34;compress&#34;: &#34;true&#34;,
+            &#34;access_key_secret&#34;: &#34;******************************************&#34;,
+            &#34;base_path&#34;: &#34;sync_backup&#34;,
+            &#34;region&#34;: &#34;ap-nanjin&#34;
+        }
+    }
+ 
+GET http://127.0.0.1:9200/_snapshot/sync_backup/*
+content-type: application/json
+Authorization: Basic ***************
+ 
+PUT http://127.0.0.1:9200/_snapshot/sync_backup/snapshot_6
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+    &#34;indices&#34;: &#34;system,message&#34;
+}
+ 
+PUT http://127.0.0.1:9200/_snapshot/es_master_cos_backup/snapshot_6
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+    &#34;indices&#34;: &#34;system_message,message_template&#34;
+}
+ 
+GET http://127.0.0.1:9200/_cat/indices
+content-type: application/json
+Authorization: Basic ***************
+ 
+DELETE http://127.0.0.1:9200/_snapshot/sync_backup/snapshot_6
+content-type: application/json
+Authorization: Basic ***************
+ 
+DELETE http://127.0.0.1:9200/_snapshot/sync_backup
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/system_message/_search
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+  &#34;query&#34;: {
+    &#34;match_all&#34;: {}
+  },
+  &#34;sort&#34;:[
+    {
+        &#34;updateTime&#34;: {
+            &#34;order&#34;: &#34;asc&#34;
+        }
+    }
+  ]
+}
+ 
+PUT http://127.0.0.1:9200/_snapshot/sync_backup
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+        &#34;type&#34;: &#34;cos&#34;,
+        &#34;settings&#34;: {
+            &#34;access_key_id&#34;: &#34;**************************************************&#34;,
+            &#34;bucket&#34;: &#34;harbor&#34;,
+            &#34;chunk_size&#34;: &#34;500mb&#34;,
+            &#34;compress&#34;: &#34;true&#34;,
+            &#34;access_key_secret&#34;: &#34;******************************&#34;,
+            &#34;base_path&#34;: &#34;sync_backup&#34;,
+            &#34;region&#34;: &#34;ap-nanjin&#34;
+        }
+    }
+ 
+GET http://127.0.0.1:9200/_cat/indices
+content-type: application/json
+Authorization: Basic ***************
+ 
+DELETE http://127.0.0.1:9200/system_message
+content-type: application/json
+Authorization: Basic ***************
+ 
+DELETE http://127.0.0.1:9200/message_template
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_snapshot
+content-type: application/json
+Authorization: Basic ***************
+ 
+GET http://127.0.0.1:9200/_snapshot/sync_backup/*
+content-type: application/json
+Authorization: Basic ***************
+ 
+POST http://127.0.0.1:9200/_snapshot/sync_backup/snapshot_6/_restore
+content-type: application/json
+Authorization: Basic ***************
+ 
+{
+    &#34;indices&#34;: &#34;system,message&#34;
+}
+ 
+GET http://127.0.0.1:9200/_cat/indices
+content-type: application/json
+Authorization: Basic ***************
+</code></pre>
               
 
 
@@ -306,7 +523,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/websocket%E6%B5%8B%E8%AF%95/" data-tooltip="Websocket测试" aria-label="下一篇: Websocket测试">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -314,7 +531,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/" data-tooltip="华为网关路由器配置命令" aria-label="上一篇: 华为网关路由器配置命令">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/websocket%E6%B5%8B%E8%AF%95/" data-tooltip="Websocket测试" aria-label="上一篇: Websocket测试">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -357,9 +574,9 @@
     </div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/lifethinking\/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83\/';
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/workrecords\/elasticsearch%E5%A4%87%E4%BB%BD\/';
         
-          this.page.identifier = '\/post\/lifethinking\/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83\/'
+          this.page.identifier = '\/post\/workrecords\/elasticsearch%E5%A4%87%E4%BB%BD\/'
         
       };
       (function() {
@@ -395,7 +612,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/websocket%E6%B5%8B%E8%AF%95/" data-tooltip="Websocket测试" aria-label="下一篇: Websocket测试">
+            <a class="post-action-btn btn btn--disabled">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -403,7 +620,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/" data-tooltip="华为网关路由器配置命令" aria-label="上一篇: 华为网关路由器配置命令">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/workrecords/websocket%E6%B5%8B%E8%AF%95/" data-tooltip="Websocket测试" aria-label="上一篇: Websocket测试">
           
               <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
               <i class="fa fa-angle-right"></i>
