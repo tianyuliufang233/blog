@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/resource\/workcollection\/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F\/",
+  "keywords":"[记录]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="记录">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DockerHub国内镜像">
+<meta name="twitter:title" content="DockerHub国内镜像">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/resource/workcollection/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/resource/workcollection/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2024-08-07T14:23:55">
+  
+  
+    <meta property="article:modified_time" content="2024-08-07T14:23:55">
+  
+  
+  
+    
+      <meta property="article:section" content="资源">
+    
+      <meta property="article:section" content="工作技巧及思路">
+    
+  
+  
+    
+      <meta property="article:tag" content="阅读">
+    
+      <meta property="article:tag" content="记录">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>DockerHub国内镜像</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/resource/workcollection/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      DockerHub国内镜像
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2024-08-07T14:23:55&#43;08:00">
+        
+  
+  
+  
+  
+    2024-08-07
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%b5%84%e6%ba%90">资源</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e5%b7%a5%e4%bd%9c%e6%8a%80%e5%b7%a7%e5%8f%8a%e6%80%9d%e8%b7%af">工作技巧及思路</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <h1 id="docker-hub-国内镜像源配置">Docker Hub 国内镜像源配置</h1>
+<p>Docker Hub 国内镜像源是指在国内境内提供 Docker 镜像服务的镜像源。由于国际网络带宽等问题，国内用户下载 Docker 镜像通常速度较慢。因此，为了解决这个问题，一些国内的公司和组织提供了 Docker 镜像的国内镜像源，例如阿里云、网易云、百度云等。使用这些镜像源，国内用户可以更快地下载 Docker 镜像，提高使用体验。</p>
+<h2 id="国内有效的镜像源">国内有效的镜像源</h2>
+<p>以下是一些常见的 Docker 国内镜像源：</p>
+<ul>
+<li>网易云 Docker 镜像：http://hub-mirror.c.163.com</li>
+<li>百度云 Docker 镜像：https://mirror.baidubce.com</li>
+<li>腾讯云 Docker 镜像：https://ccr.ccs.tencentyun.com</li>
+<li>Docker Proxy 镜像：https://dockerproxy.com</li>
+<li>阿里云 Docker 镜像（需要使用阿里账号自行创建专属镜像仓库）：https://cr.console.aliyun.com/</li>
+<li>DaoCloud Docker 镜像（配置文档）：http://f1361db2.m.daocloud.io</li>
+</ul>
+<p>使用这些镜像源，可以加速 Docker 镜像的下载，提高使用体验。根据自己的需求和使用情况，可以选择其中一个或多个镜像源。需要注意的是，不同的镜像源可能包含的 Docker 镜像不同，因此在使用时需要注意确认所需的 Docker 镜像是否在镜像源中存在。</p>
+<h3 id="测试镜像源是否有效">测试镜像源是否有效</h3>
+<p>docker pull hub-mirror.c.163.com/library/nginx:latest
+docker pull mirror.baidubce.com/library/nginx:latest
+docker pull ccr.ccs.tencentyun.com/library/nginx:latest
+docker pull dockerproxy.com/library/nginx:latest</p>
+<h2 id="无效的镜像源">无效的镜像源</h2>
+<ul>
+<li>Docker 官方国内镜像站：https://registry.docker-cn.com、https://reg-mirror.qiniu.com、https://dockerhub.azk8s.cn已转为私有</li>
+<li>腾讯云 Docker 镜像：https://mirror.ccs.tencentyun.com/</li>
+<li>中国科学技术大学镜像站 Docker 镜像源（配置文档）：https://docker.mirrors.ustc.edu.cn/</li>
+</ul>
+<h3 id="国内镜像站配置">国内镜像站配置</h3>
+<h4 id="命令行">命令行</h4>
+<p>在使用 Docker 时，可以通过将 Docker 镜像源设置为国内镜像源来加速镜像下载。例如，在使用 Docker 命令拉取镜像时，可以使用以下命令：</p>
+<pre tabindex="0"><code>   docker pull 镜像名称 -–registry-mirror=国内镜像源地址
+</code></pre><p>其中，镜像名称 是要下载的 Docker 镜像的名称，国内镜像源地址 是要使用的国内镜像源的地址。通过这种方式，可以更快地下载 Docker 镜像。</p>
+<h4 id="配置文件">配置文件</h4>
+<h5 id="linux">Linux</h5>
+<p>要配置 Docker 国内镜像源，可以按照以下步骤进行：<br>
+打开 Docker 配置文件 /etc/docker/daemon.json，如果该文件不存在，则可以创建该文件。在该配置文件中添加以下内容：</p>
+<pre tabindex="0"><code>{
+    &#34;registry-mirrors&#34;: [&#34;https://hub-mirror.c.163.com&#34;]
+}
+</code></pre><p>如果要使用多个镜像源，可以在 &ldquo;registry-mirrors&rdquo; 数组中添加多个镜像源地址，以英文逗号分隔。
+保存配置文件，并重启 Docker 服务，以使配置生效。可以使用以下命令重启 Docker 服务：</p>
+<pre tabindex="0"><code>sudo systemctl restart docker
+</code></pre><p>如果使用的是 Ubuntu 14.04 等旧版系统，可以使用以下命令重启 Docker 服务：</p>
+<pre tabindex="0"><code>sudo service docker restart
+</code></pre><p>配置完成后，可以使用 docker pull 命令测试是否成功使用了国内镜像源。例如，可以使用以下命令拉取官方的 Ubuntu 镜像：</p>
+<pre tabindex="0"><code>docker pull ubuntu
+</code></pre><p>如果使用了正确的国内镜像源地址，镜像的下载速度应该比官方源快很多。<br>
+注意：如果在 Docker Desktop for Mac 或 Docker Desktop for Windows 中使用 Docker，可以在 Docker Desktop 的设置中进行镜像加速器的配置，不需要手动编辑配置文件。</p>
+<h5 id="windowsmac">Windows/Mac</h5>
+<p>以在 Windows 上配置 Docker 国内镜像为例，按照以下步骤进行：<br>
+打开 Docker 设置。可以在任务栏右下角找到 Docker 图标，右键单击该图标，然后选择“Settings”打开设置。在设置界面中，选择“Docker Engine”选项卡，在该选项卡中找到“registry-mirrors”一栏。在“registry-mirrors”一栏中，输入要使用的国内镜像源的地址，例如：</p>
+<pre tabindex="0"><code>    https://registry.docker-cn.com
+</code></pre><p>点击“Apply &amp; restart”保存设置，并等待 Docker 服务重启。配置完成后，可以使用 docker pull 命令测试是否成功使用了国内镜像源。例如，可以使用以下命令拉取官方的 Ubuntu 镜像：</p>
+<pre tabindex="0"><code>docker pull ubuntu
+</code></pre><p>如果使用了正确的国内镜像源地址，镜像的下载速度应该比官方源快很多。<br>
+在 Mac 上的配置类似。</p>
+<h5 id="注意">注意：</h5>
+<p>在 Docker Desktop for Windows 中，还需要确保 Docker Daemon 正在运行，并已经启用了“Expose daemon on tcp://localhost:2375 without TLS”选项。可以在 Docker 设置的“General”选项卡中勾选该选项。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://blog.csdn.net/sxf1061700625/article/details/140895299">Docker国内镜像源列表</a></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E9%98%85%E8%AF%BB/">阅读</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/resource/workcollection/%E5%A6%82%E4%BD%95%E5%BC%80%E4%BC%9A%E7%9A%84%E8%A7%82%E5%AF%9F%E5%92%8C%E6%80%9D%E8%80%83/" data-tooltip="如何开会的观察和思考" aria-label="下一篇: 如何开会的观察和思考">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifethinking/%E5%AF%B9%E4%B9%B0%E8%BD%A6%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对买车的思考" aria-label="上一篇: 对买车的思考">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/resource\/workcollection\/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F\/';
+        
+          this.page.identifier = '\/post\/resource\/workcollection\/dockerhub%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/resource/workcollection/%E5%A6%82%E4%BD%95%E5%BC%80%E4%BC%9A%E7%9A%84%E8%A7%82%E5%AF%9F%E5%92%8C%E6%80%9D%E8%80%83/" data-tooltip="如何开会的观察和思考" aria-label="下一篇: 如何开会的观察和思考">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifethinking/%E5%AF%B9%E4%B9%B0%E8%BD%A6%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对买车的思考" aria-label="上一篇: 对买车的思考">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+

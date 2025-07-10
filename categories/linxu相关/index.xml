@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linxu相关 on 素履虔行</title>
+    <link>https://tianyuliufang233.github.io/blog/categories/linxu%E7%9B%B8%E5%85%B3/</link>
+    <description>Recent content in linxu相关 on 素履虔行</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Jul 2024 00:04:42 +0800</lastBuildDate><atom:link href="https://tianyuliufang233.github.io/blog/categories/linxu%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git多key情况</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/git%E5%A4%9Akey%E6%83%85%E5%86%B5/</link>
+      <pubDate>Thu, 25 Jul 2024 00:04:42 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/git%E5%A4%9Akey%E6%83%85%E5%86%B5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch备份</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/elasticsearch%E5%A4%87%E4%BB%BD/</link>
+      <pubDate>Thu, 06 Jun 2024 17:33:15 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/elasticsearch%E5%A4%87%E4%BB%BD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql8.0锁表问题排查</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/mysql8.0%E9%94%81%E8%A1%A8%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</link>
+      <pubDate>Tue, 16 Jan 2024 16:15:27 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/mysql8.0%E9%94%81%E8%A1%A8%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux 全局代理</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/linux-%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Fri, 05 Jan 2024 11:20:56 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/linux-%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>备份数据到cos脚本</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Tue, 24 Oct 2023 10:23:01 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0cos%E8%84%9A%E6%9C%AC/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus_config</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/prometheus_config/</link>
+      <pubDate>Tue, 24 Oct 2023 09:43:29 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/prometheus_config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheusalert规则编辑</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/prometheusalert%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</link>
+      <pubDate>Tue, 26 Sep 2023 15:57:26 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/prometheusalert%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perf原理</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/perf%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Tue, 19 Sep 2023 10:59:07 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/perf%E5%8E%9F%E7%90%86/</guid>
+      <description>&lt;p&gt;perf原理&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Interface MTU</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/interface-mtu/</link>
+      <pubDate>Fri, 25 Aug 2023 11:31:55 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/interface-mtu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>imagemagick安装编译无法识别helc问题</title>
+      <link>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 19 Jul 2023 22:03:21 +0800</pubDate>
+      
+      <guid>https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

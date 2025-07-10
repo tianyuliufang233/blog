@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/router\/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为网关路由器配置命令">
+<meta name="twitter:title" content="华为网关路由器配置命令">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/area/router/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/area/router/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2024-05-31T17:10:01">
+  
+  
+    <meta property="article:modified_time" content="2024-05-31T17:10:01">
+  
+  
+  
+    
+      <meta property="article:section" content="领域">
+    
+      <meta property="article:section" content="路由">
+    
+  
+  
+    
+      <meta property="article:tag" content="华为">
+    
+      <meta property="article:tag" content="路由器">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>华为网关路由器配置命令</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/area/router/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      华为网关路由器配置命令
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2024-05-31T17:10:01&#43;08:00">
+        
+  
+  
+  
+  
+    2024-05-31
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e9%a2%86%e5%9f%9f">领域</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%b7%af%e7%94%b1">路由</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <h2 id="查看路由器snmpv2信息命令">查看路由器snmpv2信息命令：</h2>
+<ul>
+<li>执行display snmp-agent community { read | write }命令，查看当前配置的团体名。</li>
+<li>执行display snmp-agent sys-info version命令，查看SNMP使能的版本信息。</li>
+<li>执行display acl acl-number命令，显示配置的访问控制列表的规则。</li>
+<li>执行display snmp-agent mib-view命令，查看MIB视图信息。</li>
+<li>执行display snmp-agent sys-info contact命令，查看管理员的联系方式。</li>
+<li>执行display snmp-agent sys-info location命令，查看路由器的位置。</li>
+<li>执行display current-configuration | include trap命令，查看Trap配置信息。</li>
+<li>执行display snmp-agent trap all命令，查看所有特性下所有Trap开关当前的状态和缺省状态。</li>
+<li>执行display snmp-agent trap-source命令，查看发送Trap的源接口。</li>
+<li>执行display snmp-agent target-host命令，查看目标主机的信息。</li>
+<li>执行display snmp-agent extend error-code status命令，查看设备向网管发送扩展错误码的功能是否使能。</li>
+<li>执行display station all 查看sta接入的终端及对应ssid</li>
+</ul>
+<h2 id="丢包排查思路">丢包排查思路</h2>
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">    graph TD
+    A[STA丢包] --&gt; B[确认是否丢弃在wifi侧]
+    B[确认是否丢弃在wifi侧] --&gt; C[STA信号过低-75dBm以下,明确STA信号底具体原因，并进行相应处理]
+    C --&gt; D[查询终端信息，是否为终端进入省电状态]
+    D --&gt; E[信道利用率或底噪高,明确信道利用率高或底噪高的具体原因]
+    E --&gt; F[wifi驱动侧发包队列异常]
+    F --&gt; G[射频扫描参数配置不合理]
+    G --&gt; H[EDCA参数配置不合理]
+    H --&gt; I[终端个体原因，驱动或系统软件到最新版本]
+</code></pre><p>开启station-trace功能，进行ping包测试</p>
+<pre tabindex="0"><code>station-trace sta-mac 482c-a042-8227 
+</code></pre><p>通过命令查询终端相关信息</p>
+<pre tabindex="0"><code>display station sta-mac 8844-7748-3c81
+</code></pre><p>查询用户当前接入的ap对应的射频信道利用率以及底噪情况。</p>
+<pre tabindex="0"><code>display ap traffic statistics wireless ap-id 19 radio 1
+Wireless noise(dBm)                                   :-104  //底噪
+Wireless port up rate(Kbps)                           :0     //射频口上行流量
+Wireless port down rate(Kbps)                         :0     //射频口下行流量
+ Wireless channel utilization(%)                       :84    //信道利用率
+</code></pre><p>查看导致ap信道利用率高的原因</p>
+<pre tabindex="0"><code>V200R019C10及之后版本：
+[AP-diagnose] display lmac base-info radio 1
+ ......
+ ChannelUtilizationRate(%)  : 3        //信道利用率
+CoChanInterferenceRate(%)  : 3        //同频干扰率
+V200R006C20~V200R019C00版本：
+&lt;AP&gt; system-view
+ [AP] diagnose
+ [AP-diagnose] display wifi base-info radio 0
+ ......
+ ChanUtilizationRate(%)    = 80  //信道利用率
+CoChanInterferenceRate(%) = 10  //干扰率
+......
+ V200R005以及V200R006C10版本：
+&lt;AP&gt; system-view
+ [AP] diagnose
+ [AP-diagnose] display interface radio 0
+ ......
+ ChanUtilizationRate(%)    = 80  //信道利用率
+CoChanInterferenceRate(%) = 10  //干扰率
+如果信道利用率很高，但是干扰率并不大，如上面显示，说明信道利用率高
+主要由于本AP导致；如果信道利用率很高，干扰率也很高，则说明信道利用
+率高是由于干扰导致。
+</code></pre><p>查看射频上、下行流量</p>
+<pre tabindex="0"><code> display ap traffic statistics wireless ap-id 19 radio 1
+ ......
+ Wireless port up rate(Kbps)                           :311112
+ Wireless port down rate(Kbps)                         :402245
+</code></pre><p>查看是否存在大量组播或广播报文通过ap发送到空口</p>
+<pre tabindex="0"><code>V200R019C10及之后版本：
+[AP-diagnose] display lmac radio-tx-statistics radio 1
+ Tx stats:
+ ......
+ Multicast packets                  : 54
+ Broadcast packets                  : 27
+ V200R006C20~V200R019C00版本：
+&lt;AP&gt; system-view
+ [AP] diagnose
+ [AP-diagnose] display wifi radio-statistics radio 1
+ ......
+  Broadcast Pkt Num         : 323212
+  Multicast Pkt Num         : 234223
+ ......
+ V200R005以及V200R006C10版本：
+&lt;AP&gt; system-view
+ [AP] diagnose
+ [AP-diagnose] display radio-statistics radio 1
+ ......
+  Broadcast Pkt Num         : 323212
+  Multicast Pkt Num         : 234223
+由于组播或者广播报文，默
+认都是以低物理层速率（2.4G：11Mbps，5G：6Mbps）进行发送，因此报
+文过多将会导致空口带宽耗尽，进而影响到普通的单播数据业务。
+</code></pre><p>查看低速或低rssi用户</p>
+<pre tabindex="0"><code>&lt;AC&gt; display station ap 19
+ Rf/WLAN: Radio ID/WLAN ID
+ Rx/Tx: link receive rate/link transmit rate(Mbps)
+-----------------------------------------------------------------------------------------------
+STA MAC          Rf/WLAN  Band  Type  Rx/Tx      RSSI  VLAN  IP address      SSID
+-----------------------------------------------------------------------------------------------
+8844-7748-3c81   1/1      5G    11ac  39/52      -64   1     192.168.150.162 m0_tes
+-----------------------------------------------------------------------------------------------
+Total: 1 2.4G: 0 5G: 1
+查看终端流量统计
+&lt;AC&gt; display station statistics sta-mac 8844-7748-3c81
+----------------------------------------------------------------
+  Packets sent to the station                           : 11234
+  Packets received from the station                     : 23423
+  Bytes sent to the station                             : 123434
+  Bytes received from the station                       : 323444
+  Wireless data rate sent to the station(kbps)          : 4320
+  Wireless data rate received from the station(kbps)    : 4599
+  Trigger roam total                                    : 0
+  Trigger roam failed                                   : 0
+  STA power save percent                                : 0%
+--------------------------------------------------------------------
+上面显示的Rx表示STA发包给AP采用的物理层速率，Tx表示AP发包给STA采
+用的物理层速率。Rx/Tx速率均会随着报文在空口的传送情况（重传或极限重
+传丢包）进行自适应变化。传送相同的流量，物理层速率越低占用的空口带
+宽将会越大，比如某STA发给AP报文采用的物理层速率在13Mbps左右，此时
+传输5Mbps的流量就基本上会将空口带宽耗尽，导致信道利用率很高，影响
+同射频下其他STA正常业务。
+</code></pre><p>查看是否由于AP cpu利用率高导致丢包</p>
+<pre tabindex="0"><code>&lt;AC&gt; display ap performance statistics ap-id 15
+ ......
+ CPU usage(%)                    : 80
+ ......
+</code></pre><p>查看ap射频下的发包队列是否正常</p>
+<pre tabindex="0"><code>&lt;AP&gt; system-view 
+[AP] diagnose 
+[AP-diagnose] display interface radio 0 txq-buf 
+[txqbuf] 
+  ath_softc free buf:1024 
+  tx queue depth    :1024 
+  txq 0:buf_used = 0   minfree = 48   aggr_depth = 0   axq_depth = 0 
+  txq 1:buf_used = 0   minfree = 32   aggr_depth = 0   axq_depth = 0 
+  txq 2:buf_used = 0   minfree = 16   aggr_depth = 0   axq_depth = 0 
+重点观察Txq 0 、1、2 、3 、7 以及8等6个队列的buffer使用情况，正常情
+况下buf_used值都是比较小的，当存在大业务量，比如下载时，个别队列的
+buf_used值会增加到比较大的值，比如达到500。当存在低建链速率用户下
+载或大量组播/广播报文时，可能会更高，由于buffer是射频下所有用户共享
+的，当被某个用户占用太多时，会导致其他用户无法及时申请到buffer，导
+致丢包或时延大.
+对于带有11ac芯片款型AP，如AP5030DN（5G射频）、AP7050DE、
+AP4050DN等：
+[AP-diagnose] display wifi txq-buf radio 1 
+[Txqbuf]
+  Host tx queue depth:2500
+ [Frames queued to hwq]
+  -------------------------------------
+  Q0  Q1  Q2  Q3  Q4  Q5  Q6  Q7  Q8  Q9
+  0   0   0   0   0   0   0   0   0   0
+  -------------------------------------
+[Tid queue stats]
+  SW queue stats &lt;---&gt; HW queue stats
+  -----------------------------
+  TID 0     0               0
+  TID 1     0               0
+  TID 2     0               0
+  TID 3     0               0
+  TID 4     0               0
+  TID 5     0               0
+  TID 6     0               0
+  TID 7     0               0
+  TID 8     0               0
+  TID 9     0               0
+  TID 10    0               0
+  TID 11    0               0
+  TID 12    0               0
+  TID 13    0               0
+  TID 14    0               0
+  TID 15    0               0
+  TID 16    0               0
+  TID 17    0               0
+  TID 18    0               0
+  TID 19    0               0
+  -----------------------------
+[Prefetch Tx queue stats]         //该项只有支持11ac Wave2款型的AP存在，如AP7050DE/
+ AP6050DN/AP4050DN等-----------------------------
+  TID 0     0
+重点观察TID 0、1、2、3、16以及17等6个队列的SW queue stats 值，一般
+情况下值也都比较小。
+正常情况下，每个队列的buffer使用个数均是在动态变化的，会随着业务量
+的增加而变大，业务量的降低而减小
+对于V200R019C10版本11ax芯片款型AP：
+[AP-diagnose] display lmac txq-buf radio 1
+ Hardware tx queue statistic:
+-----------------------------------------------------------------
+        Txq0  Txq1  Txq2   Txq3   Txq4   Txq5   Txq6   Txq7
+ Total   0     0     0      0      0      0      0      0
+-----------------------------------------------------------------
+        Txq8  Txq9  Txq10  Txq11  Txq12  Txq13  Txq14  Txq15
+ Total   0     0     0      0      0      0      0      0
+-----------------------------------------------------------------
+Software tid queue statistic:
+-----------------------------------------------------------------
+        Tid0   Tid1   Tid2   Tid3   Tid4
+ Total   0      0      0      0      0
+-----------------------------------------------------------------
+        Tid5   Tid6   Tid7   Tid8   Tid9
+ Total   0      0      0      0      0
+-----------------------------------------------------------------
+Qos queue statistic:
+-----------------------------------------------------------------
+       BE     BK     VI     VO
+ Total  0      0      0      0
+-----------------------------------------------------------------
+当出现整个射频下几乎没有业务量，信道利用率也处于正常水平，但是buffer使用
+个数一直很高（多次查询该命令发现始终很高，比如超过800），且业务丢包严
+重，此时需要确认下具体是哪个用户占用了buffer，可能该用户状态出现了问题。
+display lmac sta-statistics queue-status sta d453-83e1-1bea
+查看
+</code></pre><h2 id="常用查看wifi情况命令">常用查看wifi情况命令</h2>
+<pre tabindex="0"><code>display ap traffic statistics wireless ap-id 0 radio 1  查看ap 0 发射器1，查询ap的信道利用率大于50%，信道利用率比较高，空口干扰比较大： 
+Wireless channel utilization(%)  :2
+Wireless noise(dBm)                                   :-104  //底噪
+Wireless port up rate(Kbps)                           :0     //射频口上行流量
+Wireless port down rate(Kbps)                         :0     //射频口下行流量
+
+
+display station all   查看终端的RSSI和协商速率。  display station all | include mac-address 查看具体sta 协商速率
+display station sta-mac 8038-FB18-D92C  查看终端关联后的射频模式、AP配置的加密方式、终端支持的空间流、配置的频宽都与协商速率
+Station&#39;s radio mode                      : 11n
+Station&#39;s Authentication Method           : WPA2-PSK
+Station&#39;s Cipher Type                     : AES 
+Station&#39;s Channel Band-width              : 20MHz 
+Station&#39;s QoS Mode                        : WMM 
+Station&#39;s HT Mode                         : HT20 
+Station&#39;s MCS value                       : 15 
+Station&#39;s NSS value                       : 2
+Station&#39;s Short GI                        : nonsupport  
+
+配置功率
+</code></pre><p><!-- raw HTML omitted --> system-view
+[AC] wlan
+[AC-wlan-view] ap-id 0
+[AC-wlan-ap-0] radio 0
+[AC-wlan-radio-0/0] eirp 24</p>
+<pre tabindex="0"><code>配置频宽
+</code></pre><p><!-- raw HTML omitted --> system-view
+[AC] wlan
+[AC-wlan-view] ap-id 0
+[AC-wlan-ap-0] radio 1
+[AC-wlan-radio-0/1] channel 80mhz 149</p>
+<pre tabindex="0"><code>配置自动调整模板
+</code></pre><p><!-- raw HTML omitted --> system-view
+[AC6605] wlan
+[AC6605-wlan-view] regulatory-domain-profile name huawei
+[AC6605-wlan-regulate-domain-huawei] dca-channel 5g bandwidth 40mhz
+[AC6605-wlan-regulate-domain-huawei] dca-channel 5g channel-set 36,40,44,48,52,56,60,64,149,153,157,161
+[AC6605-wlan-regulate-domain-huawei] dca-channel 2.4g channel-set 1,2,3,4,5,6,7,8,9,10,11,12,13
+commit { all | ap-name ap-name | ap-id { ap-id1 [ to ap-id2 ] } &amp;&lt;1-10&gt; }，下发配置到AP</p>
+<pre tabindex="0"><code>
+
+display station statistics sta-mac xxxx-xxxx-xxxx  查看sta速率
+
+display ap configurable channel ap-name test 查看ap支持频段
+
+display station sta-mac 482c-a042-8227  检查终端是否处在节电状态                 
+Power save mode enabled                 :YES    
+
+display radio ap-id 0    ac 查看ap信道利用率判断空口干扰程度。
+
+display ap performance statistics ap-id 0  查看ap情况， cpu memory 温度 传输流量 情况
+display ap neighbor ap-id 0 查看 ap 周围信道及强度
+display station ap-name f4b7-8d4f-47e0  查看 ap下所有sta情况
+display radio all   查看 所有 ap 信道利用率情况
+display radio-5g-profile all  查看5g模板
+display air-scan-profile name default 查看模板名为default的模板内容
+display ip pool interface Vlanif1 查看ip池分配情况
+
+display smart-policy-route load-balance-mode select-path-result，查看负载分担模式下流量的选路结果。
+display smart-policy-route physical-interface，查看物理接口的相关信息。
+
+AC-BE: 尽力而为流量队列
+AC-BK：后台流量队列
+Wireless frames(RX): 无线侧接收空口数据帧和管理帧总数
+Wireless bytes(RX): 无线侧接收空口数据帧的字节总数
+Wireless error frames(RX): 无线侧接收的错误帧的总数
+Wireless physical layer error frames(RX): 无线侧接收物理层错误帧数。
+Wireless MIC error frames(RX): 无线侧接收MIC错误帧数。
+Wireless private key and decrypt fail frames(RX): 无线侧接收KEY解密失败错误帧数。
+Wireless unicast frames(RX): 接收的单播帧的总数
+Wireless management frames(RX): 无线侧接收管理帧数。
+Wireless data frames(RX): 无线侧接收数据帧数。
+Wireless frames(TX): 发送的帧的总数
+Wireless bytes(TX): 线侧发送空口数据帧的字节总数
+Wireless RTS successes(TX): 无线侧发送成功RTS帧数。
+Wireless unicast frames(TX): 发送的单播帧的总数
+Wireless broadcast frames(TX): 无线侧发送广播帧数。
+Wireless failure frames(TX): 无线侧发送失败帧数。
+Wireless management frames(TX): 无线侧发送管理帧数。
+Wireless data frames(TX): 无线侧发送数据帧数。
+Wireless noise(dBm): 无线侧的噪声值(dBm)。
+Wireless port up rate(Kbps): 无线侧上行速率(Kbps)。
+Wireless port down rate(Kbps): 无线侧下行速率(Kbps)。
+Wireless port PS-Poll Frames: 终端station处于省电模式时发送的帧数。
+Wireless port Association Request: 关联请求帧数。
+Wireless port Association Response: 关联响应帧数。
+Wireless port ReAssociation Request: 重关联请求帧数。
+Wireless port ReAssociation Response: 重关联响应帧数。
+Wireless port Disassociation Frames: 去关联帧数。
+Wireless port Deauthentication Frames: 去认证帧数。
+Wireless retry frames: 无线侧重传帧数。
+Wireless PER(%): 无线侧误包率。
+Wireless PER of the last 5min(%): 无线侧在上一个统计周期内的误包率。
+Wireless port drop rate(%): 无线侧软件丢包率。
+Wireless port drop rate of the last 5min(%): 无线侧在上一个周期内的软件丢包率。
+Wireless retransmitted rate(%): 无线侧重传率。
+Wireless retransmitted rate of the last 5min(%): 无线侧在上一个周期内的重传率。
+Wireless channel utilization(%): 无线侧信道利用率。
+WMM AC_BE retry ratio(%): WMM队列中AC_BE类别报文的重传率。
+WMM AC_BK retry ratio(%): WMM队列中AC_BK类别报文的重传率。
+WMM AC_VI retry ratio(%): WMM队列中AC_VI类别报文的重传率。
+WMM AC_VO retry ratio(%): WMM队列中AC_VO类别报文的重传率。
+WMM AC_BE PER(%): WMM队列中AC_BE类别报文的丢包率。
+WMM AC_BK PER(%): WMM队列中AC_BK类别报文的丢包率。
+WMM AC_VI PER(%): WMM队列中AC_VI类别报文的丢包率。
+WMM AC_VO PER(%): WMM队列中AC_VO类别报文的丢包率。
+
+- 如果信道利用率超过60%，且干扰率较高，说明空口干扰比较严重，可以尝试通过调整信道和功率的方式来解决。
+- 如果底噪高于-80dBm，建议切换信道，切到一个底噪较低的信道，切信道时注意兼顾信道利用率和干扰率。
+- 报文重传率较高（高于20%），说明空口碰撞较大，建议配置RTS-CTS的工作模式为rts-cts模式，减少空口报文的碰撞。，比如某STA发给AP报文采用的物理层速率在13Mbps左右，此时传输5Mbps的流量就基本上会将空口带宽耗尽，导致信道利用率很高，影响同射频下其他STA正常业务。一般低速率用户都会伴随着低信号强度。
+- 扫描参数主要涉及扫描间隔以及扫描持续时间，如果配置不合理，比如扫描间隔配置的很短（低于3s）或扫描持续时间配置的较大（如100ms），由于AP频繁切换到非工作信道进行信息收集，会导致工作信道上的用户业务受损，表现为丢包或时延大。
+</code></pre><h2 id="拿命填坑">拿命填坑：</h2>
+<p>设置snmp需要配置server-source为Loopback，必须设置，否则没有响应。设置了interface 作为源，不知道是不是清理密码干掉了，总之无法成功访问，无意间看到有server-source 配置为loopback的文档，验证，有响应了。</p>
+<pre tabindex="0"><code>&lt;Huawei&gt; system-view
+[Huawei] interface Loopback 0
+[Huawei] ip address 192.168.30.5 32
+[Huawei] quit
+[Huawei] snmp-agent 
+[Huawei] snmp-agent sys-info version v2c
+[Huawei] snmp-agent mib-view dnsmib include 1.3.6.1.4.1.2011.5.25.194
+[Huawei] snmp-agent server-source -i loopback 0
+</code></pre><h2 id="非等价负载分担功能">非等价负载分担功能</h2>
+<pre tabindex="0"><code>system-view
+interface interface-type interface-number [.subinterface-number ] 
+load-balance bandwidth bandwidth，手动配置当前接口的带宽。
+load-balance unequal-cost enable，使能当前接口非等价负载分担功能。
+shutdown，关闭当前接口。
+undo shutdown，开启当前接口。
+quit，退出接口视图
+只有当所有等价链路的出接口都使能UCMP功能，且触发了FIB表项重新下发（先后执行命令shutdown和undo shutdown）后，各等价链路才在设备上进行非等价负载分担。如果其中任一接口没有使能UCMP功能，即使触发了FIB表项重新下发，各等价链路仍进行等价负载分担。
+display pppoe-client session summary   查看pppoe会话状态和配置信息
+display ip routing-table protocol static    查看配置的静态路由表信息
+</code></pre><p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320897/f19d5a22">配置非等价负载分担功能</a></p>
+<h2 id="配置ap命令">配置ap命令</h2>
+<pre tabindex="0"><code>执行命令system-view，进入系统视图。
+执行命令wlan ac，进入WLAN视图。
+执行命令regulatory-domain-profile name profile-name，创建域管理模板，并进入模板视图。
+缺省情况下，系统上存在名为default的域管理模板。
+
+执行命令country-code country-code，配置国家码。
+缺省情况下，设备的国家码标识为“CN”。
+关于国家码和国家的对应关系表请参见country-code。
+在域模板下修改国家码后，会自动重启使用了该域模板的AP。
+
+执行命令quit，返回WLAN视图。
+在AP组或AP上引用域管理模板。
+在AP组中引用域管理模板。
+执行命令ap-group name group-name，进入AP组视图。
+执行命令regulatory-domain-profile profile-name，在AP组中引用域管理模板。
+缺省情况下，AP组中引用了名为default的域管理模板。
+
+在AP上引用域管理模板。
+执行命令ap-id ap-id、ap-mac ap-mac或ap-name ap-name，进入AP视图。
+执行命令regulatory-domain-profile profile-name，在AP上引用域管理模板。
+缺省情况下，AP上未引用域管理模板。
+
+执行命令quit，返回WLAN视图。
+执行命令commit { all | ap-name ap-name | ap-id { ap-id1 [ to ap-id2 ] } &amp;&lt;1-10&gt; }，下发配置到AP。
+
+执行命令display regulatory-domain-profile { all | name profile-name }，查看域管理模板的配置信息。
+执行命令display references regulatory-domain-profile name profile-name，查看域管理模板的引用信息。
+执行命令display capwap configuration，查看AC的源接口。
+执行命令display ac global configuration，查看AC的全局配置信息，即AC的网元名称。
+执行命令display ap all，查看AP的上线结果
+</code></pre><h3 id="配置射频参数">配置射频参数</h3>
+<p>为避免信号干扰，使AP工作在更佳状态，提高WLAN网络质量，可以手动配置相邻AP工作在非重叠信道上。
+display ap configurable channel { ap-name ap-name | ap-id ap-id }查看指定AP支持的可配置的信道。
+2.4G 20M : 1,2,3,4,5,6,7,8,9,10,11,12,13.
+2.4G 40M+: 1,2,3,4,5,6,7.
+2.4G 40M-: 5,6,7,8,9,10,11.
+5G   20M : 36,40,44,48,52,56,60,64,149,153,157,161,165.
+5G   40M+: 36,44,52,60,149,157.
+5G   40M-: 40,48,56,64,153,161.
+5G   80M : 36,40,44,48,52,56,60,64,149,153,157,161.</p>
+<p>执行命令display radio-2g-profile { all | name profile-name }，查看2G射频模板的配置信息和引用信息。
+执行命令display radio-5g-profile { all | name profile-name }，查看5G射频模板的配置信息和引用信息。
+执行命令display references radio-2g-profile name profile-name，查看2G射频模板的引用信息。
+执行命令display references radio-5g-profile name profile-name，查看5G射频模板的引用信息。
+执行命令display ap configurable channel { ap-name ap-name | ap-id ap-id }，查看指定AP支持的可配置信道。
+执行命令display ap config-info { ap-name ap-name | ap-id ap-id }，查看AP的配置信息。</p>
+<h3 id="检测无线链路质量">检测无线链路质量</h3>
+<p>执行命令system-view，进入系统视图。
+执行命令wlan ac，进入WLAN视图。
+执行命令rf-ping [ -m time | -c number ] * mac-address，主动探测无线链路质量。
+执行命令system-view，进入系统视图。
+执行命令wlan ac，进入WLAN视图。
+执行命令ap-ping { ap-name ap-name | ap-id ap-id } [ -c count | -s packetsize | -m time | -t timeout ] * host，配置AP设备去Ping一个网络设备，检测从AP到指定网络设备之间的网络是否连通。</p>
+<h2 id="wlan设置静态ip">wlan设置静态ip</h2>
+<pre tabindex="0"><code>&lt;Huawei&gt; system-view
+[Huawei] interface vlanif 888
+[Huawei-Vlanif100] dhcp select interface
+[Huawei-Vlanif100] dhcp server static-bind ip-address 192.168.2.120 mac-address 7456-3CC2-089C
+</code></pre><h3 id="信道利用率">信道利用率</h3>
+<p>如果广播或组播报文的增长速率超过100pps，说明接收到的广播、组播报文较多。此时，可以在上层的交换机或AC上开启二层网络隔离功能，或开启广播和组播报文限速功能。
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100344599">信道利用率</a></p>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/4c91cb23">射频参数配置</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/b595aeb#ZH-CN_TASK_0177875460">射频调优</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/dfe85e4a">检测ap与sta的无线质量</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/418ccbe9">检测ap与网络设备的连通性</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/368bfb7f">维护ap统计信息</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/2f777213">维护sta统计信息</a></p>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100320912/67bc98e0">配置ap上线</a></p>
+<h2 id="配置snmpv1">配置snmpv1</h2>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/b7ca8f82">官方文档</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/d3a64a86">案例</a></p>
+<h2 id="配置snmpv2">配置snmpv2</h2>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/40dfdfef?idPath=24030814%7C21782164%7C7923148%7C256863201">官方文档</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/43195717">案例</a></p>
+<h2 id="配置snmpv3">配置snmpv3</h2>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/82912919">官方文档</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/341e6781">案例</a></p>
+<h2 id="检查配置结果">检查配置结果</h2>
+<p><a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332363/6244c007">官方文档</a></p>
+<h1 id="参考">参考</h1>
+<p>华为 软件故障定位指南
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100271770/dab469bd#ZH-CN_CLIREF_0177886580">snmp配置命令</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332376/b595aeb?idPath=24030814%7C21782164%7C7923148%7C256863201">射频调优</a>
+<a href="https://support.huawei.com/enterprise/zh/doc/EDOC1100332376/b595aeb?idPath=24030814%7C21782164%7C7923148%7C256863201">无线射频调优</a></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E5%8D%8E%E4%B8%BA/">华为</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifethinking/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对未来的思考" aria-label="下一篇: 对未来的思考">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifehacks/%E7%BD%91%E7%BB%9C%E6%B3%A2%E5%8A%A8%E6%8E%92%E6%9F%A5/" data-tooltip="网络波动排查" aria-label="上一篇: 网络波动排查">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/router\/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4\/';
+        
+          this.page.identifier = '\/post\/area\/router\/%E5%8D%8E%E4%B8%BA%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifethinking/%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-tooltip="对未来的思考" aria-label="下一篇: 对未来的思考">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/inbox/life/lifehacks/%E7%BD%91%E7%BB%9C%E6%B3%A2%E5%8A%A8%E6%8E%92%E6%9F%A5/" data-tooltip="网络波动排查" aria-label="上一篇: 网络波动排查">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+  
+<script type="module">  
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; 
+    
+    mermaid.initialize({ startOnLoad: true });  
+</script>
+<script>  
+    
+    Array.from(document.getElementsByClassName("language-mermaid")).forEach(  
+        (el) => {  
+            el.parentElement.outerHTML = `<per class="mermaid">${el.innerHTML}</per>`;  
+        }  
+    );  
+</script>  
+<style>  
+       
+    .mermaid svg {  
+        display: block;  
+        margin: auto;  
+    }  
+</style>  
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+

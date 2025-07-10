@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/workrecords\/kubernetes\/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3\/",
+  "keywords":"[记录]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="记录">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes集群部署文档">
+<meta name="twitter:title" content="Kubernetes集群部署文档">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/area/workrecords/kubernetes/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/area/workrecords/kubernetes/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2025-06-05T13:55:03">
+  
+  
+    <meta property="article:modified_time" content="2025-06-05T13:55:03">
+  
+  
+  
+    
+      <meta property="article:section" content="收件箱">
+    
+      <meta property="article:section" content="记录">
+    
+  
+  
+    
+      <meta property="article:tag" content="阅读">
+    
+      <meta property="article:tag" content="记录">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>Kubernetes集群部署文档</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/kubernetes/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Kubernetes集群部署文档
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2025-06-05T13:55:03&#43;08:00">
+        
+  
+  
+  
+  
+    2025-06-05
+  
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e6%94%b6%e4%bb%b6%e7%ae%b1">收件箱</a>, 
+    
+      <a class="category-link" href="https://tianyuliufang233.github.io/blog/categories/%e8%ae%b0%e5%bd%95">记录</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <h1 id="docker镜像">docker镜像</h1>
+<pre tabindex="0"><code>docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/cni:v3.28.2 172.27.0.7:9000/dockerio/calico/cni:v3.28.2
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/node:v3.28.2 172.27.0.7:9000/dockerio/calico/node:v3.28.2
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/kube-controllers:v3.28.2 172.27.0.7:9000/dockerio/calico/kube-controllers:v3.28.2
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/coredns/coredns:1.9.4 172.27.0.7:9000/dockerio/coredns/coredns:1.9.4
+</code></pre><h1 id="kubernetes-各配置文件">kubernetes 各配置文件：</h1>
+<h2 id="etcdconfyml">etcd.conf.yml</h2>
+<pre tabindex="0"><code># This is the configuration file for the etcd server.
+ 
+# Human-readable name for this member.
+name: &#39;etcd1&#39;
+ 
+# Path to the data directory.
+data-dir: /data/data/etcd/default.etcd
+ 
+# Path to the dedicated wal directory.
+wal-dir:
+ 
+# Number of committed transactions to trigger a snapshot to disk.
+snapshot-count: 10000
+ 
+# Time (in milliseconds) of a heartbeat interval.
+heartbeat-interval: 100
+ 
+# Time (in milliseconds) for an election to timeout.
+election-timeout: 1000
+ 
+# Raise alarms when backend size exceeds the given quota. 0 means use the
+# default quota.
+quota-backend-bytes: 0
+ 
+# List of comma separated URLs to listen on for peer traffic.
+listen-peer-urls: https://172.16.1.94:2380
+ 
+# List of comma separated URLs to listen on for client traffic.
+listen-client-urls: https://172.16.1.94:2379
+ 
+# Maximum number of snapshot files to retain (0 is unlimited).
+max-snapshots: 5
+ 
+# Maximum number of wal files to retain (0 is unlimited).
+max-wals: 5
+ 
+# Comma-separated white list of origins for CORS (cross-origin resource sharing).
+cors:
+ 
+# List of this member&#39;s peer URLs to advertise to the rest of the cluster.
+# The URLs needed to be a comma-separated list.
+initial-advertise-peer-urls: https://172.16.1.94:2380
+ 
+# List of this member&#39;s client URLs to advertise to the public.
+# The URLs needed to be a comma-separated list.
+advertise-client-urls: https://172.16.1.94:2379
+ 
+# Discovery URL used to bootstrap the cluster.
+discovery:
+ 
+# Valid values include &#39;exit&#39;, &#39;proxy&#39;
+discovery-fallback: &#39;proxy&#39;
+ 
+# HTTP proxy to use for traffic to discovery service.
+discovery-proxy:
+ 
+# DNS domain used to bootstrap initial cluster.
+discovery-srv:
+ 
+# Initial cluster configuration for bootstrapping.
+initial-cluster:
+ 
+# Initial cluster token for the etcd cluster during bootstrap.
+initial-cluster-token: &#39;etcd-cluster&#39;
+ 
+# Initial cluster state (&#39;new&#39; or &#39;existing&#39;).
+initial-cluster-state: &#39;new&#39;
+ 
+# Reject reconfiguration requests that would cause quorum loss.
+strict-reconfig-check: false
+ 
+# Enable runtime profiling data via HTTP server
+enable-pprof: true
+ 
+# Valid values include &#39;on&#39;, &#39;readonly&#39;, &#39;off&#39;
+proxy: &#39;off&#39;
+ 
+# Time (in milliseconds) an endpoint will be held in a failed state.
+proxy-failure-wait: 5000
+ 
+# Time (in milliseconds) of the endpoints refresh interval.
+proxy-refresh-interval: 30000
+ 
+# Time (in milliseconds) for a dial to timeout.
+proxy-dial-timeout: 1000
+ 
+# Time (in milliseconds) for a write to timeout.
+proxy-write-timeout: 5000
+ 
+# Time (in milliseconds) for a read to timeout.
+proxy-read-timeout: 0
+ 
+client-transport-security:
+  # Path to the client server TLS cert file.
+  cert-file: /data/apps/kubernetes/ssl/etcd.pem
+ 
+  # Path to the client server TLS key file.
+  key-file: /data/apps/kubernetes/ssl/etcd-key.pem
+ 
+  # Enable client cert authentication.
+  client-cert-auth: true
+ 
+  # Path to the client server TLS trusted CA cert file.
+  trusted-ca-file: /data/apps/kubernetes/ssl/ca.pem
+ 
+  # Client TLS using generated certificates
+  auto-tls: false
+ 
+peer-transport-security:
+  # Path to the peer server TLS cert file.
+  cert-file: /data/apps/kubernetes/ssl/etcd.pem
+ 
+  # Path to the peer server TLS key file.
+  key-file: /data/apps/kubernetes/ssl/etcd-key.pem
+ 
+  # Enable peer client cert authentication.
+  client-cert-auth: true
+ 
+  # Path to the peer server TLS trusted CA cert file.
+  trusted-ca-file: /data/apps/kubernetes/ssl/ca.pem
+ 
+  # Peer TLS using generated certificates.
+  auto-tls: false
+ 
+# The validity period of the self-signed certificate, the unit is year.
+self-signed-cert-validity: 1
+ 
+# Enable debug-level logging for etcd.
+log-level: info
+ 
+logger: zap
+ 
+# Specify &#39;stdout&#39; or &#39;stderr&#39; to skip journald logging even when running under systemd.
+log-outputs: [stderr]
+ 
+# Force to create a new one member cluster.
+force-new-cluster: false
+ 
+auto-compaction-mode: periodic
+auto-compaction-retention: &#34;1&#34;
+</code></pre><h2 id="kube-apiserverconf">kube-apiserver.conf</h2>
+<pre tabindex="0"><code>KUBE_APISERVER_OPTS=&#34;--enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
+ --anonymous-auth=false \
+ --bind-address=172.16.1.94 \
+ --secure-port=6443 \
+ --advertise-address=172.16.1.94 \
+ --insecure-port=0 \
+ --authorization-mode=Node,RBAC \
+ --runtime-config=api/all=true \
+ --enable-bootstrap-token-auth \
+ --service-cluster-ip-range=10.174.0.0/16 \
+ --token-auth-file=/data/apps/kubernetes/conf/token.csv \
+ --service-node-port-range=30000-50000 \
+ --tls-cert-file=/data/apps/kubernetes/ssl/kube-apiserver.pem  \
+ --tls-private-key-file=/data/apps/kubernetes/ssl/kube-apiserver-key.pem \
+ --client-ca-file=/data/apps/kubernetes/ssl/ca.pem \
+ --kubelet-client-certificate=/data/apps/kubernetes/ssl/kube-apiserver.pem \
+ --kubelet-client-key=/data/apps/kubernetes/ssl/kube-apiserver-key.pem \
+ --service-account-key-file=/data/apps/kubernetes/ssl/ca-key.pem \
+ --service-account-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem  \
+ --service-account-issuer=api \
+ --etcd-cafile=/data/apps/kubernetes/ssl/ca.pem \
+ --etcd-certfile=/data/apps/kubernetes/ssl/etcd.pem \
+ --etcd-keyfile=/data/apps/kubernetes/ssl/etcd-key.pem \
+ --etcd-servers=https://172.16.1.94:2379 \
+ --enable-swagger-ui=true \
+ --allow-privileged=true \
+ --apiserver-count=3 \
+ --audit-log-maxage=30 \
+ --audit-log-maxbackup=3 \
+ --audit-log-maxsize=100 \
+ --audit-log-path=/data/log/kube-apiserver-audit.log \
+ --event-ttl=1h \
+ --alsologtostderr=true \
+ --logtostderr=false \
+ --log-dir=/data/log/kubernetes \
+ --feature-gates=RemoveSelfLink=false \
+ --v=4&#34;
+</code></pre><h2 id="kube-controller-managerconf">kube-controller-manager.conf</h2>
+<pre tabindex="0"><code>KUBE_CONTROLLER_MANAGER_OPTS=&#34;--port=0 \
+  --secure-port=10257 \
+  --bind-address=0.0.0.0 \
+  --kubeconfig=/data/apps/kubernetes/conf/kube-controller-manager.kubeconfig \
+  --service-cluster-ip-range=10.174.0.0/16 \
+  --cluster-name=kubernetes \
+  --cluster-signing-cert-file=/data/apps/kubernetes/ssl/ca.pem \
+  --cluster-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem \
+  --allocate-node-cidrs=true \
+  --cluster-cidr=10.175.0.0/16 \
+  --experimental-cluster-signing-duration=87600h \
+  --root-ca-file=/data/apps/kubernetes/ssl/ca.pem \
+  --service-account-private-key-file=/data/apps/kubernetes/ssl/ca-key.pem \
+  --leader-elect=true \
+  --feature-gates=RotateKubeletServerCertificate=true \
+  --controllers=*,bootstrapsigner,tokencleaner \
+  --horizontal-pod-autoscaler-sync-period=10s \
+  --tls-cert-file=/data/apps/kubernetes/ssl/kube-controller-manager.pem \
+  --tls-private-key-file=/data/apps/kubernetes/ssl/kube-controller-manager-key.pem \
+  --use-service-account-credentials=true \
+  --alsologtostderr=true \
+  --logtostderr=false \
+  --log-dir=/data/log/kubernetes \
+  --v=2&#34;
+</code></pre><h2 id="kubeletjson">kubelet.json</h2>
+<pre tabindex="0"><code>{
+  &#34;kind&#34;: &#34;KubeletConfiguration&#34;,
+  &#34;apiVersion&#34;: &#34;kubelet.config.k8s.io/v1beta1&#34;,
+  &#34;authentication&#34;: {
+    &#34;x509&#34;: {
+      &#34;clientCAFile&#34;: &#34;/data/apps/kubernetes/ssl/ca.pem&#34;
+    },
+    &#34;webhook&#34;: {
+      &#34;enabled&#34;: true,
+      &#34;cacheTTL&#34;: &#34;2m0s&#34;
+    },
+    &#34;anonymous&#34;: {
+      &#34;enabled&#34;: false
+    }
+  },
+  &#34;authorization&#34;: {
+    &#34;mode&#34;: &#34;Webhook&#34;,
+    &#34;webhook&#34;: {
+      &#34;cacheAuthorizedTTL&#34;: &#34;5m0s&#34;,
+      &#34;cacheUnauthorizedTTL&#34;: &#34;30s&#34;
+    }
+  },
+  &#34;address&#34;: &#34;0.0.0.0&#34;,
+  &#34;port&#34;: 10250,
+  &#34;readOnlyPort&#34;: 10255,
+  &#34;cgroupDriver&#34;: &#34;systemd&#34;,                   
+  &#34;hairpinMode&#34;: &#34;promiscuous-bridge&#34;,
+  &#34;systemReserved&#34;: {&#34;cpu&#34;: &#34;200m&#34;,&#34;memory&#34;: &#34;4096Mi&#34;},
+  &#34;serializeImagePulls&#34;: false,
+  &#34;clusterDomain&#34;: &#34;cluster.local.&#34;,
+  &#34;clusterDNS&#34;: [&#34;10.174.0.2&#34;]
+}
+</code></pre><h2 id="kubeletyml">kubelet.yml</h2>
+<pre tabindex="0"><code>apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+address: &#34;0.0.0.0&#34;
+port: 10250
+serializeImagePulls: false
+evictionHard:
+  memory.available:  &#34;200Mi&#34;
+  nodefs.available:  &#34;10%&#34;
+  nodefs.inodesFree: &#34;5%&#34;
+  imagefs.available: &#34;15%&#34;
+authentication:
+  anonymous:
+    enabled: false
+  webhook:
+    cacheTTL: 2m0s
+    enabled: true
+  x509:
+    clientCAFile: /data/apps/kubernetes/ssl/ca.pem
+authorization:
+  mode: Webhook
+  webhook:
+    cacheAuthorizedTTL: 5m0s
+    cacheUnauthorizedTTL: 30s
+readOnlyPort: 10255
+clusterDNS:
+  - &#34;10.174.0.2&#34;
+clusterDomain: &#34;cluster.local.&#34;
+cgroupDriver: &#34;systemd&#34;
+systemReserved:
+  cpu: &#34;200m&#34;
+  memory: &#34;1024Mi&#34;
+rotateCertificates: true
+containerLogMaxSize: 1Gi
+containerLogMaxFiles: 5
+</code></pre><p>kube-proxy.yaml</p>
+<pre tabindex="0"><code>apiVersion: kubeproxy.config.k8s.io/v1alpha1
+bindAddress: 0.0.0.0
+clientConnection:
+  kubeconfig: /data/apps/kubernetes/conf/kube-proxy.kubeconfig
+clusterCIDR: 10.175.0.0/16
+healthzBindAddress: 0.0.0.0:10256
+kind: KubeProxyConfiguration
+metricsBindAddress: 0.0.0.0:10249
+mode: &#34;ipvs&#34;
+</code></pre><p>kube-scheduler.yaml</p>
+<pre tabindex="0"><code>KUBE_SCHEDULER_OPTS=&#34;--address=0.0.0.0 \
+--terminated-pod-gc-threshold=1\
+--kubeconfig=/data/apps/kubernetes/conf/kube-scheduler.kubeconfig \
+--leader-elect=true \
+--alsologtostderr=true \
+--logtostderr=false \
+--log-dir=/data/log/kubernetes \
+--v=2&#34;
+</code></pre><h1 id="各种service文件">各种service文件</h1>
+<h2 id="kubeletservice">kubelet.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/kubernetes/kubernetes
+After=containerd.service
+Requires=containerd.service
+[Service]
+WorkingDirectory=/data/data/kubelet
+ExecStart=/usr/local/bin/kubelet  --bootstrap-kubeconfig=/data/apps/kubernetes/conf/kubelet-bootstrap.kubeconfig   --cert-dir=/data/apps/kubernetes/ssl   --kubeconfig=/data/apps/kubernetes/conf/kubelet.kubeconfig   --config=/data/apps/kubernetes/conf/kubelet.yml   --container-runtime-endpoint=unix:///run/containerd/containerd.sock --v=2 --cert-dir=/data/apps/kubernetes/ssl --container-log-max-files=5 --container-log-max-size=1Gi
+Restart=on-failure
+RestartSec=5
+#StandardOutput=null
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="kube-apiserverservice">kube-apiserver.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/kubernetes/kubernetes
+After=etcd.service
+Wants=etcd.service
+[Service]
+ExecStart=/usr/local/bin/kube-log-runner -log-file=/data/log/kubernetes/kube-apiserver/kube-apiserver.log --also-stdout=false /usr/local/bin/kube-apiserver --enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota --anonymous-auth=false --bind-address=172.16.1.94 --secure-port=6443 --advertise-address=172.16.1.94 --authorization-mode=Node,RBAC --runtime-config=api/all=true --enable-bootstrap-token-auth --service-cluster-ip-range=10.174.0.0/16 --token-auth-file=/data/apps/kubernetes/conf/token.csv --service-node-port-range=30000-50000 --tls-cert-file=/data/apps/kubernetes/ssl/kube-apiserver.pem --tls-private-key-file=/data/apps/kubernetes/ssl/kube-apiserver-key.pem --client-ca-file=/data/apps/kubernetes/ssl/ca.pem --kubelet-client-certificate=/data/apps/kubernetes/ssl/kube-apiserver.pem --kubelet-client-key=/data/apps/kubernetes/ssl/kube-apiserver-key.pem --service-account-key-file=/data/apps/kubernetes/ssl/ca-key.pem --service-account-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem --service-account-issuer=api --etcd-cafile=/data/apps/kubernetes/ssl/ca.pem --etcd-certfile=/data/apps/kubernetes/ssl/etcd.pem --etcd-keyfile=/data/apps/kubernetes/ssl/etcd-key.pem --etcd-servers=https://172.16.1.94:2379  --allow-privileged=true --apiserver-count=3  --audit-log-maxage=30 --audit-log-maxbackup=3 --audit-log-maxsize=100 --audit-log-path=/data/log/kubernetes/kube-apiserver-audit.log --event-ttl=1h  --v=4 --enable-bootstrap-token-auth  --runtime-config=api/all=true --requestheader-allowed-names=aggregator --requestheader-group-headers=X-Remote-Group --requestheader-username-headers=X-Remote-User --requestheader-extra-headers-prefix=X-Remote-Extra- --requestheader-client-ca-file=/data/apps/kubernetes/ssl/ca.pem --proxy-client-cert-file=/data/apps/kubernetes/ssl/requestheader-proxy-client.pem --proxy-client-key-file=/data/apps/kubernetes/ssl/requestheader-proxy-client-key.pem
+Restart=on-failure
+RestartSec=5
+Type=simple
+LimitNOFILE=65536
+#StandardOutput=null
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="kube-controller-managerservice">kube-controller-manager.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/kubernetes/kubernetes
+[Service]
+#EnvironmentFile=-/data/apps/kubernetes/conf/kube-controller-manager.conf
+ExecStart=/usr/local/bin/kube-log-runner -log-file=/data/log/kubernetes/kube-controller-manager/kube-controller-manager.log --also-stdout=false /usr/local/bin/kube-controller-manager  --secure-port=10257  --bind-address=0.0.0.0  --kubeconfig=/data/apps/kubernetes/conf/kube-controller-manager.kubeconfig  --service-cluster-ip-range=10.174.0.0/16  --cluster-name=kubernetes  --cluster-signing-cert-file=/data/apps/kubernetes/ssl/ca.pem  --cluster-signing-key-file=/data/apps/kubernetes/ssl/ca-key.pem   --allocate-node-cidrs=true   --cluster-cidr=10.175.0.0/16   --root-ca-file=/data/apps/kubernetes/ssl/ca.pem   --service-account-private-key-file=/data/apps/kubernetes/ssl/ca-key.pem   --leader-elect=true   --feature-gates=RotateKubeletServerCertificate=true   --controllers=*,bootstrapsigner,tokencleaner   --horizontal-pod-autoscaler-sync-period=10s   --tls-cert-file=/data/apps/kubernetes/ssl/kube-controller-manager.pem   --tls-private-key-file=/data/apps/kubernetes/ssl/kube-controller-manager-key.pem   --use-service-account-credentials=true   --v=4
+Restart=on-failure
+RestartSec=5
+#StandardOutput=null
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="kube-proxyservice">kube-proxy.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Kubernetes Kube-Proxy Server
+Documentation=https://github.com/kubernetes/kubernetes
+After=network.target
+[Service]
+WorkingDirectory=/data/data/kube-proxy
+ExecStart=/usr/local/bin/kube-log-runner -log-file=/data/log/kubernetes/kube-proxy/kube-proxy.log --also-stdout=false  /usr/local/bin/kube-proxy   --config=/data/apps/kubernetes/conf/kube-proxy.yaml  --v=2
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+#StandardOutput=null
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="kubeletservice-1">kubelet.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/kubernetes/kubernetes
+After=containerd.service
+Requires=containerd.service
+[Service]
+WorkingDirectory=/data/data/kubelet
+ExecStart=/usr/local/bin/kubelet  --bootstrap-kubeconfig=/data/apps/kubernetes/conf/kubelet-bootstrap.kubeconfig   --cert-dir=/data/apps/kubernetes/ssl   --kubeconfig=/data/apps/kubernetes/conf/kubelet.kubeconfig   --config=/data/apps/kubernetes/conf/kubelet.yml   --container-runtime-endpoint=unix:///run/containerd/containerd.sock --v=2 --cert-dir=/data/apps/kubernetes/ssl --container-log-max-files=5 --container-log-max-size=1Gi
+Restart=on-failure
+RestartSec=5
+#StandardOutput=null
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="etcdservice">etcd.service</h2>
+<pre tabindex="0"><code>[Unit]
+Description=Etcd Server
+After=network.target
+After=network-online.target
+Wants=network-online.target
+  
+[Service]
+Type=notify
+WorkingDirectory=/data/data/etcd/
+ExecStart=/usr/local/bin/etcd --config-file=/data/apps/kubernetes/conf/etcd.conf.yml  --peer-client-cert-auth  --client-cert-auth
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+  
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="etcmodules-loaddipvsconf">/etc/modules-load.d/ipvs.conf</h2>
+<pre tabindex="0"><code>ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+nf_conntrack
+ip_tables
+ip_set
+xt_set
+ipt_set
+ipt_rpfilter
+ipt_REJECT
+ipip
+</code></pre><h2 id="etcmodules-loaddk8sconf">/etc/modules-load.d/k8s.conf</h2>
+<pre tabindex="0"><code>overlay
+br_netfilter
+</code></pre><h2 id="etchosts">/etc/hosts</h2>
+<pre tabindex="0"><code>172.16.1.94   k8s-master
+172.16.1.129  k8s-node1
+172.16.1.23   k8s-node2
+172.16.1.220  k8s-node3
+</code></pre><h2 id="etccontainerdconfigtoml">/etc/containerd/config.toml</h2>
+<pre tabindex="0"><code>disabled_plugins = []
+imports = []
+oom_score = 0
+plugin_dir = &#34;&#34;
+required_plugins = []
+root = &#34;/data/data/containerd&#34;
+state = &#34;/run/containerd&#34;
+temp = &#34;&#34;
+version = 2
+ 
+[cgroup]
+  path = &#34;&#34;
+ 
+[debug]
+  address = &#34;&#34;
+  format = &#34;&#34;
+  gid = 0
+  level = &#34;&#34;
+  uid = 0
+ 
+[grpc]
+  address = &#34;/run/containerd/containerd.sock&#34;
+  gid = 0
+  max_recv_message_size = 16777216
+  max_send_message_size = 16777216
+  tcp_address = &#34;&#34;
+  tcp_tls_ca = &#34;&#34;
+  tcp_tls_cert = &#34;&#34;
+  tcp_tls_key = &#34;&#34;
+  uid = 0
+ 
+[metrics]
+  address = &#34;&#34;
+  grpc_histogram = false
+ 
+[plugins]
+ 
+  [plugins.&#34;io.containerd.gc.v1.scheduler&#34;]
+    deletion_threshold = 0
+    mutation_threshold = 100
+    pause_threshold = 0.02
+    schedule_delay = &#34;0s&#34;
+    startup_delay = &#34;100ms&#34;
+ 
+  [plugins.&#34;io.containerd.grpc.v1.cri&#34;]
+    device_ownership_from_security_context = false
+    disable_apparmor = false
+    disable_cgroup = false
+    disable_hugetlb_controller = true
+    disable_proc_mount = false
+    disable_tcp_service = true
+    enable_selinux = false
+    enable_tls_streaming = false
+    enable_unprivileged_icmp = false
+    enable_unprivileged_ports = false
+    ignore_image_defined_volumes = false
+    max_concurrent_downloads = 3
+    max_container_log_line_size = 16384
+    netns_mounts_under_state_dir = false
+    restrict_oom_score_adj = false
+    sandbox_image = &#34;registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.6&#34;
+    selinux_category_range = 1024
+    stats_collect_period = 10
+    stream_idle_timeout = &#34;4h0m0s&#34;
+    stream_server_address = &#34;127.0.0.1&#34;
+    stream_server_port = &#34;0&#34;
+    systemd_cgroup = false
+    tolerate_missing_hugetlb_controller = true
+    unset_seccomp_profile = &#34;&#34;
+ 
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]
+      bin_dir = &#34;/opt/cni/bin&#34;
+      conf_dir = &#34;/etc/cni/net.d&#34;
+      conf_template = &#34;&#34;
+      ip_pref = &#34;&#34;
+      max_conf_num = 1
+ 
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd]
+      default_runtime_name = &#34;runc&#34;
+      disable_snapshot_annotations = true
+      discard_unpacked_layers = false
+      ignore_rdt_not_enabled_errors = false
+      no_pivot = false
+      snapshotter = &#34;overlayfs&#34;
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.default_runtime]
+        base_runtime_spec = &#34;&#34;
+        cni_conf_dir = &#34;&#34;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        runtime_engine = &#34;&#34;
+        runtime_path = &#34;&#34;
+        runtime_root = &#34;&#34;
+        runtime_type = &#34;&#34;
+ 
+        [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.default_runtime.options]
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes]
+ 
+        [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc]
+          base_runtime_spec = &#34;&#34;
+          cni_conf_dir = &#34;&#34;
+          cni_max_conf_num = 0
+          container_annotations = []
+          pod_annotations = []
+          privileged_without_host_devices = false
+          runtime_engine = &#34;&#34;
+          runtime_path = &#34;&#34;
+          runtime_root = &#34;&#34;
+          runtime_type = &#34;io.containerd.runc.v2&#34;
+ 
+          [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc.options]
+            BinaryName = &#34;&#34;
+            CriuImagePath = &#34;&#34;
+            CriuPath = &#34;&#34;
+            CriuWorkPath = &#34;&#34;
+            IoGid = 0
+            IoUid = 0
+            NoNewKeyring = false
+            NoPivotRoot = false
+            Root = &#34;&#34;
+            ShimCgroup = &#34;&#34;
+            SystemdCgroup = true
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.untrusted_workload_runtime]
+        base_runtime_spec = &#34;&#34;
+        cni_conf_dir = &#34;&#34;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        runtime_engine = &#34;&#34;
+        runtime_path = &#34;&#34;
+        runtime_root = &#34;&#34;
+        runtime_type = &#34;&#34;
+ 
+        [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.untrusted_workload_runtime.options]
+ 
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.image_decryption]
+      key_model = &#34;node&#34;
+ 
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry]
+      config_path = &#34;&#34;
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.auths]
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.configs]
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.headers]
+ 
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors]
+        [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors.&#34;docker.io&#34;]
+          endpoint = [&#34;https://cekcu3pt.mirror.aliyuncs.com&#34;]
+ 
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.x509_key_pair_streaming]
+      tls_cert_file = &#34;&#34;
+      tls_key_file = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.internal.v1.opt&#34;]
+    path = &#34;/opt/containerd&#34;
+ 
+  [plugins.&#34;io.containerd.internal.v1.restart&#34;]
+    interval = &#34;10s&#34;
+ 
+  [plugins.&#34;io.containerd.internal.v1.tracing&#34;]
+    sampling_ratio = 1.0
+    service_name = &#34;containerd&#34;
+ 
+  [plugins.&#34;io.containerd.metadata.v1.bolt&#34;]
+    content_sharing_policy = &#34;shared&#34;
+ 
+  [plugins.&#34;io.containerd.monitor.v1.cgroups&#34;]
+    no_prometheus = false
+ 
+  [plugins.&#34;io.containerd.runtime.v1.linux&#34;]
+    no_shim = false
+    runtime = &#34;runc&#34;
+    runtime_root = &#34;&#34;
+    shim = &#34;containerd-shim&#34;
+    shim_debug = false
+ 
+  [plugins.&#34;io.containerd.runtime.v2.task&#34;]
+    platforms = [&#34;linux/amd64&#34;]
+    sched_core = false
+ 
+  [plugins.&#34;io.containerd.service.v1.diff-service&#34;]
+    default = [&#34;walking&#34;]
+ 
+  [plugins.&#34;io.containerd.service.v1.tasks-service&#34;]
+    rdt_config_file = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.aufs&#34;]
+    root_path = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.btrfs&#34;]
+    root_path = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.devmapper&#34;]
+    async_remove = false
+    base_image_size = &#34;&#34;
+    discard_blocks = false
+    fs_options = &#34;&#34;
+    fs_type = &#34;&#34;
+    pool_name = &#34;&#34;
+    root_path = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.native&#34;]
+    root_path = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.overlayfs&#34;]
+    mount_options = []
+    root_path = &#34;&#34;
+    sync_remove = false
+    upperdir_label = false
+ 
+  [plugins.&#34;io.containerd.snapshotter.v1.zfs&#34;]
+    root_path = &#34;&#34;
+ 
+  [plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]
+    endpoint = &#34;&#34;
+    insecure = false
+    protocol = &#34;&#34;
+ 
+[proxy_plugins]
+ 
+[stream_processors]
+ 
+  [stream_processors.&#34;io.containerd.ocicrypt.decoder.v1.tar&#34;]
+    accepts = [&#34;application/vnd.oci.image.layer.v1.tar+encrypted&#34;]
+    args = [&#34;--decryption-keys-path&#34;, &#34;/etc/containerd/ocicrypt/keys&#34;]
+    env = [&#34;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&#34;]
+    path = &#34;ctd-decoder&#34;
+    returns = &#34;application/vnd.oci.image.layer.v1.tar&#34;
+ 
+  [stream_processors.&#34;io.containerd.ocicrypt.decoder.v1.tar.gzip&#34;]
+    accepts = [&#34;application/vnd.oci.image.layer.v1.tar+gzip+encrypted&#34;]
+    args = [&#34;--decryption-keys-path&#34;, &#34;/etc/containerd/ocicrypt/keys&#34;]
+    env = [&#34;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&#34;]
+    path = &#34;ctd-decoder&#34;
+    returns = &#34;application/vnd.oci.image.layer.v1.tar+gzip&#34;
+ 
+[timeouts]
+  &#34;io.containerd.timeout.bolt.open&#34; = &#34;0s&#34;
+  &#34;io.containerd.timeout.shim.cleanup&#34; = &#34;5s&#34;
+  &#34;io.containerd.timeout.shim.load&#34; = &#34;5s&#34;
+  &#34;io.containerd.timeout.shim.shutdown&#34; = &#34;3s&#34;
+  &#34;io.containerd.timeout.task.state&#34; = &#34;2s&#34;
+ 
+[ttrpc]
+  address = &#34;&#34;
+  gid = 0
+  uid = 0
+</code></pre><p>生成token：   head -c 16 /dev/urandom| od -An -t x |tr -d &rsquo; &rsquo;<br>
+创建token.csv文件  cat &gt; token.csv &laquo; EOF 54e30ab1155a753e192109070466377f,kubelet-bootstrap,10001,&ldquo;system:kubelet-bootstrap&rdquo; EOF</p>
+<h2 id="calicoyaml">calico.yaml</h2>
+<pre tabindex="0"><code>---
+# Source: calico/templates/calico-kube-controllers.yaml
+# This manifest creates a Pod Disruption Budget for Controller to allow K8s Cluster Autoscaler to evict
+ 
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: calico-kube-controllers
+  namespace: kube-system
+  labels:
+    k8s-app: calico-kube-controllers
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      k8s-app: calico-kube-controllers
+---
+# Source: calico/templates/calico-kube-controllers.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: calico-kube-controllers
+  namespace: kube-system
+---
+# Source: calico/templates/calico-node.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: calico-node
+  namespace: kube-system
+---
+# Source: calico/templates/calico-etcd-secrets.yaml
+# The following contains k8s Secrets for use with a TLS enabled etcd cluster.
+# For information on populating Secrets, see http://kubernetes.io/docs/user-guide/secrets/
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: calico-etcd-secrets
+  namespace: kube-system
+data:
+  # Populate the following with etcd TLS configuration if desired, but leave blank if
+  # not using TLS for etcd.
+  # The keys below should be uncommented and the values populated with the base64
+  # encoded contents of each file that would be associated with the TLS data.
+  # Example command for encoding a file contents: cat &lt;file&gt; | base64 -w 0
+  # etcd-key: null
+  # etcd-cert: null
+  # etcd-ca: null
+  etcd-key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBelFMNVhSTkdNL1RHTlRYVkZpTnRPNFhmOGFoNGdJcnRNMTVFdXA1eWNsaTc4cElBCi9HNnJmUFRvSEpoTndnTHA5eHAyQm05RkRCK3BVc3M5dHRyZW80eE1nUkhyUmxNS1hxTm5MK3EzYllZakNMbFoKdXEwWGJ5aXlSS2Z3ZzEzZVovWEJQcjhDWENRcFkrcFBjVUU3R20xNzUvSjBpNVFIWmhBL0Y3MU1jaEZSMU5mTwpZNExxM25FR21qZFZKOUhtZXphUHZpdVdOZFdvdzR3aHhhR1NBay9LZUxRU2J2UHJqbWpJY2JYYlVMdVpMQUpkCmJaZEl3dE5nM0ZJdm96ZW9WanZOSUxTek05WWNxemJyeDNJUHpXRnFTamlPaDJTWHg3T1B0MDNJYmk1ZmN2NFEKdUNRbTdESCt2S2lBcG5oNHQrRzRDVi9lbVgyWlhsbXRYbjlsRFFJREFRQUJBb0lCQVFDemVlMFF2TFR5KzFFaQplRFJLSTAyWGxJWVBLNndDN0p6b0laa052M1QyQWhUWU1WWEhxS05jeTVNQXBaMDlRZ3ZObGs3SkoxUk5YdEovCmR3cGFNSlpFbTZqR1BnZTVFeTI2MkZhWHJtWlM3ZUZ4MjhKZ0dQU3hEZkd6QlVzYjFtdkVtM05JR1RSWnNoYkMKTC9qSWI1RHNlL2pEZ0pEak9QNlpMWlB1bG54OFJuWEZGdUg2YlY5L0ZDRVpYUGx2V1hWc3lESDlkMFNOZmgzaApld21oSzdraytRa1h3cU81d1NlZzdhN1V2T3I4WE1OK085SnRBYnl2RmJMQWY0VklDWUNUM3U2V3NzZ1pLYVNsCnhmMVFlazNCTTBYT3lMblJmaUJoNWtMTXlOSnhsQnFNRzJudXBweEtFaStGQTlHd2NZeU12TnpUcUg0MG5UM0oKVnYxc0czUUJBb0dCQVAveWcvM2FJMlRweXQwL0NRRkRrY2dTUXcwYmlIeXpQVVozSHZQMno0K2wzSjZoWExPeAo3WktiT2xTRTNyS1cxc0MrMWJscVpLQWM3MFA2bDZLdjkzTHVyRFBxems2OExoWU8wWUZ5RndkLzNUYXVmRGQ2ClVIZmZDYk4zZ1FwblpKOTh3ZGNUS1VhVmlqK3JxMjA2c2pvZ29sUHpzV3czdkJaOE5yWERPdGFOQW9HQkFNME4KeG1TSzZUT2FsemplUVVLNndCV0hsR25xNS91eEpmU2dKWHovWjZ1cjFndzg4elhpQzgvSHZqTTc0VzZGOEtsTApmVjBFNXREZmtJWDZTVHhnMVRWUmJvMGNnNmVqUzU2aDJJZGpOMU90SWFhREk1aUlvVnJaNGZZNDF6L0poZWFlCmlBUUZPeFJoTVRpTkQ0QW1EaXF1S0d3NjJqNzFGNDNDVFROZGNHaUJBb0dCQVBDYllqdTgybk1lV1dmOXZ4QmkKSGVTd1Rqby9QT0xGZVFBS01aMzAwcERld25TWml0VWVtaEN0UG50LzRQNlFVRmduempFYzlIV1VYZFZRK1VXbQpHSUFDSVA0NWFUS1pNdFhubmtvTEg5MGI5YkJXL1UwRi9pbUNFZE9WcjBoQmhGVnQ2YWV2U3FraElUTFR4amJMCjdBbzY3WDd3WTBVeGErN1RYSGNvamVKdEFvR0FHblhobVEzWDVBSFo2OHU2YmlyOUtJb1RXOHVsWGZSUktvMFQKNlZwbi9WNHlRK2dGbG5seC9zRU95VHU3N25BNFN4Qmp3QUltNnVNK21odGZJZng0NXVWNE41dHJYZEdUcTRmRgpFa3Q2VTBEdks3YVdmRk45UnVVQTVLNFhFTE1ucFVmbDAyYjlaYmJaREN3ZnlQQ2dPVis1OWFWdWpsdEFTOW03CjdwbnJMSUVDZ1lCWEdlNFVRdFN1RkVEZWd1RXUzcVVBdTBvcWdlM3pZSi9nb09xWEpGa2Nwa1puU2xaYXNsMkEKcEZMcHJtb1NXYmFwemNvZVhoMDZPZlRBKzA0MUF3c2FnV2NsL0NQdlJCdjNhenVSYm41QmdidjI1L2IxdHVvcwo5TjExM2NOYXE2cVRzZ3E1UWhqQ21DSU12VjZWQSt6V1g0Wmt1Z1lUaGNnNzloSjhUemNObFE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+  etcd-cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVEakNDQXZhZ0F3SUJBZ0lVWkhCb0hQQ0s1TmU3a24zV0Q0OW90WUpmalhZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjFOcFkyaDFZVzR4RURBT0JnTlZCQWNUQjJObwpaVzVuWkhVeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HYzNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEl6TVRFeU16QTNOVFl3TUZvWERUTXpNVEV5TURBM05UWXdNRm93WHpFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjFOcFkyaDFZVzR4RURBT0JnTlZCQWNUQjJOb1pXNW5aSFV4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HYzNsemRHVnRNUTB3Q3dZRFZRUURFd1JsZEdOa01JSUJJakFOCkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXpRTDVYUk5HTS9UR05UWFZGaU50TzRYZjhhaDQKZ0lydE0xNUV1cDV5Y2xpNzhwSUEvRzZyZlBUb0hKaE53Z0xwOXhwMkJtOUZEQitwVXNzOXR0cmVvNHhNZ1JIcgpSbE1LWHFObkwrcTNiWVlqQ0xsWnVxMFhieWl5Uktmd2cxM2VaL1hCUHI4Q1hDUXBZK3BQY1VFN0dtMTc1L0owCmk1UUhaaEEvRjcxTWNoRlIxTmZPWTRMcTNuRUdtamRWSjlIbWV6YVB2aXVXTmRXb3c0d2h4YUdTQWsvS2VMUVMKYnZQcmptakljYlhiVUx1WkxBSmRiWmRJd3ROZzNGSXZvemVvVmp2TklMU3pNOVljcXpicngzSVB6V0ZxU2ppTwpoMlNYeDdPUHQwM0liaTVmY3Y0UXVDUW03REgrdktpQXBuaDR0K0c0Q1YvZW1YMlpYbG10WG45bERRSURBUUFCCm80RzdNSUc0TUE0R0ExVWREd0VCL3dRRUF3SUZvREFkQmdOVkhTVUVGakFVQmdnckJnRUZCUWNEQVFZSUt3WUIKQlFVSEF3SXdEQVlEVlIwVEFRSC9CQUl3QURBZEJnTlZIUTRFRmdRVW0vUlk5VFVJeUE3ZDFXNTdYZ0s2WXNXdQpGNTB3SHdZRFZSMGpCQmd3Rm9BVXo1RXRoRUZDdmRaYTE2dnc2Z0YrOHhFV092Z3dPUVlEVlIwUkJESXdNSWNFCmZ3QUFBWWNFckJBNFhvY0VyQkE0M0ljRXJCQTRGNGNFckJBNGdZY0VyQkE0NTRjRXJCQTQ1b2NFckJBNDVUQU4KQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBQ3BPRnpDbHNCMWR5VDlEdENuRHNaSWdVNDVoWmcrR0pIWmNYaTFycgpUeVVmbkVaZUVvNmFobkZSeTh0cmdoNTBJcnNTSFZUd1JRK2R0aEVFRFBLdUFDR1R5SEpZM1FKQ2JYWU9WSGNnCmRVWld5S3ZzTXM5RUVtNXlzbzJsa3hBWFhLMXFvemc2blYrblhUOXMwcnBodFNEVmRJaUkrZkxLUnVHcDNoOWkKUzVFYW1JaFE4QkF2RUdnRDVsMHB2enQ4QTdUZHoyVExDM0U3TkM0MFo0UnVIY0FYMDBoejgzNEVjNy9vamZ1NApTUHBHVGpBa3k3SXJmRzZDaW5YY0tha2s5SVNHMUpJUmZwdG13V1c4SFN5a25vQ1RyMUlTQ3pIQnFrQW1FUDBSCkFmcnBScXhDcG02NDlBMzBqT3BGQ0wzdFl0WlBRbGtYa2M2REJ2VHVEem9GblE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  etcd-ca: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURtakNDQW9LZ0F3SUJBZ0lVYTlLUGwrRi9JSmViZFBCNzFnN0FuR1ZBQjBZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjFOcFkyaDFZVzR4RURBT0JnTlZCQWNUQjJObwpaVzVuWkhVeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HYzNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEl6TVRFeU16QTNOVFl3TUZvWERUTXpNVEV5TURBM05UWXdNRm93WlRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjFOcFkyaDFZVzR4RURBT0JnTlZCQWNUQjJOb1pXNW5aSFV4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HYzNsemRHVnRNUk13RVFZRFZRUURFd3ByZFdKbGNtNWxkR1Z6Ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBcTA5SjhDSDd3RjVlVHpWVkZvREUKRVBzbGhGcEczL3I3dkl0aHZxU09wTFlUajZuQzBzYzJDaERHZEVYQ3BObVJzd2J6OGUyQVA2SWlFS3F0QXB5dQpwaXBzSDJ0WEhMRUpYOFllV1Q5WlJTNzEwdTM3VUtjRnhJNWFobnpORHFVR0hQUHMxbHNIVktmUEN4VXpVQThTCkdYZjRFaFFEdUZsblgrelJCdjE3Lyt1UzlsZFpla014R3B0RUZ5YmxVSXRCeG5nS0ViazRHS2RQeUZGeERGM1UKNkR0WlNQL2M0WXRUSkdFOHZ0aURIWHlUWmc0TGF4REVNQVZVdFFIUTU5M3N4Y0twdXVtSEVPMmY2R1RmVFlVZQpOcWVEYUg2SzB5Z0o3M0ZET2cyd1AxTlhBMit3TUJLT1dmZGVWNmlJcXNtcHdLUUVNamFtclEyN0FjZFE0Y1pvCjFRSURBUUFCbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlYKSFE0RUZnUVV6NUV0aEVGQ3ZkWmExNnZ3NmdGKzh4RVdPdmd3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUh4QwpxSTBvcGZkcEJMNUZuZXRxcFhqNGljSlRoRU5ZMnd3dWVnclVRbjBIRVRHMnZIY0JRQWxYMXpFUVNjTllOS0NsClBEaHErWmY5SFRQcjMvNUZ2eEREN1NKZFNuNmU3dmUxZmFZdkJRbm52T01nc05lK2lCWko0eS9TbHBuWk9FVkwKRkNOMjd1QmloN3dhcTA3NmhIVlQ1K1dwNll6a2pIT0ZsVFU4b1BjeXQwOHI4QUROM1VNVWlGcHdkTXgxK2wxRQpMSiswT0tvc0FyNU80Z3J6TERudFZrQXN4bWtuMG5pRlZMZTRic0ZrOE8ra2FYN0ZSUEt0SkVRMWc2RjdVeUpvCkVSVTVSZi9tdkJiN3ZyK1AwY21DaXdBa0ppcWpVWGY4M1ZJTzJGUUVHeFNtSU05YjFVZTNDbjZoUUwrTENpMjAKZVRreEZZM3hWbjRxQkZMSVBJaz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+---
+# Source: calico/templates/calico-config.yaml
+# This ConfigMap is used to configure a self-hosted Calico installation.
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: calico-config
+  namespace: kube-system
+data:
+  # Configure this with the location of your etcd cluster.
+  etcd_endpoints: &#34;https://172.16.1.94:2379&#34;
+  # If you&#39;re using TLS enabled etcd uncomment the following.
+  # You must also populate the Secret below with these files.
+  etcd_ca: &#34;/calico-secrets/etcd-ca&#34;   # &#34;/calico-secrets/etcd-ca&#34;
+  etcd_cert: &#34;/calico-secrets/etcd-cert&#34; # &#34;/calico-secrets/etcd-cert&#34;
+  etcd_key: &#34;/calico-secrets/etcd-key&#34;  # &#34;/calico-secrets/etcd-key&#34;
+  # Typha is disabled.
+  typha_service_name: &#34;none&#34;
+  # Configure the backend to use.
+  calico_backend: &#34;vxlan&#34;
+  #calico_backend: &#34;bird&#34;
+ 
+  # Configure the MTU to use for workload interfaces and tunnels.
+  # By default, MTU is auto-detected, and explicitly setting this field should not be required.
+  # You can override auto-detection by providing a non-zero value.
+  veth_mtu: &#34;0&#34;
+ 
+  # The CNI network configuration to install on each node. The special
+  # values in this config will be automatically populated.
+  cni_network_config: |-
+    {
+      &#34;name&#34;: &#34;k8s-pod-network&#34;,
+      &#34;cniVersion&#34;: &#34;0.3.1&#34;,
+      &#34;plugins&#34;: [
+        {
+          &#34;type&#34;: &#34;calico&#34;,
+          &#34;log_level&#34;: &#34;info&#34;,
+          &#34;log_file_path&#34;: &#34;/var/log/calico/cni/cni.log&#34;,
+          &#34;etcd_endpoints&#34;: &#34;__ETCD_ENDPOINTS__&#34;,
+          &#34;etcd_key_file&#34;: &#34;__ETCD_KEY_FILE__&#34;,
+          &#34;etcd_cert_file&#34;: &#34;__ETCD_CERT_FILE__&#34;,
+          &#34;etcd_ca_cert_file&#34;: &#34;__ETCD_CA_CERT_FILE__&#34;,
+          &#34;mtu&#34;: __CNI_MTU__,
+          &#34;ipam&#34;: {
+              &#34;type&#34;: &#34;calico-ipam&#34;
+          },
+          &#34;policy&#34;: {
+              &#34;type&#34;: &#34;k8s&#34;
+          },
+          &#34;kubernetes&#34;: {
+              &#34;kubeconfig&#34;: &#34;__KUBECONFIG_FILEPATH__&#34;
+          }
+        },
+        {
+          &#34;type&#34;: &#34;portmap&#34;,
+          &#34;snat&#34;: true,
+          &#34;capabilities&#34;: {&#34;portMappings&#34;: true}
+        },
+        {
+          &#34;type&#34;: &#34;bandwidth&#34;,
+          &#34;capabilities&#34;: {&#34;bandwidth&#34;: true}
+        }
+      ]
+    }
+---
+# Source: calico/templates/calico-kube-controllers-rbac.yaml
+# Include a clusterrole for the kube-controllers component,
+# and bind it to the calico-kube-controllers serviceaccount.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: calico-kube-controllers
+rules:
+  # Pods are monitored for changing labels.
+  # The node controller monitors Kubernetes nodes.
+  # Namespace and serviceaccount labels are used for policy.
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - pods
+      - nodes
+      - namespaces
+      - serviceaccounts
+    verbs:
+      - watch
+      - list
+      - get
+  # Watch for changes to Kubernetes NetworkPolicies.
+  - apiGroups: [&#34;networking.k8s.io&#34;]
+    resources:
+      - networkpolicies
+    verbs:
+      - watch
+      - list
+---
+# Source: calico/templates/calico-node-rbac.yaml
+# Include a clusterrole for the calico-node DaemonSet,
+# and bind it to the calico-node serviceaccount.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: calico-node
+rules:
+  # Used for creating service account tokens to be used by the CNI plugin
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - serviceaccounts/token
+    resourceNames:
+      - calico-node
+    verbs:
+      - create
+  # The CNI plugin needs to get pods, nodes, and namespaces.
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - pods
+      - nodes
+      - namespaces
+    verbs:
+      - get
+  # EndpointSlices are used for Service-based network policy rule
+  # enforcement.
+  - apiGroups: [&#34;discovery.k8s.io&#34;]
+    resources:
+      - endpointslices
+    verbs:
+      - watch
+      - list
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - endpoints
+      - services
+    verbs:
+      # Used to discover service IPs for advertisement.
+      - watch
+      - list
+  # Pod CIDR auto-detection on kubeadm needs access to config maps.
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - configmaps
+    verbs:
+      - get
+  - apiGroups: [&#34;&#34;]
+    resources:
+      - nodes/status
+    verbs:
+      # Needed for clearing NodeNetworkUnavailable flag.
+      - patch
+---
+# Source: calico/templates/calico-kube-controllers-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: calico-kube-controllers
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: calico-kube-controllers
+subjects:
+- kind: ServiceAccount
+  name: calico-kube-controllers
+  namespace: kube-system
+---
+# Source: calico/templates/calico-node-rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: calico-node
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: calico-node
+subjects:
+- kind: ServiceAccount
+  name: calico-node
+  namespace: kube-system
+---
+# Source: calico/templates/calico-node.yaml
+# This manifest installs the calico-node container, as well
+# as the CNI plugins and network config on
+# each master and worker node in a Kubernetes cluster.
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: calico-node
+  namespace: kube-system
+  labels:
+    k8s-app: calico-node
+spec:
+  selector:
+    matchLabels:
+      k8s-app: calico-node
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: calico-node
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      hostNetwork: true
+      tolerations:
+        # Make sure calico-node gets scheduled on all nodes.
+        - effect: NoSchedule
+          operator: Exists
+        # Mark the pod as a critical add-on for rescheduling.
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+      serviceAccountName: calico-node
+      # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a &#34;force
+      # deletion&#34;: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
+      terminationGracePeriodSeconds: 0
+      priorityClassName: system-node-critical
+      initContainers:
+        # This container installs the CNI binaries
+        # and CNI network config file on each node.
+        - name: install-cni
+          image: docker.io/calico/cni:v3.25.2
+          imagePullPolicy: IfNotPresent
+          command: [&#34;/opt/cni/bin/install&#34;]
+          envFrom:
+          - configMapRef:
+              # Allow KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT to be overridden for eBPF mode.
+              name: kubernetes-services-endpoint
+              optional: true
+          env:
+            # Name of the CNI config file to create.
+            - name: CNI_CONF_NAME
+              value: &#34;10-calico.conflist&#34;
+            # The CNI network config to install on each node.
+            - name: CNI_NETWORK_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: cni_network_config
+            # The location of the etcd cluster.
+            - name: ETCD_ENDPOINTS
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_endpoints
+            # CNI MTU Config variable
+            - name: CNI_MTU
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: veth_mtu
+            # Prevents the container from sleeping forever.
+            - name: SLEEP
+              value: &#34;false&#34;
+          volumeMounts:
+            - mountPath: /host/opt/cni/bin
+              name: cni-bin-dir
+            - mountPath: /host/etc/cni/net.d
+              name: cni-net-dir
+            - mountPath: /calico-secrets
+              name: etcd-certs
+          securityContext:
+            privileged: true
+        # This init container mounts the necessary filesystems needed by the BPF data plane
+        # i.e. bpf at /sys/fs/bpf and cgroup2 at /run/calico/cgroup. Calico-node initialisation is executed
+        # in best effort fashion, i.e. no failure for errors, to not disrupt pod creation in iptable mode.
+        - name: &#34;mount-bpffs&#34;
+          image: docker.io/calico/node:v3.25.2
+          imagePullPolicy: IfNotPresent
+          command: [&#34;calico-node&#34;, &#34;-init&#34;, &#34;-best-effort&#34;]
+          volumeMounts:
+            - mountPath: /sys/fs
+              name: sys-fs
+              # Bidirectional is required to ensure that the new mount we make at /sys/fs/bpf propagates to the host
+              # so that it outlives the init container.
+              mountPropagation: Bidirectional
+            - mountPath: /var/run/calico
+              name: var-run-calico
+              # Bidirectional is required to ensure that the new mount we make at /run/calico/cgroup propagates to the host
+              # so that it outlives the init container.
+              mountPropagation: Bidirectional
+            # Mount /proc/ from host which usually is an init program at /nodeproc. It&#39;s needed by mountns binary,
+            # executed by calico-node, to mount root cgroup2 fs at /run/calico/cgroup to attach CTLB programs correctly.
+            - mountPath: /nodeproc
+              name: nodeproc
+              readOnly: true
+          securityContext:
+            privileged: true
+      containers:
+        # Runs calico-node container on each Kubernetes node. This
+        # container programs network policy and routes on each
+        # host.
+        - name: calico-node
+          image: docker.io/calico/node:v3.25.2
+          imagePullPolicy: IfNotPresent
+          envFrom:
+          - configMapRef:
+              # Allow KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT to be overridden for eBPF mode.
+              name: kubernetes-services-endpoint
+              optional: true
+          env:
+            # The location of the etcd cluster.
+            - name: ETCD_ENDPOINTS
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_endpoints
+            # Location of the CA certificate for etcd.
+            - name: ETCD_CA_CERT_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_ca
+            # Location of the client key for etcd.
+            - name: ETCD_KEY_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_key
+            # Location of the client certificate for etcd.
+            - name: ETCD_CERT_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_cert
+            # Set noderef for node controller.
+            - name: CALICO_K8S_NODE_REF
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            # Choose the backend to use.
+            - name: CALICO_NETWORKING_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: calico_backend
+            # Cluster type to identify the deployment type
+            - name: CLUSTER_TYPE
+              value: &#34;k8s,bgp&#34;
+            # Auto-detect the BGP IP address.
+            - name: IP
+              value: &#34;autodetect&#34;
+            # Enable IPIP
+            - name: CALICO_IPV4POOL_IPIP
+              value: &#34;Never&#34;
+            # Enable or Disable VXLAN on the default IP pool.
+            - name: CALICO_IPV4POOL_VXLAN
+              value: &#34;Always&#34;
+            # Enable or Disable VXLAN on the default IPv6 IP pool.
+            - name: CALICO_IPV6POOL_VXLAN
+              value: &#34;Never&#34;
+            # Set MTU for tunnel device used if ipip is enabled
+            - name: FELIX_IPINIPMTU
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: veth_mtu
+            # Set MTU for the VXLAN tunnel device.
+            - name: FELIX_VXLANMTU
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: veth_mtu
+            # Set MTU for the Wireguard tunnel device.
+            - name: FELIX_WIREGUARDMTU
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: veth_mtu
+            - name: IP_AUTODETECTION_METHOD
+              value: &#34;interface=ens.*&#34;
+            # The default IPv4 pool to create on startup if none exists. Pod IPs will be
+            # chosen from this range. Changing this value after installation will have
+            # no effect. This should fall within `--cluster-cidr`.
+            # - name: CALICO_IPV4POOL_CIDR
+            #   value: &#34;192.168.0.0/16&#34;
+            - name: CALICO_IPV4POOL_CIDR
+              value: &#34;10.175.0.0/16&#34;
+            # Disable file logging so `kubectl logs` works.
+            - name: CALICO_DISABLE_FILE_LOGGING
+              value: &#34;true&#34;
+            # Set Felix endpoint to host default action to ACCEPT.
+            - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+              value: &#34;ACCEPT&#34;
+            # Disable IPv6 on Kubernetes.
+            - name: FELIX_IPV6SUPPORT
+              value: &#34;false&#34;
+            - name: FELIX_HEALTHENABLED
+              value: &#34;true&#34;
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 250m
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/calico-node
+                - -shutdown
+          livenessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-live
+                # - -bird-live
+            periodSeconds: 10
+            initialDelaySeconds: 10
+            failureThreshold: 6
+            timeoutSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-ready
+                # - -bird-ready
+            periodSeconds: 10
+            timeoutSeconds: 10
+          volumeMounts:
+            # For maintaining CNI plugin API credentials.
+            - mountPath: /host/etc/cni/net.d
+              name: cni-net-dir
+              readOnly: false
+            - mountPath: /lib/modules
+              name: lib-modules
+              readOnly: true
+            - mountPath: /run/xtables.lock
+              name: xtables-lock
+              readOnly: false
+            - mountPath: /var/run/calico
+              name: var-run-calico
+              readOnly: false
+            - mountPath: /var/lib/calico
+              name: var-lib-calico
+              readOnly: false
+            - mountPath: /calico-secrets
+              name: etcd-certs
+            - name: policysync
+              mountPath: /var/run/nodeagent
+            # For eBPF mode, we need to be able to mount the BPF filesystem at /sys/fs/bpf so we mount in the
+            # parent directory.
+            - name: bpffs
+              mountPath: /sys/fs/bpf
+            - name: cni-log-dir
+              mountPath: /var/log/calico/cni
+              readOnly: true
+      volumes:
+        # Used by calico-node.
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: var-run-calico
+          hostPath:
+            path: /var/run/calico
+        - name: var-lib-calico
+          hostPath:
+            path: /var/lib/calico
+        - name: xtables-lock
+          hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+        - name: sys-fs
+          hostPath:
+            path: /sys/fs/
+            type: DirectoryOrCreate
+        - name: bpffs
+          hostPath:
+            path: /sys/fs/bpf
+            type: Directory
+        # mount /proc at /nodeproc to be used by mount-bpffs initContainer to mount root cgroup2 fs.
+        - name: nodeproc
+          hostPath:
+            path: /proc
+        # Used to install CNI.
+        - name: cni-bin-dir
+          hostPath:
+            path: /opt/cni/bin
+        - name: cni-net-dir
+          hostPath:
+            path: /etc/cni/net.d
+        # Used to access CNI logs.
+        - name: cni-log-dir
+          hostPath:
+            path: /var/log/calico/cni
+        # Mount in the etcd TLS secrets with mode 400.
+        # See https://kubernetes.io/docs/concepts/configuration/secret/
+        - name: etcd-certs
+          secret:
+            secretName: calico-etcd-secrets
+            defaultMode: 0400
+        # Used to create per-pod Unix Domain Sockets
+        - name: policysync
+          hostPath:
+            type: DirectoryOrCreate
+            path: /var/run/nodeagent
+---
+# Source: calico/templates/calico-kube-controllers.yaml
+# See https://github.com/projectcalico/kube-controllers
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calico-kube-controllers
+  namespace: kube-system
+  labels:
+    k8s-app: calico-kube-controllers
+spec:
+  # The controllers can only have a single active instance.
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: calico-kube-controllers
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: calico-kube-controllers
+      namespace: kube-system
+      labels:
+        k8s-app: calico-kube-controllers
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+        # Mark the pod as a critical add-on for rescheduling.
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+      serviceAccountName: calico-kube-controllers
+      priorityClassName: system-cluster-critical
+      # The controllers must run in the host network namespace so that
+      # it isn&#39;t governed by policy that would prevent it from working.
+      hostNetwork: true
+      containers:
+        - name: calico-kube-controllers
+          image: docker.io/calico/kube-controllers:v3.25.2
+          imagePullPolicy: IfNotPresent
+          env:
+            # The location of the etcd cluster.
+            - name: ETCD_ENDPOINTS
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_endpoints
+            # Location of the CA certificate for etcd.
+            - name: ETCD_CA_CERT_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_ca
+            # Location of the client key for etcd.
+            - name: ETCD_KEY_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_key
+            # Location of the client certificate for etcd.
+            - name: ETCD_CERT_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: etcd_cert
+            # Choose which controllers to run.
+            - name: ENABLED_CONTROLLERS
+              value: policy,namespace,serviceaccount,workloadendpoint,node
+          volumeMounts:
+            # Mount in the etcd TLS secrets.
+            - mountPath: /calico-secrets
+              name: etcd-certs
+          livenessProbe:
+            exec:
+              command:
+              - /usr/bin/check-status
+              - -l
+            periodSeconds: 10
+            initialDelaySeconds: 10
+            failureThreshold: 6
+            timeoutSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - /usr/bin/check-status
+              - -r
+            periodSeconds: 10
+      volumes:
+        # Mount in the etcd TLS secrets with mode 400.
+        # See https://kubernetes.io/docs/concepts/configuration/secret/
+        - name: etcd-certs
+          secret:
+            secretName: calico-etcd-secrets
+            defaultMode: 0440
+coredns.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: coredns
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: system:coredns
+rules:
+  - apiGroups:
+    - &#34;&#34;
+    resources:
+    - endpoints
+    - services
+    - pods
+    - namespaces
+    verbs:
+    - list
+    - watch
+  - apiGroups:
+    - discovery.k8s.io
+    resources:
+    - endpointslices
+    verbs:
+    - list
+    - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: &#34;true&#34;
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: system:coredns
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:coredns
+subjects:
+- kind: ServiceAccount
+  name: coredns
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+          lameduck 5s
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        prometheus :9153
+        forward . /etc/resolv.conf {
+          max_concurrent 1000
+        }
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coredns
+  namespace: kube-system
+  labels:
+    k8s-app: kube-dns
+    kubernetes.io/name: &#34;CoreDNS&#34;
+    app.kubernetes.io/name: coredns
+spec:
+  # replicas: not specified here:
+  # 1. Default is 1.
+  # 2. Will be tuned in real time if DNS horizontal auto-scaling is turned on.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      k8s-app: kube-dns
+      app.kubernetes.io/name: coredns
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-dns
+        app.kubernetes.io/name: coredns
+    spec:
+      priorityClassName: system-cluster-critical
+      serviceAccountName: coredns
+      tolerations:
+        - key: &#34;CriticalAddonsOnly&#34;
+          operator: &#34;Exists&#34;
+      nodeSelector:
+        kubernetes.io/os: linux
+      affinity:
+         podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+           - labelSelector:
+               matchExpressions:
+               - key: k8s-app
+                 operator: In
+                 values: [&#34;kube-dns&#34;]
+             topologyKey: kubernetes.io/hostname
+      containers:
+      - name: coredns
+        image: coredns/coredns:1.9.4
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 170Mi
+          requests:
+            cpu: 100m
+            memory: 70Mi
+        args: [ &#34;-conf&#34;, &#34;/etc/coredns/Corefile&#34; ]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/coredns
+          readOnly: true
+        ports:
+        - containerPort: 53
+          name: dns
+          protocol: UDP
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 9153
+          name: metrics
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+            - NET_BIND_SERVICE
+            drop:
+            - all
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8181
+            scheme: HTTP
+      dnsPolicy: Default
+      volumes:
+        - name: config-volume
+          configMap:
+            name: coredns
+            items:
+            - key: Corefile
+              path: Corefile
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dns
+  namespace: kube-system
+  annotations:
+    prometheus.io/port: &#34;9153&#34;
+    prometheus.io/scrape: &#34;true&#34;
+  labels:
+    k8s-app: kube-dns
+    kubernetes.io/cluster-service: &#34;true&#34;
+    kubernetes.io/name: &#34;CoreDNS&#34;
+    app.kubernetes.io/name: coredns
+spec:
+  selector:
+    k8s-app: kube-dns
+    app.kubernetes.io/name: coredns
+  clusterIP: 10.174.0.2
+  ports:
+  - name: dns
+    port: 53
+    protocol: UDP
+  - name: dns-tcp
+    port: 53
+    protocol: TCP
+  - name: metrics
+    port: 9153
+    protocol: TCP
+</code></pre><p>crictl.yaml</p>
+<pre tabindex="0"><code>runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 2
+debug: true
+pull-image-on-create: false
+</code></pre><h2 id="metric-serveryaml">metric-server.yaml</h2>
+<pre tabindex="0"><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    k8s-app: metrics-server
+    rbac.authorization.k8s.io/aggregate-to-admin: &#34;true&#34;
+    rbac.authorization.k8s.io/aggregate-to-edit: &#34;true&#34;
+    rbac.authorization.k8s.io/aggregate-to-view: &#34;true&#34;
+  name: system:aggregated-metrics-reader
+rules:
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: system:metrics-server
+rules:
+- apiGroups:
+  - &#34;&#34;
+  resources:
+  - nodes/metrics
+  verbs:
+  - get
+- apiGroups:
+  - &#34;&#34;
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server-auth-reader
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+- kind: ServiceAccount
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server:system:auth-delegator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: system:metrics-server
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:metrics-server
+subjects:
+- kind: ServiceAccount
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server
+  namespace: kube-system
+spec:
+  ports:
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    k8s-app: metrics-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: metrics-server
+    spec:
+      hostNetwork: true
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                k8s-app: metrics-server
+            namespaces:
+            - kube-system
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=4443
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --kubelet-insecure-tls
+        - --metric-resolution=15s
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server:v0.6.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /livez
+            port: https
+            scheme: HTTPS
+          periodSeconds: 10
+        name: metrics-server
+        ports:
+        - containerPort: 4443
+          name: https
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: https
+            scheme: HTTPS
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-dir
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
+      serviceAccountName: metrics-server
+      volumes:
+      - emptyDir: {}
+        name: tmp-dir
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: metrics-server
+  namespace: kube-system
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
+---
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: v1beta1.metrics.k8s.io
+spec:
+  group: metrics.k8s.io
+  groupPriorityMinimum: 100
+  insecureSkipTLSVerify: true
+  service:
+    name: metrics-server
+    namespace: kube-system
+  version: v1beta1
+  versionPriority: 100
+</code></pre><h2 id="node-exportyaml">node-export.yaml</h2>
+<pre tabindex="0"><code>apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: crane-system
+  labels:
+    k8s-app: node-exporter
+spec:
+  selector:
+    matchLabels:
+        k8s-app: node-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: node-exporter
+    spec:
+      tolerations:    #污点配置,不往master上调度这个
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+      containers:
+      - image: quay.io/prometheus/node-exporter:latest
+        imagePullPolicy: IfNotPresent
+        name: prometheus-node-exporter
+        ports:
+        - containerPort: 9100
+          hostPort: 9100
+          protocol: TCP
+          name: metrics
+        volumeMounts:
+        - mountPath: /host/proc
+          name: proc
+        - mountPath: /host/sys
+          name: sys
+        - mountPath: /host
+          name: rootfs
+        args:
+        - --path.procfs=/host/proc
+        - --path.sysfs=/host/sys
+        - --path.rootfs=/host
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: rootfs
+          hostPath:
+            path: /
+      hostNetwork: true
+      hostPID: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: &#34;true&#34;
+  labels:
+    k8s-app: node-exporter
+  name: node-exporter
+  namespace: crane-system
+spec:
+  ports:
+  - name: http
+    port: 9100
+    protocol: TCP
+  selector:
+    k8s-app: node-exporter
+ 
+---
+# prom.rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: crane-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus
+rules:
+- apiGroups:
+  - &#34;&#34;
+  resources:
+  - nodes
+  - services
+  - endpoints
+  - pods
+  - nodes/proxy
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - &#34;extensions&#34;
+  resources:
+    - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - &#34;&#34;
+  resources:
+  - configmaps
+  - nodes/metrics
+  verbs:
+  - get
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus
+subjects:
+- kind: ServiceAccount
+  name: prometheus
+  namespace: crane-system
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prometheus
+  namespace: crane-system
+  annotations:
+    kubernetes.io/service-account.name: prometheus
+type: kubernetes.io/service-account-token
+</code></pre><h2 id="limitsconf">limits.conf</h2>
+<pre tabindex="0"><code>* soft nofile  100001
+* hard nofile  100002
+root soft nofile 100001
+root hard nofile 100002
+* hard core 0
+# End of file
+</code></pre><h2 id="admin-csrjson">admin-csr.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;admin&#34;,
+  &#34;hosts&#34;: [],
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [
+    {
+      &#34;C&#34;: &#34;CN&#34;,
+      &#34;ST&#34;: &#34;Sichuan&#34;,
+      &#34;L&#34;: &#34;chengdu&#34;,
+      &#34;O&#34;: &#34;system:masters&#34;,            
+      &#34;OU&#34;: &#34;system&#34;
+    }
+  ]
+}
+</code></pre><h2 id="ca-configjson">ca-config.json</h2>
+<pre tabindex="0"><code>{
+  &#34;signing&#34;: {
+      &#34;default&#34;: {
+          &#34;expiry&#34;: &#34;87600h&#34;
+        },
+      &#34;profiles&#34;: {
+          &#34;kubernetes&#34;: {
+              &#34;usages&#34;: [
+                  &#34;signing&#34;,
+                  &#34;key encipherment&#34;,
+                  &#34;server auth&#34;,
+                  &#34;client auth&#34;
+              ],
+              &#34;expiry&#34;: &#34;87600h&#34;
+          }
+      }
+  }
+}
+</code></pre><h2 id="ca-csrjson">ca-csr.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;kubernetes&#34;,
+  &#34;key&#34;: {
+      &#34;algo&#34;: &#34;rsa&#34;,
+      &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [
+    {
+      &#34;C&#34;: &#34;CN&#34;,
+      &#34;ST&#34;: &#34;Sichuan&#34;,
+      &#34;L&#34;: &#34;chengdu&#34;,
+      &#34;O&#34;: &#34;k8s&#34;,
+      &#34;OU&#34;: &#34;system&#34;
+    }
+  ],
+  &#34;ca&#34;: {
+          &#34;expiry&#34;: &#34;87600h&#34;
+  }
+}
+</code></pre><h2 id="datacenter-dev-userjson">datacenter-dev-user.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;datacenter-dev-cd-user&#34;,
+  &#34;hosts&#34;: [],
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [
+    {
+      &#34;C&#34;: &#34;CN&#34;,
+      &#34;ST&#34;: &#34;Sichuan&#34;,
+      &#34;L&#34;: &#34;chengdu&#34;,
+      &#34;O&#34;: &#34;k8s&#34;,            
+      &#34;OU&#34;: &#34;system&#34;
+    }
+  ]
+}
+</code></pre><h2 id="etcd-apisix-csrjson">etcd-apisix-csr.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;etcd-apisix&#34;,
+  &#34;hosts&#34;: [
+    &#34;127.0.0.1&#34;,
+    &#34;172.16.1.94&#34;,
+    &#34;172.16.1.220&#34;,
+    &#34;172.16.1.23&#34;,
+    &#34;172.16.1.129&#34;,
+    &#34;172.16.1.231&#34;,
+    &#34;172.16.1.230&#34;,
+    &#34;172.16.1.229&#34;
+  ],
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [{
+    &#34;C&#34;: &#34;CN&#34;,
+    &#34;ST&#34;: &#34;Sichuan&#34;,
+    &#34;L&#34;: &#34;chengdu&#34;,
+    &#34;O&#34;: &#34;k8s&#34;,
+    &#34;OU&#34;: &#34;system&#34;
+  }]
+}
+</code></pre><h2 id="etcd-csrjson">etcd-csr.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;etcd&#34;,
+  &#34;hosts&#34;: [
+    &#34;127.0.0.1&#34;,
+    &#34;172.16.1.94&#34;,
+    &#34;172.16.1.220&#34;,
+    &#34;172.16.1.23&#34;,
+    &#34;172.16.1.129&#34;,
+    &#34;172.16.1.231&#34;,
+    &#34;172.16.1.230&#34;,
+    &#34;172.16.1.229&#34;
+  ],
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [{
+    &#34;C&#34;: &#34;CN&#34;,
+    &#34;ST&#34;: &#34;Sichuan&#34;,
+    &#34;L&#34;: &#34;chengdu&#34;,
+    &#34;O&#34;: &#34;k8s&#34;,
+    &#34;OU&#34;: &#34;system&#34;
+  }]
+}
+</code></pre><h2 id="kube-apiserver-csrjson">kube-apiserver-csr.json</h2>
+<pre tabindex="0"><code>{
+&#34;CN&#34;: &#34;kubernetes&#34;,
+  &#34;hosts&#34;: [
+    &#34;127.0.0.1&#34;,
+    &#34;172.16.1.94&#34;,
+    &#34;172.16.1.220&#34;,
+    &#34;172.16.1.23&#34;,
+    &#34;172.16.1.129&#34;,
+    &#34;172.16.1.231&#34;,
+    &#34;172.16.1.230&#34;,
+    &#34;172.16.1.229&#34;,
+    &#34;10.174.0.1&#34;,
+    &#34;kubernetes&#34;,
+    &#34;kubernetes.default&#34;,
+    &#34;kubernetes.default.svc&#34;,
+    &#34;kubernetes.default.svc.cluster&#34;,
+    &#34;kubernetes.default.svc.cluster.local&#34;
+  ],
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [
+    {
+      &#34;C&#34;: &#34;CN&#34;,
+      &#34;ST&#34;: &#34;Sichuan&#34;,
+      &#34;L&#34;: &#34;chengdu&#34;,
+      &#34;O&#34;: &#34;k8s&#34;,
+      &#34;OU&#34;: &#34;system&#34;
+    }
+  ]
+}
+</code></pre><h2 id="kube-controller-manager-csrjson">kube-controller-manager-csr.json</h2>
+<pre tabindex="0"><code>{
+    &#34;CN&#34;: &#34;system:kube-controller-manager&#34;,
+    &#34;key&#34;: {
+        &#34;algo&#34;: &#34;rsa&#34;,
+        &#34;size&#34;: 2048
+    },
+    &#34;hosts&#34;: [
+      &#34;127.0.0.1&#34;,
+      &#34;172.16.1.94&#34;
+    ],
+    &#34;names&#34;: [
+      {
+        &#34;C&#34;: &#34;CN&#34;,
+        &#34;ST&#34;: &#34;Sichuan&#34;,
+        &#34;L&#34;: &#34;chengdu&#34;,
+        &#34;O&#34;: &#34;system:kube-controller-manager&#34;,
+        &#34;OU&#34;: &#34;system&#34;
+      }
+    ]
+}
+</code></pre><h2 id="kube-proxy-csrjson">kube-proxy-csr.json</h2>
+<pre tabindex="0"><code>{
+  &#34;CN&#34;: &#34;system:kube-proxy&#34;,
+  &#34;key&#34;: {
+    &#34;algo&#34;: &#34;rsa&#34;,
+    &#34;size&#34;: 2048
+  },
+  &#34;names&#34;: [
+    {
+      &#34;C&#34;: &#34;CN&#34;,
+      &#34;ST&#34;: &#34;Sichuan&#34;,
+      &#34;L&#34;: &#34;chengdu&#34;,
+      &#34;O&#34;: &#34;k8s&#34;,
+      &#34;OU&#34;: &#34;system&#34;
+    }
+  ]
+}
+</code></pre><h2 id="kube-scheduler-csrjson">kube-scheduler-csr.json</h2>
+<pre tabindex="0"><code>{
+    &#34;CN&#34;: &#34;system:kube-scheduler&#34;,
+    &#34;hosts&#34;: [
+      &#34;127.0.0.1&#34;,
+      &#34;172.16.1.94&#34;
+    ],
+    &#34;key&#34;: {
+        &#34;algo&#34;: &#34;rsa&#34;,
+        &#34;size&#34;: 2048
+    },
+    &#34;names&#34;: [
+      {
+        &#34;C&#34;: &#34;CN&#34;,
+        &#34;ST&#34;: &#34;Sichuan&#34;,
+        &#34;L&#34;: &#34;chengdu&#34;,
+        &#34;O&#34;: &#34;system:kube-scheduler&#34;,
+        &#34;OU&#34;: &#34;system&#34;
+      }
+    ]
+}
+</code></pre><p>生成配置</p>
+<pre tabindex="0"><code># 生成ca
+cfssl gencert -initca ca-csr.json  | cfssljson -bare ca
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes etcd-csr.json | cfssljson  -bare etcd
+# 生成token
+cat &gt; token.csv &lt;&lt; EOF
+$(head -c 16 /dev/urandom | od -An -t x | tr -d &#39; &#39;),kubelet-bootstrap,10001,&#34;system:kubelet-bootstrap&#34;
+EOF
+# kube-apiserver
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-apiserver-csr.json | cfssljson -bare kube-apiserver
+# 客户端证书
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
+kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.7.10:6443 --kubeconfig=kube.config
+kubectl config set-credentials admin --client-certificate=admin.pem --client-key=admin-key.pem --embed-certs=true --kubeconfig=kube.config
+kubectl config set-context kubernetes --cluster=kubernetes --user=admin --kubeconfig=kube.config
+kubectl config use-context kubernetes --kubeconfig=kube.config
+kubectl create clusterrolebinding kube-apiserver:kubelet-apis --clusterrole=system:kubelet-api-admin --user kubernetes
+# kube-controller-manager
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager
+kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.7.10:6443 --kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-credentials system:kube-controller-manager --client-certificate=kube-controller-manager.pem --client-key=kube-controller-manager-key.pem --embed-certs=true --kubeconfig=kube-controller-manager.kubeconfig
+kubectl config set-context system:kube-controller-manager --cluster=kubernetes --user=system:kube-controller-manager --kubeconfig=kube-controller-manager.kubeconfig
+kubectl config use-context system:kube-controller-manager --kubeconfig=kube-controller-manager.kubeconfig
+# kube-scheduler
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-scheduler-csr.json | cfssljson -bare kube-scheduler
+kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.7.10:6443 --kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-credentials system:kube-scheduler --client-certificate=kube-scheduler.pem --client-key=kube-scheduler-key.pem --embed-certs=true --kubeconfig=kube-scheduler.kubeconfig
+kubectl config set-context system:kube-scheduler --cluster=kubernetes --user=system:kube-scheduler --kubeconfig=kube-scheduler.kubeconfig
+kubectl config use-context system:kube-scheduler --kubeconfig=kube-scheduler.kubeconfig
+# kubelet
+BOOTSTRAP_TOKEN=$(awk -F &#34;,&#34; &#39;{print $1}&#39; /etc/kubernetes/token.csv)
+kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.7.10:6443 --kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-credentials kubelet-bootstrap --token=${BOOTSTRAP_TOKEN} --kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config set-context default --cluster=kubernetes --user=kubelet-bootstrap --kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl config use-context default --kubeconfig=kubelet-bootstrap.kubeconfig
+kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap
+# kube-proxy
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson -bare kube-proxy
+kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.7.10:6443 --kubeconfig=kube-proxy.kubeconfig
+kubectl config set-credentials kube-proxy --client-certificate=kube-proxy.pem --client-key=kube-proxy-key.pem --embed-certs=true --kubeconfig=kube-proxy.kubeconfig
+kubectl config set-context default --cluster=kubernetes --user=kube-proxy --kubeconfig=kube-proxy.kubeconfig
+kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
+</code></pre><p>参考：</p>
+<p><a href="https://www.cnblogs.com/fengdejiyixx/p/16576021.html">https://www.cnblogs.com/fengdejiyixx/p/16576021.html</a></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E9%98%85%E8%AF%BB/">阅读</a>
+
+  <a class="tag tag--primary tag--small" href="https://tianyuliufang233.github.io/blog/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/docker%E9%83%A8%E7%BD%B2/" data-tooltip="Docker部署" aria-label="下一篇: Docker部署">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/rabbitmq%E9%95%9C%E5%83%8F%E9%9B%86%E7%BE%A4/" data-tooltip="Rabbitmq镜像集群" aria-label="上一篇: Rabbitmq镜像集群">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/workrecords\/kubernetes\/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3\/';
+        
+          this.page.identifier = '\/post\/area\/workrecords\/kubernetes\/kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/docker%E9%83%A8%E7%BD%B2/" data-tooltip="Docker部署" aria-label="下一篇: Docker部署">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/rabbitmq%E9%95%9C%E5%83%8F%E9%9B%86%E7%BE%A4/" data-tooltip="Rabbitmq镜像集群" aria-label="上一篇: Rabbitmq镜像集群">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+

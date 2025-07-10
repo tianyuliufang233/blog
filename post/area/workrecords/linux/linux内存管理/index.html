@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/tianyuliufang233.github.io\/blog\/",
+  "author": {
+    "@type": "Person",
+    "name": "天雨流芳233",
+    
+    "image": "/favicon.jpg%!(EXTRA string=25c3a5a7d53fe645bc24bd47d868ff89)"
+    
+  },
+  "name":"素履虔行",
+  "description":"虚拟地址 为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有4GB 互不干涉的虚拟地址空间。 进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。\n虚拟地址的好处 避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统 每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间 4GB 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」 物理地址 不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。 把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。 Linux 内核会将物理内存分为3个管理区，分别是：\nZONE_DMA DMA内存区域。包含0MB~16MB之间的内存页框，可以由老式基于ISA的设备通过DMA使用，直接映射到内核的地址空间。\nZONE_NORMAL 普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。\nZONE_HIGHMEM 高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。 物理内存区划分\n用户空间 用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 0x00000000 至 0xBFFFFFFF 总容量3G 。 用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。\n进程与内存 进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 5个不同的内存区域。访问属性指的是“可读、可写、可执行等 。\n代码段 代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。\n数据段 数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。\nBSS段 BSS段包含了程序中未初始化的全局变量，在内存中 bss 段全部置零。\n堆 heap 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）\n栈 stack 栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 static 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存\/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。\n上述几种内存区域中数据段、BSS 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 i386 体系结构中栈向下扩展、堆向上扩展，相对而生。 你也可以在linux下用size 命令查看编译后程序的各个内存区域大小：\n[lemon ~]# size \/usr\/local\/sbin\/sshd text\tdata\tbss\tdec\thex\tfilename 1924532\t12412\t426896\t2363840\t2411c0\t\/usr\/local\/sbin\/sshd 内核空间 在 x86 32 位系统里，Linux 内核地址空间是指虚拟地址从 0xC0000000 开始到 0xFFFFFFFF 为止的高端内存地址空间，总计 1G 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。 直接映射区 直接映射区 Direct Memory Region：从内核空间起始地址开始，最大896M的内核空间地址区间，为直接内存映射区。 直接映射区的896MB的「线性地址」直接与「物理地址」的前896MB进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址0xC0000001所对应的物理地址为0x00000001，它们之间相差一个偏移量PAGE_OFFSET = 0xC0000000 该区域的线性地址和物理地址存在线性转换关系「线性地址 = PAGE_OFFSET \u002b 物理地址」也可以用 virt_to_phys()函数将内核虚拟空间中的线性地址转化为物理地址。",
+  "url":"https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/workrecords\/linux\/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86\/",
+  "keywords":"[]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.115.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="天雨流芳233">
+<meta name="keywords" content="">
+<meta name="description" content="虚拟地址 为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有4GB 互不干涉的虚拟地址空间。 进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。
+虚拟地址的好处 避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统 每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间 4GB 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」 物理地址 不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。 把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。 Linux 内核会将物理内存分为3个管理区，分别是：
+ZONE_DMA DMA内存区域。包含0MB~16MB之间的内存页框，可以由老式基于ISA的设备通过DMA使用，直接映射到内核的地址空间。
+ZONE_NORMAL 普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。
+ZONE_HIGHMEM 高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。 物理内存区划分
+用户空间 用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 0x00000000 至 0xBFFFFFFF 总容量3G 。 用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。
+进程与内存 进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 5个不同的内存区域。访问属性指的是“可读、可写、可执行等 。
+代码段 代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。
+数据段 数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。
+BSS段 BSS段包含了程序中未初始化的全局变量，在内存中 bss 段全部置零。
+堆 heap 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+栈 stack 栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 static 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。
+上述几种内存区域中数据段、BSS 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 i386 体系结构中栈向下扩展、堆向上扩展，相对而生。 你也可以在linux下用size 命令查看编译后程序的各个内存区域大小：
+[lemon ~]# size /usr/local/sbin/sshd text	data	bss	dec	hex	filename 1924532	12412	426896	2363840	2411c0	/usr/local/sbin/sshd 内核空间 在 x86 32 位系统里，Linux 内核地址空间是指虚拟地址从 0xC0000000 开始到 0xFFFFFFFF 为止的高端内存地址空间，总计 1G 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。 直接映射区 直接映射区 Direct Memory Region：从内核空间起始地址开始，最大896M的内核空间地址区间，为直接内存映射区。 直接映射区的896MB的「线性地址」直接与「物理地址」的前896MB进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址0xC0000001所对应的物理地址为0x00000001，它们之间相差一个偏移量PAGE_OFFSET = 0xC0000000 该区域的线性地址和物理地址存在线性转换关系「线性地址 = PAGE_OFFSET &#43; 物理地址」也可以用 virt_to_phys()函数将内核虚拟空间中的线性地址转化为物理地址。">
+
+
+<meta property="og:description" content="虚拟地址 为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有4GB 互不干涉的虚拟地址空间。 进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。
+虚拟地址的好处 避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统 每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间 4GB 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」 物理地址 不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。 把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。 Linux 内核会将物理内存分为3个管理区，分别是：
+ZONE_DMA DMA内存区域。包含0MB~16MB之间的内存页框，可以由老式基于ISA的设备通过DMA使用，直接映射到内核的地址空间。
+ZONE_NORMAL 普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。
+ZONE_HIGHMEM 高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。 物理内存区划分
+用户空间 用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 0x00000000 至 0xBFFFFFFF 总容量3G 。 用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。
+进程与内存 进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 5个不同的内存区域。访问属性指的是“可读、可写、可执行等 。
+代码段 代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。
+数据段 数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。
+BSS段 BSS段包含了程序中未初始化的全局变量，在内存中 bss 段全部置零。
+堆 heap 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+栈 stack 栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 static 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。
+上述几种内存区域中数据段、BSS 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 i386 体系结构中栈向下扩展、堆向上扩展，相对而生。 你也可以在linux下用size 命令查看编译后程序的各个内存区域大小：
+[lemon ~]# size /usr/local/sbin/sshd text	data	bss	dec	hex	filename 1924532	12412	426896	2363840	2411c0	/usr/local/sbin/sshd 内核空间 在 x86 32 位系统里，Linux 内核地址空间是指虚拟地址从 0xC0000000 开始到 0xFFFFFFFF 为止的高端内存地址空间，总计 1G 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。 直接映射区 直接映射区 Direct Memory Region：从内核空间起始地址开始，最大896M的内核空间地址区间，为直接内存映射区。 直接映射区的896MB的「线性地址」直接与「物理地址」的前896MB进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址0xC0000001所对应的物理地址为0x00000001，它们之间相差一个偏移量PAGE_OFFSET = 0xC0000000 该区域的线性地址和物理地址存在线性转换关系「线性地址 = PAGE_OFFSET &#43; 物理地址」也可以用 virt_to_phys()函数将内核虚拟空间中的线性地址转化为物理地址。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="素履虔行">
+<meta name="twitter:title" content="素履虔行">
+<meta property="og:url" content="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+<meta property="twitter:url" content="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+<meta property="og:site_name" content="素履虔行">
+<meta property="og:description" content="虚拟地址 为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有4GB 互不干涉的虚拟地址空间。 进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。
+虚拟地址的好处 避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统 每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间 4GB 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」 物理地址 不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。 把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。 Linux 内核会将物理内存分为3个管理区，分别是：
+ZONE_DMA DMA内存区域。包含0MB~16MB之间的内存页框，可以由老式基于ISA的设备通过DMA使用，直接映射到内核的地址空间。
+ZONE_NORMAL 普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。
+ZONE_HIGHMEM 高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。 物理内存区划分
+用户空间 用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 0x00000000 至 0xBFFFFFFF 总容量3G 。 用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。
+进程与内存 进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 5个不同的内存区域。访问属性指的是“可读、可写、可执行等 。
+代码段 代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。
+数据段 数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。
+BSS段 BSS段包含了程序中未初始化的全局变量，在内存中 bss 段全部置零。
+堆 heap 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+栈 stack 栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 static 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。
+上述几种内存区域中数据段、BSS 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 i386 体系结构中栈向下扩展、堆向上扩展，相对而生。 你也可以在linux下用size 命令查看编译后程序的各个内存区域大小：
+[lemon ~]# size /usr/local/sbin/sshd text	data	bss	dec	hex	filename 1924532	12412	426896	2363840	2411c0	/usr/local/sbin/sshd 内核空间 在 x86 32 位系统里，Linux 内核地址空间是指虚拟地址从 0xC0000000 开始到 0xFFFFFFFF 为止的高端内存地址空间，总计 1G 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。 直接映射区 直接映射区 Direct Memory Region：从内核空间起始地址开始，最大896M的内核空间地址区间，为直接内存映射区。 直接映射区的896MB的「线性地址」直接与「物理地址」的前896MB进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址0xC0000001所对应的物理地址为0x00000001，它们之间相差一个偏移量PAGE_OFFSET = 0xC0000000 该区域的线性地址和物理地址存在线性转换关系「线性地址 = PAGE_OFFSET &#43; 物理地址」也可以用 virt_to_phys()函数将内核虚拟空间中的线性地址转化为物理地址。">
+<meta name="twitter:description" content="虚拟地址 为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有4GB 互不干涉的虚拟地址空间。 进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。
+虚拟地址的好处 避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统 每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间 4GB 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」 物理地址 不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。 把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。 Linux 内核会将物理内存分为3个管理区，分别是：
+ZONE_DMA DMA内存区域。包含0MB~16MB之间的内存页框，可以由老式基于ISA的设备通过DMA使用，直接映射到内核的地址空间。
+ZONE_NORMAL 普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。
+ZONE_HIGHMEM 高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。 物理内存区划分
+用户空间 用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 0x00000000 至 0xBFFFFFFF 总容量3G 。 用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。
+进程与内存 进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 5个不同的内存区域。访问属性指的是“可读、可写、可执行等 。
+代码段 代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。
+数据段 数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。
+BSS段 BSS段包含了程序中未初始化的全局变量，在内存中 bss 段全部置零。
+堆 heap 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+栈 stack 栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 static 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。
+上述几种内存区域中数据段、BSS 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 i386 体系结构中栈向下扩展、堆向上扩展，相对而生。 你也可以在linux下用size 命令查看编译后程序的各个内存区域大小：
+[lemon ~]# size /usr/local/sbin/sshd text	data	bss	dec	hex	filename 1924532	12412	426896	2363840	2411c0	/usr/local/sbin/sshd 内核空间 在 x86 32 位系统里，Linux 内核地址空间是指虚拟地址从 0xC0000000 开始到 0xFFFFFFFF 为止的高端内存地址空间，总计 1G 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。 直接映射区 直接映射区 Direct Memory Region：从内核空间起始地址开始，最大896M的内核空间地址区间，为直接内存映射区。 直接映射区的896MB的「线性地址」直接与「物理地址」的前896MB进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址0xC0000001所对应的物理地址为0x00000001，它们之间相差一个偏移量PAGE_OFFSET = 0xC0000000 该区域的线性地址和物理地址存在线性转换关系「线性地址 = PAGE_OFFSET &#43; 物理地址」也可以用 virt_to_phys()函数将内核虚拟空间中的线性地址转化为物理地址。">
+<meta property="og:locale" content="zh-cn">
+
+  
+  
+  
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/head-picture.jpg">
+  <meta property="twitter:image" content="/head-picture.jpg">
+
+
+
+
+
+
+    <title>素履虔行</title>
+
+    <link rel="icon" href="https://tianyuliufang233.github.io/blog/favicon.jpg">
+    
+
+    
+
+    <link rel="canonical" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://tianyuliufang233.github.io/blog/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://tianyuliufang233.github.io/blog/" aria-label="去首页">素履虔行</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://tianyuliufang233.github.io/blog/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://tianyuliufang233.github.io/blog/#about" aria-label="阅读有关作者的更多信息">
+         <img class="sidebar-profile-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">天雨流芳233</h4>
+        
+          <h5 class="sidebar-profile-bio">心之所向，素履以往。生如逆旅，一苇以航。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/tianyuliufang233" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://tianyuliufang233.github.io/blog/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="0001-01-01T00:00:00Z">
+        
+  
+  
+  
+  
+    0001-01-01
+  
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <h2 id="虚拟地址">虚拟地址</h2>
+<p>为了充分利用和管理系统内存资源，Linux采用虚拟内存管理技术，利用虚拟内存技术让每个进程都有<code>4GB</code> 互不干涉的虚拟地址空间。
+进程初始化分配和操作的都是基于这个「虚拟地址」，只有当进程需要实际访问内存资源的时候才会建立虚拟地址和物理地址的映射，调入物理内存页。</p>
+<h4 id="虚拟地址的好处">虚拟地址的好处</h4>
+<ul>
+<li>避免用户直接访问物理内存地址，防止一些破坏性操作，保护操作系统</li>
+<li>每个进程都被分配了4GB的虚拟内存，用户程序可使用比实际物理内存更大的地址空间</li>
+</ul>
+<p><code>4GB</code> 的进程虚拟地址空间被分成两部分：「用户空间」和「内核空间」
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593589648246-c1e50a60-7ad7-4cce-9c35-40000b300ec3.png#align=left&amp;display=inline&amp;height=321&amp;margin=%5Bobject%20Object%5D&amp;originHeight=321&amp;originWidth=322&amp;size=0&amp;status=done&amp;style=none&amp;width=322" alt=""></p>
+<h2 id="物理地址">物理地址</h2>
+<p>不管是用户空间还是内核空间，使用的地址都是虚拟地址，当需进程要实际访问内存的时候，会由内核的「请求分页机制」产生「缺页异常」调入物理内存页。
+把虚拟地址转换成内存的物理地址，这中间涉及利用mmu内存管理单元（memory management unit）对虚拟地址分段和分页（段页式）地址转换，关于分段和分页的具体流程，这里不再赘述，可以参考任何一本计算机组成原理教材。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593589966219-b9c8b907-848f-4ac3-becc-303bf1a9ec12.png#align=left&amp;display=inline&amp;height=88&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=88&amp;originWidth=931&amp;size=22631&amp;status=done&amp;style=none&amp;width=931" alt="image.png">
+<code>Linux</code> 内核会将物理内存分为3个管理区，分别是：</p>
+<h3 id="zone_dma">ZONE_DMA</h3>
+<p><code>DMA</code>内存区域。包含0MB~16MB之间的内存页框，可以由老式基于<code>ISA</code>的设备通过<code>DMA</code>使用，直接映射到内核的地址空间。</p>
+<h3 id="zone_normal">ZONE_NORMAL</h3>
+<p>普通内存区域。包含16MB~896MB之间的内存页框，常规页框，直接映射到内核的地址空间。</p>
+<h3 id="zone_highmem">ZONE_HIGHMEM</h3>
+<p>高端内存区域。包含896MB以上的内存页框，不进行直接映射，可以通过永久映射和临时映射进行这部分内存页框的访问。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593592614169-883721f2-a527-44ca-b026-e6be2bf62625.png#align=left&amp;display=inline&amp;height=331&amp;margin=%5Bobject%20Object%5D&amp;originHeight=331&amp;originWidth=261&amp;size=0&amp;status=done&amp;style=none&amp;width=261" alt="">
+物理内存区划分</p>
+<h2 id="用户空间">用户空间</h2>
+<p>用户进程能访问的是「用户空间」，每个进程都有自己独立的用户空间，虚拟地址范围从从 <code>0x00000000</code> 至 <code>0xBFFFFFFF</code> 总容量3G 。
+用户进程通常只能访问用户空间的虚拟地址，只有在执行内陷操作或系统调用时才能访问内核空间。</p>
+<h3 id="进程与内存">进程与内存</h3>
+<p>进程（执行的程序）占用的用户空间按照「 访问属性一致的地址空间存放在一起 」的原则，划分成 <code>5</code>个不同的内存区域。访问属性指的是“可读、可写、可执行等 。</p>
+<ul>
+<li>
+<p>代码段
+代码段是用来存放可执行文件的操作指令，可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，它是不可写的。</p>
+</li>
+<li>
+<p>数据段
+数据段用来存放可执行文件中已初始化全局变量，换句话说就是存放程序静态分配的变量和全局变量。</p>
+</li>
+<li>
+<p>BSS段
+<code>BSS</code>段包含了程序中未初始化的全局变量，在内存中 <code>bss</code> 段全部置零。</p>
+</li>
+<li>
+<p>堆 <code>heap</code>
+堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+</li>
+<li>
+<p>栈 <code>stack</code>
+栈是用户存放程序临时创建的局部变量，也就是函数中定义的变量（但不包括 <code>static</code> 声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+</li>
+</ul>
+<p>上述几种内存区域中数据段、<code>BSS</code> 段、堆通常是被连续存储在内存中，在位置上是连续的，而代码段和栈往往会被独立存放。堆和栈两个区域在 <code>i386</code> 体系结构中栈向下扩展、堆向上扩展，相对而生。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593592866312-a19b8f6b-4d3d-4da2-89f0-6be359b52c2f.png#align=left&amp;display=inline&amp;height=316&amp;margin=%5Bobject%20Object%5D&amp;originHeight=316&amp;originWidth=121&amp;size=0&amp;status=done&amp;style=none&amp;width=121" alt="">
+你也可以在linux下用<code>size</code> 命令查看编译后程序的各个内存区域大小：</p>
+<pre tabindex="0"><code>[lemon ~]# size /usr/local/sbin/sshd
+   text	   data	    bss	    dec	    hex	filename
+1924532	  12412	 426896	2363840	 2411c0	/usr/local/sbin/sshd
+</code></pre><h2 id="内核空间">内核空间</h2>
+<p>在 <code>x86 32</code> 位系统里，Linux 内核地址空间是指虚拟地址从 <code>0xC0000000</code> 开始到 <code>0xFFFFFFFF</code> 为止的高端内存地址空间，总计 <code>1G</code> 的容量， 包括了内核镜像、物理页面表、驱动程序等运行在内核空间 。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593594396235-0f59c417-b1b5-4b54-aa2e-262c1a485887.png#align=left&amp;display=inline&amp;height=306&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=409&amp;originWidth=299&amp;size=20853&amp;status=done&amp;style=none&amp;width=224" alt="image.png"></p>
+<h4 id="直接映射区">直接映射区</h4>
+<p>直接映射区 <code>Direct Memory Region</code>：从内核空间起始地址开始，最大<code>896M</code>的内核空间地址区间，为直接内存映射区。
+直接映射区的896MB的「线性地址」直接与「物理地址」的前<code>896MB</code>进行映射，也就是说线性地址和分配的物理地址都是连续的。内核地址空间的线性地址<code>0xC0000001</code>所对应的物理地址为<code>0x00000001</code>，它们之间相差一个偏移量<code>PAGE_OFFSET = 0xC0000000</code>
+该区域的线性地址和物理地址存在线性转换关系「线性地址 = <code>PAGE_OFFSET</code> + 物理地址」也可以用 <code>virt_to_phys()</code>函数将内核虚拟空间中的线性地址转化为物理地址。</p>
+<h4 id="高端内存线性地址空间">高端内存线性地址空间</h4>
+<p>内核空间线性地址从 896M 到 1G 的区间，容量 128MB 的地址区间是高端内存线性地址空间，为什么叫高端内存线性地址空间？下面给你解释一下：
+前面已经说过，内核空间的总大小 1GB，从内核空间起始地址开始的 896MB 的线性地址可以直接映射到物理地址大小为 896MB 的地址区间。
+退一万步，即使内核空间的1GB线性地址都映射到物理地址，那也最多只能寻址 1GB 大小的物理内存地址范围。
+请问你现在你家的内存条多大？快醒醒都 0202 年了，一般 PC 的内存都大于 1GB 了吧！
+所以，内核空间拿出了最后的 128M 地址区间，划分成下面三个高端内存映射区，以达到对整个物理地址范围的寻址。而在 64 位的系统上就不存在这样的问题了，因为可用的线性地址空间远大于可安装的内存。</p>
+<h5 id="动态内存映射区">动态内存映射区</h5>
+<p><code>vmalloc Region</code> 该区域由内核函数<code>vmalloc</code>来分配，特点是：线性空间连续，但是对应的物理地址空间不一定连续。<code>vmalloc</code> 分配的线性地址所对应的物理页可能处于低端内存，也可能处于高端内存。</p>
+<h5 id="永久内存映射区">永久内存映射区</h5>
+<p><code>Persistent Kernel Mapping Region</code> 该区域可访问高端内存。访问方法是使用 <code>alloc_page (_GFP_HIGHMEM)</code> 分配高端内存页或者使用<code>kmap</code>函数将分配到的高端内存映射到该区域。</p>
+<h5 id="固定映射区">固定映射区</h5>
+<p><code>Fixing kernel Mapping Region</code> 该区域和 4G 的顶端只有 4k 的隔离带，其每个地址项都服务于特定的用途，如 <code>ACPI_BASE</code> 等。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593596212052-68c592b4-2cfa-4274-90a7-5f7157ceb812.png#align=left&amp;display=inline&amp;height=213&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=438&amp;originWidth=753&amp;size=43510&amp;status=done&amp;style=none&amp;width=367" alt="image.png">
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593596275531-ee8f9985-d5f3-486b-9e63-877be0d6a282.png#align=left&amp;display=inline&amp;height=149&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=414&amp;originWidth=1019&amp;size=48480&amp;status=done&amp;style=none&amp;width=367" alt="image.png"></p>
+<h2 id="内存数据结构">内存数据结构</h2>
+<p>要让内核管理系统中的虚拟内存，必然要从中抽象出内存管理数据结构，内存管理操作如「分配、释放等」都基于这些数据结构操作，这里列举两个管理虚拟内存区域的数据结构。</p>
+<h3 id="用户空间内存数据结构">用户空间内存数据结构</h3>
+<p>在前面「进程与内存」章节我们提到，Linux进程可以划分为 5 个不同的内存区域，分别是：代码段、数据段、<code>BSS</code>、堆、栈，内核管理这些区域的方式是，将这些内存区域抽象成<code>vm_area_struct</code>的内存管理对象。
+<code>vm_area_struct</code>是描述进程地址空间的基本管理单元，一个进程往往需要多个<code>vm_area_struct</code>来描述它的用户空间虚拟地址，需要使用「链表」和「红黑树」来组织各个<code>vm_area_struct</code>。
+链表用于需要遍历全部节点的时候用，而红黑树适用于在地址空间中定位特定内存区域。内核为了内存区域上的各种不同操作都能获得高性能，所以同时使用了这两种数据结构。
+用户空间进程的地址管理模型：
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593596724432-dfa4a7dc-8c2c-4eec-97c2-cace8e0d996b.png#align=left&amp;display=inline&amp;height=271&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=362&amp;originWidth=367&amp;size=27473&amp;status=done&amp;style=none&amp;width=275" alt="image.png"></p>
+<h3 id="内核空间动态分配内存数据结构">内核空间动态分配内存数据结构</h3>
+<p>在内核空间章节提到过「动态内存映射区」，该区域由内核函数vmalloc来分配，特点是：线性空间连续，但是对应的物理地址空间不一定连续。vmalloc分配的线性地址所对应的物理页可能处于低端内存，也可能处于高端内存。
+vmalloc 分配的地址则限于vmalloc_start与vmalloc_end之间。每一块vmalloc分配的内核虚拟内存都对应一个vm_struct结构体，不同的内核空间虚拟地址之间有4k大小的防越界空闲区间隔区。
+与用户空间的虚拟地址特征一样，这些虚拟地址与物理内存没有简单的映射关系，必须通过内核页表才可转换物理地址或物理页，它们有可能尚未被映射，当发生缺页时才真正分配物理页面。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593606887811-ebf196ea-ef71-471c-8c8e-193900babd8a.png#align=left&amp;display=inline&amp;height=295&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=410&amp;originWidth=787&amp;size=38511&amp;status=done&amp;style=none&amp;width=567" alt="image.png">
+前面分析了 Linux 内存管理机制，下面深入学习<strong>物理内存管理和虚拟内存分配。</strong>
+通过前面的学习我们知道，程序可没这么好骗，任你内存管理把虚拟地址空间玩出花来，到最后还是要给程序实实在在的物理内存，不然程序就要罢工了。
+所以物理内存这么重要的资源一定要好好管理起来使用（物理内存，就是你实实在在的内存条），那么内核是如何管理物理内存的呢？</p>
+<h2 id="物理内存管理">物理内存管理</h2>
+<p>在linux系统中通过分段和分页机制，把物理内存划分4k大小的内存页page（也称作页框page frame），物理内存的分布和回收都是基于内存页进行，把物理内存分页管理的好处很多。
+加入系统请求小块内存，可以预先分配一页给它，避免了反复的申请和释放小块内存带来频繁的系统开销。
+假如系统需要大块内存，则可以用多页内存拼凑，而不必要求大块连续内存。你看不管内存大小都能收放自如，分页机制多么完美的解决方案！
+but，理想很丰满，现实很骨感。如果就直接这样把内存分页使用，不再加额外的管理还是存在问题的，下面，我们来看下，系统在多次分配和释放物理页的时候会遇到哪些问题。</p>
+<h3 id="物理页管理面临问题">物理页管理面临问题</h3>
+<p>物理内存页分配会出现外部碎片和内部碎片问题，所谓的「内部」和「外部」是针对「页框内外」而言，一个页框内的内存碎片是内部碎片，多个页框间的碎片是外部碎片。
+<strong>外部碎片</strong>
+当需要分配大块内存的时候，要用好几页组合起来才够，而系统分配物理内存页的时候会尽量分配连续的内存页面，频繁的分配与回收物理页导致大量的小块内存夹杂在已分配页面中间，形成外部碎片，例如：
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593608258881-f09558f5-73f2-4571-bdf6-dcef7a7271ef.png#align=left&amp;display=inline&amp;height=286&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=381&amp;originWidth=421&amp;size=13783&amp;status=done&amp;style=none&amp;width=316" alt="image.png">
+<strong>内部碎片</strong>
+物理内存是按页来分配的，这样当实际只需要很小内存的时候，也会分配至少4k大小的页面，而内核中有很多需要以字节为单位分配内存的场景，这样本来只想要几个字节而已却不得不分配一页内存，除去用掉的字节剩下的就形成了内部碎片。
+方法总比困难多，因为存在上面的这些问题，聪明的程序员灵机一动，引入页面管理算法来解决上述的碎片问题。
+<strong>buddy（伙伴）分配算法</strong>
+linux 内核引入伙伴系统算法（buddy system），什么意识呢？就是把相同大小的页框用链表串起来，页框块就像手拉手的好伙伴，也是这个算法的名字的由来。
+具体的，所有的空闲页框分组为11个块链表，每个块链表分别包含大小为1,2,4,8,16,32,64,128,256,512,1024个连续页框的页框块。最大可以申请1024个连续页框，对应4mb大小的连续内存。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593608898092-af9ec250-e8b5-402c-9431-be6d7cff9d11.png#align=left&amp;display=inline&amp;height=218&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=291&amp;originWidth=316&amp;size=7593&amp;status=done&amp;style=none&amp;width=237" alt="image.png">
+因为任何正整数都可以由2^n的和组成，所以总能找到合适大小的内存块分配出去减少了外部碎片产生。
+<strong>分配实例</strong>
+比如：我需要申请4个页框，但是长度为4个连续页框块链表没有空闲的页框块，伙伴系统会从连续8个页框块的链表获取一个，并将其拆分为两个连续4个页框块，取其中一个，另一个放入连续4个页框块的空闲链表中。释放的时候会检查，释放的这几个页框后的页框是否空闲，能否组成下一级长度的块。</p>
+<pre tabindex="0"><code>[lemon]]# cat /proc/buddyinfo 
+Node 0, zone      DMA      1      0      0      0      2      1      1      0      1      1      3 
+Node 0, zone    DMA32   3198   4108   4940   4773   4030   2184    891    180     67     32    330 
+Node 0, zone   Normal  42438  37404  16035   4386    610    121     22      3      0      0      1
+</code></pre><p><strong>slab分配器</strong>
+看到这里你可能会想，有了伙伴系统这下总可以管理好物理内存了吧？不，还不够，否则就没有slab分配器什么事了。
+什么事slab分配器？
+一般来说，内核对象的生命周期是这样的：分配内存-初始化-释放内存，内核中有大量的小对象，比如文件描述结构对象、任务描述结构对象，如果按照伙伴系统按页分配和释放内存，对小对象频繁的执行「分配内存-初始化-释放内存」会非常消耗性能。
+伙伴系统分配出去的内存还是以页框为单位，而对于内核的很多场景都是分配小片内存，远不到一页内存大小的空间。slab分配器，<strong>「通过将内存按使用对象不同再划分成不同大小的空间」</strong>，应用于内核对象的缓存。伙伴系统和slab不是二选一的关系，slab内存分配器是对伙伴分配算法的补充。
+<strong>大白话说原理</strong>
+对于每个内核中的相同类型的对象，如：task_struct、file_struct等需要重复使用的小型内核数据对象，都会有个slab缓存池，缓存住大量常用的「已经初始化」的对象，每当要申请这种类型的对象时，就从缓存池中的slab列表中分配一个出去；而当要释放时，将其重新保存在该列表中，而不是直接返回给伙伴系统，从而避免内部碎片，同时也大大提高了内存分配性能。
+<strong>数据结构</strong>
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614334639-a18ff7d1-8d1b-4650-bf2e-61be9d1e87f8.png#align=left&amp;display=inline&amp;height=188&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=251&amp;originWidth=633&amp;size=24224&amp;status=done&amp;style=none&amp;width=475" alt="image.png">
+<code>kmem_cache</code> 是一个<code>cache_chain</code> 的链表组成节点，代表的是一个内核中的相同类型的「对象高速缓存」，每个<code>kmem_cache</code> 通常是一段连续的内存块，包含了三种类型的 <code>slabs</code> 链表：</p>
+<ul>
+<li><code>slabs_full</code> (完全分配的 <code>slab</code> 链表)</li>
+<li><code>slabs_partial</code> (部分分配的<code>slab</code> 链表)</li>
+<li><code>slabs_empty</code> ( 没有被分配对象的<code>slab</code> 链表)</li>
+</ul>
+<p><code>kmem_cache</code> 中有个重要的结构体 <code>kmem_list3</code> 包含了以上三个数据结构的声明。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614367122-ab19023a-5482-478b-9847-a0ad4a0346c1.png#align=left&amp;display=inline&amp;height=292&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=557&amp;originWidth=1080&amp;size=239690&amp;status=done&amp;style=none&amp;width=567" alt="image.png">
+<code>slab</code> 是<code>slab</code> 分配器的最小单位，在实现上一个 <code>slab</code> 由一个或多个连续的物理页组成（通常只有一页）。单个slab可以在 <code>slab</code> 链表之间移动，例如如果一个「半满<code>slabs_partial</code>链表」被分配了对象后变满了，就要从 <code>slabs_partial</code> 中删除，同时插入到「全满<code>slabs_full</code>链表」中去。内核<code>slab</code>对象的分配过程是这样的：</p>
+<ol>
+<li>如果<code>slabs_partial</code>链表还有未分配的空间，分配对象，若分配之后变满，移动 <code>slab</code> 到<code>slabs_full</code> 链表</li>
+<li>如果<code>slabs_partial</code>链表没有未分配的空间，进入下一步</li>
+<li>如果<code>slabs_empty</code> 链表还有未分配的空间，分配对象，同时移动<code>slab</code>进入<code>slabs_partial</code>链表</li>
+<li>如果<code>slabs_empty</code>为空，请求伙伴系统分页，创建一个新的空闲<code>slab</code>， 按步骤 3 分配对象</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614396572-3f99d3ef-f777-4099-bdf9-d0f4a4dea471.png#align=left&amp;display=inline&amp;height=256&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=341&amp;originWidth=461&amp;size=24279&amp;status=done&amp;style=none&amp;width=346" alt="image.png"></p>
+<h5 id="命令查看">命令查看</h5>
+<p>上面说的都是理论，比较抽象，动动手来看看系统中的 slab 吧！你可以通过 <code>cat /proc/slabinfo</code> 命令，实际查看系统中<code>slab</code> 信息。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614479901-7f503632-45dc-4f5e-928f-1327c169ba71.png#align=left&amp;display=inline&amp;height=114&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=217&amp;originWidth=1080&amp;size=162928&amp;status=done&amp;style=none&amp;width=567" alt="image.png">
+<code>slabtop</code>  实时显示内核 slab 内存缓存信息。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614559843-2f066201-2400-4c64-8b1a-228b4d5d16c9.png#align=left&amp;display=inline&amp;height=213&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=213&amp;originWidth=577&amp;size=35867&amp;status=done&amp;style=none&amp;width=577" alt="image.png"></p>
+<h4 id="slab高速缓存的分类">slab高速缓存的分类</h4>
+<p>slab高速缓存分为两大类，「通用高速缓存」和「专用高速缓存」。</p>
+<h5 id="通用高速缓存">通用高速缓存</h5>
+<p>slab分配器中用 <code>kmem_cache</code> 来描述高速缓存的结构，它本身也需要 slab 分配器对其进行高速缓存。cache_cache 保存着对「高速缓存描述符的高速缓存」，是一种通用高速缓存，保存在<code>cache_chain</code> 链表中的第一个元素。
+另外，slab 分配器所提供的小块连续内存的分配，也是通用高速缓存实现的。通用高速缓存所提供的对象具有几何分布的大小，范围为32到131072字节。内核中提供了 <code>kmalloc()</code> 和 <code>kfree()</code> 两个接口分别进行内存的申请和释放。</p>
+<h5 id="专用高速缓存">专用高速缓存</h5>
+<p>内核为专用高速缓存的申请和释放提供了一套完整的接口，根据所传入的参数为指定的对象分配slab缓存。</p>
+<h6 id="专用高速缓存的申请和释放">专用高速缓存的申请和释放</h6>
+<p>kmem_cache_create() 用于对一个指定的对象创建高速缓存。它从 cache_cache 普通高速缓存中为新的专有缓存分配一个高速缓存描述符，并把这个描述符插入到高速缓存描述符形成的 cache_chain 链表中。kmem_cache_destory() 用于撤消和从 cache_chain 链表上删除高速缓存。</p>
+<h5 id="slab的申请和释放">slab的申请和释放</h5>
+<p><code>slab</code> 数据结构在内核中的定义，如下：
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614595843-a9a74383-6263-4616-8129-647d006256f2.png#align=left&amp;display=inline&amp;height=480&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=480&amp;originWidth=1080&amp;size=173882&amp;status=done&amp;style=none&amp;width=1080" alt="image.png">
+kmem_cache_alloc() 在其参数所指定的高速缓存中分配一个slab，对应的 kmem_cache_free() 在其参数所指定的高速缓存中释放一个slab。
+<strong>虚拟内存分配</strong>
+前面讨论的都是对物理内存的管理，Linux 通过虚拟内存管理，欺骗了用户程序假装每个程序都有 4G 的虚拟内存寻址空间（如果这里不懂我说啥，建议回头看下 <a href="https://mp.weixin.qq.com/s?__biz=MzIwMjM4NDE1Nw==&amp;mid=2247483865&amp;idx=1&amp;sn=dfa63a467b620b6131acaef9ea6874a3&amp;chksm=96de37aba1a9bebdcc097314f40ae633bd393253759ecd970ac84cdb41f18994da9405dbf356&amp;token=1178579599&amp;lang=zh_CN&amp;scene=21#wechat_redirect">别再说你不懂Linux内存管理了，10张图给你安排的明明白白！</a>）。
+所以我们来研究下虚拟内存的分配，这里包括用户空间虚拟内存和内核空间虚拟内存。
+<strong>注意，分配的虚拟内存还没有映射到物理内存，只有当访问申请的虚拟内存时，才会发生缺页异常，再通过上面介绍的伙伴系统和 slab 分配器申请物理内存。</strong></p>
+<h3 id="用户空间内存分配">用户空间内存分配</h3>
+<h4 id="malloc">malloc</h4>
+<p><code>malloc</code> 用于申请用户空间的虚拟内存，当申请小于 <code>128KB</code> 小内存的时，<code>malloc</code>使用  <code>sbrk或brk</code> 分配内存；当申请大于 <code>128KB</code> 的内存时，使用 <code>mmap</code> 函数申请内存；</p>
+<h5 id="存在问题">存在问题</h5>
+<p>由于 <code>brk/sbrk/mmap</code> 属于系统调用，如果每次申请内存都要产生系统调用开销，<code>cpu</code> 在用户态和内核态之间频繁切换，非常影响性能。
+而且，堆是从低地址往高地址增长，如果低地址的内存没有被释放，高地址的内存就不能被回收，容易产生内存碎片。</p>
+<h5 id="解决">解决</h5>
+<p>因此，<code>malloc</code>采用的是内存池的实现方式，先申请一大块内存，然后将内存分成不同大小的内存块，然后用户申请内存时，直接从内存池中选择一块相近的内存块分配出去。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614677161-eac265b5-3cc3-4a60-8623-be1300669bf9.png#align=left&amp;display=inline&amp;height=214&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=285&amp;originWidth=681&amp;size=22034&amp;status=done&amp;style=none&amp;width=511" alt="image.png"></p>
+<h3 id="内核空间内存分配">内核空间内存分配</h3>
+<p>在讲内核空间内存分配之前，先来回顾一下内核地址空间。<code>kmalloc</code> 和 <code>vmalloc</code> 分别用于分配不同映射区的虚拟内存，看这张上次画的图：
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593614833569-f6972b7b-1b62-4e99-99a9-1418806a4b93.png#align=left&amp;display=inline&amp;height=306&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=409&amp;originWidth=299&amp;size=20853&amp;status=done&amp;style=none&amp;width=224" alt="image.png"></p>
+<h4 id="kmalloc">kmalloc</h4>
+<p><code>kmalloc()</code> 分配的虚拟地址范围在内核空间的「直接内存映射区」。
+按字节为单位虚拟内存，一般用于分配小块内存，释放内存对应于 <code>kfree</code> ，可以分配连续的物理内存。函数原型在 <code>&lt;linux/kmalloc.h&gt;</code> 中声明，一般情况下在驱动程序中都是调用 <code>kmalloc()</code> 来给数据结构分配内存 。
+还记得前面说的 slab 吗？<code>kmalloc</code> 是基于slab 分配器的 ，同样可以用<code>cat /proc/slabinfo</code> 命令，查看 <code>kmalloc</code> 相关 <code>slab</code>   对象信息，下面的 kmalloc-8、kmalloc-16 等等就是基于slab分配的 kmalloc 高速缓存。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593615283170-ecafc205-84a1-4697-a058-1db04fd2b947.png#align=left&amp;display=inline&amp;height=225&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=225&amp;originWidth=764&amp;size=42330&amp;status=done&amp;style=none&amp;width=764" alt="image.png"></p>
+<h4 id="vmalloc">vmalloc</h4>
+<p><code>vmalloc</code> 分配的虚拟地址区间，位于 <code>vmalloc_start</code> 与<code>vmalloc_end</code> 之间的「动态内存映射区」。
+一般用分配大块内存，释放内存对应于 <code>vfree</code>，分配的虚拟内存地址连续，物理地址上不一定连续。函数原型在 <code>&lt;linux/vmalloc.h&gt;</code> 中声明。一般用在为活动的交换区分配数据结构，为某些 <code>I/O</code> 驱动程序分配缓冲区，或为内核模块分配空间。
+下面的图总结了上述两种内核空间虚拟内存分配方式。
+<img src="https://cdn.nlark.com/yuque/0/2020/png/515219/1593615316409-d3ababe8-c8a1-42ca-8865-fae07b062dc6.png#align=left&amp;display=inline&amp;height=161&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=215&amp;originWidth=747&amp;size=21847&amp;status=done&amp;style=none&amp;width=560" alt="image.png"></p>
+<p>原文链接：<a href="https://mp.weixin.qq.com/s/yXbUnesmoyhDyfRrQAmKsw">https://mp.weixin.qq.com/s/yXbUnesmoyhDyfRrQAmKsw</a></p>
+
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/" data-tooltip="imagemagick安装编译无法识别helc问题" aria-label="下一篇: imagemagick安装编译无法识别helc问题">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/tianyuliufang233.github.io\/blog\/post\/area\/workrecords\/linux\/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86\/';
+        
+          this.page.identifier = '\/post\/area\/workrecords\/linux\/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 天雨流芳233. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://tianyuliufang233.github.io/blog/post/area/workrecords/linux/imagemagick%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABhelc%E9%97%AE%E9%A2%98/" data-tooltip="imagemagick安装编译无法识别helc问题" aria-label="下一篇: imagemagick安装编译无法识别helc问题">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+    <li class="post-action">
+      <a class="post-action-btn btn btn--default" href="#disqus_thread" aria-label="发表评论">
+        <i class="far fa-comment"></i>
+      </a>
+    </li>
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+    <img id="about-card-picture" src="https://tianyuliufang233.github.io/blog/head-picture.jpg" /> 
+    
+    <h4 id="about-card-name">天雨流芳233</h4>
+    
+      <div id="about-card-bio">心之所向，素履以往。生如逆旅，一苇以航。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        运维工程师
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://tianyuliufang233.github.io/blog/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://tranquilpeak.kakawait.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?97573f1e8cc070e9daa2d20a117f99ce";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+    
+  </body>
+</html>
+
